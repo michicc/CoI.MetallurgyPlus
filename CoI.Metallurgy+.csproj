@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="Paths.user" Condition="Exists('Paths.user')" />
+  <Import Project="Options.user" Condition="Exists('Options.user')" />
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Paths.user" />
+    <None Include="Options.user" />
   </ItemGroup>
 
   <ItemGroup>

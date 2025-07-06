@@ -7,10 +7,10 @@ Focus is on abstracting real-world processes and enriching gameplay by providing
 
 A normal Visual Studio solution and .csproj file are provided.
 
-1. Before you can compile the mod, you need to provide the path of your COI installation directory. You can get this path from the Steam client via `Properties...` -> `Local Files` -> `Browse` (a typical install path might be `C:/Steam/steamapps/common/Captain of Industry`).
-2. Make a copy of the file `Paths.user.example` in your clone and rename the copy to `Paths.user`.
-3. Open `Paths.user` in a text editor and change the path to match your system.
+1. Before you can compile the mod, you need to provide the path of your COI installation directory. You can get this path from the Steam client via `Properties...` -> `Local Files` -> `Browse` (a typical install path might be `C:\Program Files (x86)\Steam\steamapps\common\Captain of Industry`).
+2. Make a copy of the file `Options.user.example` in your clone and rename the copy to `Options.user`.
+3. Open `Options.user` in a text editor and change the path to match your system.
 4. You should now be able to build the solution.
 
-In `Paths.user` you can also configure some more build options.
+In `Options.user` you can also configure some more build options.
 If `CopyToModDirectory` is set to the default of `true`, the build output will be automatically copied to the COI mod directory in app data.
