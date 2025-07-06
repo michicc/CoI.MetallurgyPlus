@@ -1,5 +1,6 @@
 ﻿<Project>
   <PropertyGroup>
     <GameDir>C:\Program Files\Steam\steamapps\common\Captain of Industry</GameDir>
+    <CopyToModDirectory>true</CopyToModDirectory>
   </PropertyGroup>
 </Project>

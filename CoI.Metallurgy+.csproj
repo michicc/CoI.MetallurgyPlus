@@ -13,7 +13,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Source/**" />
+    <None Include="Paths.user" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Source\**\*" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +31,8 @@
     <!-- Locate game DLL directory. -->
     <GameDir Condition="'$(GameDir)' == ''">$(COI_ROOT)</GameDir>
     <GameManagedDir Condition="'$(GameManagedDir)' == ''">$(GameDir)\Captain of Industry_Data\Managed</GameManagedDir>
+    <ModFolderName Condition="'$(ModFolderName)' == ''">$(AssemblyName)</ModFolderName>
+    <GameModDir Condition="'$(GameModDir)' == ''">$(AppData)\Captain of Industry\Mods\$(AssemblyName)\</GameModDir>
   </PropertyGroup>
 
   <ItemGroup>
@@ -41,6 +47,32 @@
     <PropertyGroup>
       <_InvalidGameDir Condition="!Exists('$(GameManagedDir)')">true</_InvalidGameDir>
     </PropertyGroup>
-    <Error Text="No valid Captain of Industry installation directory set. Modify Paths.user or set COI_ROOT environment variable properly." ContinueOnError="false" Condition="'$(_InvalidGameDir)' == 'true'"/>
+    <Error Text="No valid Captain of Industry installation directory set. Modify Paths.user or set COI_ROOT environment variable properly." ContinueOnError="false" Condition="'$(_InvalidGameDir)' == 'true'" />
+  </Target>
+
+  <!-- Collect all output files relative to the OutputPath. -->
+  <Target Name="CollectCopyToModDir" AfterTargets="AfterBuild">
+    <ItemGroup>
+      <_CopyToModDirFiles Include="$(OutputPath)\**\*" />
+      <_CopyToModDirFilesDest Include="@(_CopyToModDirFiles-&gt;Replace('$(OutputPath)', '$(GameModDir)'))" />
+    </ItemGroup>
+  </Target>
+
+  <!-- Copy mod output to game dir if requested. -->
+  <Target Name="CopyToModDir" Inputs="@(_CopyToModDirFiles)" Outputs="@(_CopyToModDirFilesDest)" AfterTargets="AfterBuild" DependsOnTargets="CollectCopyToModDir" Condition="'$(Configuration)' == 'Debug' And '$(CopyToModDirectory)' == 'true'">
+    <Message Text="-&gt; Copying mod to game dir $(GameModDir)" Importance="high" />
+
+    <Copy SourceFiles="@(_CopyToModDirFiles)" DestinationFiles="@(_CopyToModDirFilesDest)" SkipUnchangedFiles="true" />
+  </Target>
+
+  <!-- Delete mod files from game dir on Clean. -->
+  <Target Name="CustomClean" BeforeTargets="CoreClean" Condition="'$(Configuration)' == 'Debug' And '$(CopyToModDirectory)' == 'true'">
+    <Message Text="Cleaning mod from game dir" Importance="high" />
+
+    <ItemGroup>
+      <_CustomFilesToDelete Include="$(GameModDir)**\*" />
+    </ItemGroup>
+    <Delete Files="@(_CustomFilesToDelete)" />
   </Target>
 </Project>
+ 

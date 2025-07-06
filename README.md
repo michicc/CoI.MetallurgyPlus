@@ -11,3 +11,6 @@ A normal Visual Studio solution and .csproj file are provided.
 2. Make a copy of the file `Paths.user.example` in your clone and rename the copy to `Paths.user`.
 3. Open `Paths.user` in a text editor and change the path to match your system.
 4. You should now be able to build the solution.
+
+In `Paths.user` you can also configure some more build options.
+If `CopyToModDirectory` is set to the default of `true`, the build output will be automatically copied to the COI mod directory in app data.
