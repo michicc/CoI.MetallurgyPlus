@@ -1,0 +1,4 @@
+# Ignore unneeded asset files.
+AssetBundles
+*.manifest
+!mafi_bundles.manifest

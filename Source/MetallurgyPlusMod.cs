@@ -1,4 +1,5 @@
-﻿using Mafi;
+﻿using CoI.MetallurgyPlus.Data;
+using Mafi;
 using Mafi.Base;
 using Mafi.Core;
 using Mafi.Core.Mods;
@@ -19,5 +20,9 @@ public sealed class MetallurgyPlusMod : DataOnlyMod
     public override void RegisterPrototypes(ProtoRegistrator registrator)
     {
         Log.Info("[Metallurgy+] Registering prototypes");
+
+        registrator.RegisterAllProducts();
+        registrator.RegisterData<RecipesData>();
+        registrator.RegisterDataWithInterface<IResearchNodesData>();
     }
 }
