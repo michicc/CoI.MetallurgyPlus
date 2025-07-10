@@ -20,4 +20,12 @@ internal static class ReflectionHelpers
         var field = obj.GetType().GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
         field.SetValue(obj, value);
     }
+
+    public static V GetField<V, T>(this T obj, string fieldName) where T : class
+    {
+        if (obj is null) throw new ArgumentNullException(nameof(obj));
+
+        var field = obj.GetType().GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+        return (V)field.GetValue(obj);
+    }
 }

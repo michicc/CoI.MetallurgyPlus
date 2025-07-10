@@ -1,4 +1,5 @@
-﻿using Mafi;
+﻿using CoI.MetallurgyPlus.Extensions;
+using Mafi;
 using Mafi.Base;
 using Mafi.Core.Factory.Recipes;
 using Mafi.Core.Mods;
@@ -18,5 +19,15 @@ internal class RecipesData : IModData
             .AddOutput(6, ModIDs.Products.Charcoal, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .AddOutput(3, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
             .BuildAndAdd();
+
+        // Apply overrides for existing recipes.
+        ApplyOverrides(registrator.PrototypesDb);
+    }
+
+
+    private void ApplyOverrides(ProtosDb protosDb)
+    {
+        // Remove coal to wood recipe.
+        protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.CharcoalBurning).MarkAsObsolete();
     }
 }
