@@ -24,5 +24,8 @@ public static class ModIDs
         public static readonly RecipeID SteelFromScrapT1 = Ids.Recipes.CreateId("MP_SteelFromScrapT1");
         public static readonly RecipeID SteelCasting = Ids.Recipes.CreateId("MP_SteelCasting");
         public static readonly RecipeID SteelCastingT2 = Ids.Recipes.CreateId("MP_SteelCastingT2");
+
+        public static readonly RecipeID CpAssemblySteelT1 = Ids.Recipes.CreateId("MP_CpAssemblySteelT1");
+        public static readonly RecipeID CpAssemblySteelT2 = Ids.Recipes.CreateId("MP_CpAssemblySteelT2");
     }
 }

@@ -35,6 +35,25 @@ internal class RecipesData : IModData
             .AddOutput(6, Ids.Products.Steel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .BuildAndAdd();
 
+        // CP assembly steel.
+        registrator.RecipeProtoBuilder
+            .Start("CP assembly steel (T1)", ModIDs.Recipes.CpAssemblySteelT1, Ids.Machines.AssemblyManual)
+            .AddInput(2, Ids.Products.Steel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddInput(2, Ids.Products.Wood, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddInput(3, Ids.Products.ConcreteSlab, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(40)
+            .AddOutput(4, Ids.Products.ConstructionParts, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .BuildAndAdd();
+
+        registrator.RecipeProtoBuilder
+            .Start("CP assembly steel (T2)", ModIDs.Recipes.CpAssemblySteelT2, Ids.Machines.AssemblyElectrified)
+            .AddInput(2, Ids.Products.Steel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddInput(2, Ids.Products.Wood, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddInput(3, Ids.Products.ConcreteSlab, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(20)
+            .AddOutput(4, Ids.Products.ConstructionParts, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .BuildAndAdd();
+
         // Apply overrides for existing recipes.
         ApplyOverrides(registrator.PrototypesDb);
     }
@@ -47,5 +66,12 @@ internal class RecipesData : IModData
         // Remove iron casting recipes.
         protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.IronCasting).MarkAsObsolete();
         protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.IronCastingT2).MarkAsObsolete();
+
+        // Remove iron construction part recipes.
+        protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.CpAssemblyT1).MarkAsObsolete();
+        protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.CpAssemblyT2).MarkAsObsolete();
+        protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.CpAssemblyT3).MarkAsObsolete();
+        protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.CpAssemblyT4).MarkAsObsolete();
+        protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.CpAssemblyT5).MarkAsObsolete();
     }
 }

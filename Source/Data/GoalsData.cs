@@ -16,6 +16,7 @@ internal class GoalsData : IModData
     public void RegisterData(ProtoRegistrator registrator)
     {
         OverrideIronProductionGoal(registrator.PrototypesDb);
+        OverrideCpIProduction(registrator.PrototypesDb);
     }
 
     private void OverrideIronProductionGoal(ProtosDb protosDb)
@@ -34,6 +35,12 @@ internal class GoalsData : IModData
         var goalProduceIron = protosDb.GetOrThrow<GoalToReachProductStatsValue.Proto>(MakeGoalID("ProduceIron"));
         goalProduceIron.SetField("ProtoToTrack", protosDb.GetOrThrow<ProductProto>(Ids.Products.Steel));
         goalProduceIron.SetField("MinQuantityRequired", 12.Quantity());
+    }
+
+    private void OverrideCpIProduction(ProtosDb protosDb)
+    {
+        var goalSelectCpRecipe = protosDb.GetOrThrow<GoalToActivateRecipe.Proto>(MakeGoalID("SelectCpRecipe"));
+        goalSelectCpRecipe.MachineRecipeToActivate = ImmutableArray.Create(Make.Kvp(Ids.Machines.AssemblyManual, ModIDs.Recipes.CpAssemblySteelT1));
     }
 
     private static Proto.ID MakeGoalID(string goalName) => new("Goal_" + goalName);

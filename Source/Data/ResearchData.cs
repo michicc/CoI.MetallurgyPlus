@@ -13,6 +13,7 @@ internal class ResearchData : IResearchNodesData
     {
         OverrideIronSmeltingScrap(registrator.PrototypesDb);
         OverrideVehicleAndMining(registrator.PrototypesDb);
+        OverrideConstruction(registrator.PrototypesDb);
     }
 
     private void OverrideIronSmeltingScrap(ProtosDb protosDb)
@@ -47,5 +48,40 @@ internal class ResearchData : IResearchNodesData
         proto.IconsAsEditable()
             .AddProtoIcon(protosDb.GetOrThrow<MachineProto>(Ids.Machines.SmeltingFurnaceT1))
             .SetToIcons(proto);
+    }
+
+    private void OverrideConstruction(ProtosDb protosDb)
+    {
+        // Construction
+        var proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.CpPacking);
+        proto.UnitsAsEditable()
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.CpAssemblySteelT1)
+            .RemoveRecipeUnlock(Ids.Recipes.CpAssemblyT1)
+            .SetToResearch(proto);
+
+        // Construction II
+        proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Cp2Packing);
+        proto.UnitsAsEditable()
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.CpAssemblySteelT2)
+            .RemoveRecipeUnlock(Ids.Recipes.CpAssemblyT2)
+            .SetToResearch(proto);
+
+        // Construction III
+        proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Cp3Packing);
+        proto.UnitsAsEditable()
+            .RemoveRecipeUnlock(Ids.Recipes.CpAssemblyT3)
+            .SetToResearch(proto);
+
+        // Robotic assembly
+        proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.RoboticAssembly);
+        proto.UnitsAsEditable()
+            .RemoveRecipeUnlock(Ids.Recipes.CpAssemblyT4)
+            .SetToResearch(proto);
+
+        // Robotic assembly II
+        proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Assembler3);
+        proto.UnitsAsEditable()
+            .RemoveRecipeUnlock(Ids.Recipes.CpAssemblyT5)
+            .SetToResearch(proto);
     }
 }
