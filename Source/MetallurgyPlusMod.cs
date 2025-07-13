@@ -25,5 +25,6 @@ public sealed class MetallurgyPlusMod : DataOnlyMod
         registrator.RegisterData<OpenHearthFurnaceData>();
         registrator.RegisterData<RecipesData>();
         registrator.RegisterDataWithInterface<IResearchNodesData>();
+        registrator.RegisterData<GoalsData>();
     }
 }
