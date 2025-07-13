@@ -1,4 +1,5 @@
 ﻿using Mafi.Base;
+using MachineID = Mafi.Core.Factory.Machines.MachineProto.ID;
 using ProductID = Mafi.Core.Products.ProductProto.ID;
 using RecipeID = Mafi.Core.Factory.Recipes.RecipeProto.ID;
 
@@ -12,8 +13,14 @@ public static class ModIDs
         public static readonly ProductID Charcoal = Ids.Products.CreateId("Charcoal");
     }
 
+    public static class Machines
+    {
+        public static readonly MachineID OpenHearthFurnace = Ids.Machines.CreateId("OpenHearthFurnace");
+    }
+
     public static class Recipes
     {
         public static readonly RecipeID CharcoalFromWood = Ids.Recipes.CreateId("CharcoalFromWood");
+        public static readonly RecipeID SteelFromScrapT1 = Ids.Recipes.CreateId("SteelFromScrapT1");
     }
 }

@@ -22,6 +22,7 @@ public sealed class MetallurgyPlusMod : DataOnlyMod
         Log.Info("[Metallurgy+] Registering prototypes");
 
         registrator.RegisterAllProducts();
+        registrator.RegisterData<OpenHearthFurnaceData>();
         registrator.RegisterData<RecipesData>();
         registrator.RegisterDataWithInterface<IResearchNodesData>();
     }
