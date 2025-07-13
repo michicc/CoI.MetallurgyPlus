@@ -20,14 +20,32 @@ internal class RecipesData : IModData
             .AddOutput(3, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
             .BuildAndAdd();
 
+        // Basic steel casting.
+        registrator.RecipeProtoBuilder
+            .Start("Steel casting", ModIDs.Recipes.SteelCasting, Ids.Machines.Caster)
+            .AddInput(6, Ids.Products.MoltenSteel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(60)
+            .AddOutput(6, Ids.Products.Steel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .BuildAndAdd();
+        // Basic steel casting (T2).
+        registrator.RecipeProtoBuilder
+            .Start("Steel casting", ModIDs.Recipes.SteelCastingT2, Ids.Machines.CasterT2)
+            .AddInput(6, Ids.Products.MoltenSteel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(30)
+            .AddOutput(6, Ids.Products.Steel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .BuildAndAdd();
+
         // Apply overrides for existing recipes.
         ApplyOverrides(registrator.PrototypesDb);
     }
-
 
     private void ApplyOverrides(ProtosDb protosDb)
     {
         // Remove coal to wood recipe.
         protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.CharcoalBurning).MarkAsObsolete();
+
+        // Remove iron casting recipes.
+        protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.IronCasting).MarkAsObsolete();
+        protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.IronCastingT2).MarkAsObsolete();
     }
 }

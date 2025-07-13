@@ -22,5 +22,7 @@ public static class ModIDs
     {
         public static readonly RecipeID CharcoalFromWood = Ids.Recipes.CreateId("MP_CharcoalFromWood");
         public static readonly RecipeID SteelFromScrapT1 = Ids.Recipes.CreateId("MP_SteelFromScrapT1");
+        public static readonly RecipeID SteelCasting = Ids.Recipes.CreateId("MP_SteelCasting");
+        public static readonly RecipeID SteelCastingT2 = Ids.Recipes.CreateId("MP_SteelCastingT2");
     }
 }

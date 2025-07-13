@@ -26,6 +26,8 @@ internal class ResearchData : IResearchNodesData
             .RemoveRecipeUnlock(Ids.Recipes.IronSmeltingT1Scrap)
             .AddMachineUnlock(protosDb, ModIDs.Machines.OpenHearthFurnace, unlockAllRecipes: false)
             .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelFromScrapT1)
+            .RemoveRecipeUnlock(Ids.Recipes.IronCasting)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelCasting)
             .SetToResearch(proto);
 
         proto.IconsAsEditable()
