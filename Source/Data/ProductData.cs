@@ -25,7 +25,7 @@ internal class ProductData : IModData
                     initialProducts[i] = Make.Kvp(ModIDs.Products.Charcoal, initialProducts[i].Value);
                 }
             }
-            sfc.SetProperty("InitialProducts", initialProducts.ToImmutableArray());
+            sfc.SetProperty(nameof(StartingFactoryConfig.InitialProducts), initialProducts.ToImmutableArray());
         } else {
             Log.Warning("[Metallurgy+] Could not get StartingFactoryConfig");
         }

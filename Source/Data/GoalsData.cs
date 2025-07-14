@@ -24,7 +24,7 @@ internal class GoalsData : IModData
     private void OverrideIronProductionGoal(ProtosDb protosDb)
     {
         var goalProduceCoal = protosDb.GetOrThrow<GoalToReachProductStatsValue.Proto>(MakeGoalID("ProduceCoal"));
-        goalProduceCoal.SetField("ProtoToTrack", protosDb.GetOrThrow<ProductProto>(ModIDs.Products.Charcoal));
+        goalProduceCoal.SetField(nameof(GoalToReachProductStatsValue.Proto.ProtoToTrack), protosDb.GetOrThrow<ProductProto>(ModIDs.Products.Charcoal));
 
         var goalBuildFurnace = protosDb.GetOrThrow<GoalToConstructStaticEntity.Proto>(MakeGoalID("BuildFurnace"));
         KeyValuePair<StaticEntityProto, int>[] toBuild = [
@@ -32,11 +32,11 @@ internal class GoalsData : IModData
             Make.Kvp(protosDb.GetOrThrow<StaticEntityProto>(Ids.Machines.Caster), 1),
             Make.Kvp(protosDb.GetOrThrow<StaticEntityProto>(Ids.Machines.SmokeStack), 1)
         ];
-        goalBuildFurnace.SetField("ProtosToBuild", toBuild.ToImmutableArray());
+        goalBuildFurnace.SetField(nameof(GoalToConstructStaticEntity.Proto.ProtosToBuild), toBuild.ToImmutableArray());
 
         var goalProduceIron = protosDb.GetOrThrow<GoalToReachProductStatsValue.Proto>(MakeGoalID("ProduceIron"));
-        goalProduceIron.SetField("ProtoToTrack", protosDb.GetOrThrow<ProductProto>(Ids.Products.Steel));
-        goalProduceIron.SetField("MinQuantityRequired", 12.Quantity());
+        goalProduceIron.SetField(nameof(GoalToReachProductStatsValue.Proto.ProtoToTrack), protosDb.GetOrThrow<ProductProto>(Ids.Products.Steel));
+        goalProduceIron.SetField(nameof(GoalToReachProductStatsValue.Proto.MinQuantityRequired), 12.Quantity());
     }
 
     private void OverrideCpIProduction(ProtosDb protosDb)
