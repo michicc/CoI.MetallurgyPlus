@@ -64,4 +64,21 @@ internal static class ReflectionHelpers
         var field = type.GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
         return (V)field.GetValue(null);
     }
+
+    /// <summary>
+    /// Set a (private) property in an instance.
+    /// </summary>
+    /// <typeparam name="T">Instance type</typeparam>
+    /// <param name="obj">Instance to set the property on</param>
+    /// <param name="propName">Name of the property</param>
+    /// <param name="value">Value to set the property to</param>
+    public static void SetProperty<T>(this T obj, string propName, object value) where T : class
+    {
+        if (obj is null) throw new ArgumentNullException(nameof(obj));
+
+        var propInfo = obj.GetType().GetProperty(propName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        if (propInfo is null) throw new InvalidOperationException($"Property '{propName}' not found on the provided object.");
+
+        propInfo.SetValue(obj, value, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty, null, null, null);
+    }
 }
