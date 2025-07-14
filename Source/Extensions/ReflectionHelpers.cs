@@ -76,9 +76,23 @@ internal static class ReflectionHelpers
     {
         if (obj is null) throw new ArgumentNullException(nameof(obj));
 
-        var propInfo = obj.GetType().GetProperty(propName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-        if (propInfo is null) throw new InvalidOperationException($"Property '{propName}' not found on the provided object.");
+        var type = obj.GetType();
+        var propInfo = type.GetProperty(propName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic) ?? throw new InvalidOperationException($"Property '{propName}' not found on the provided object.");
 
-        propInfo.SetValue(obj, value, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty, null, null, null);
+        if (propInfo.CanWrite) {
+            propInfo.SetValue(obj, value, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty, null, null, null);
+        } else {
+            while (type != null) {
+                var backingField = type.GetField($"<{propName}>k__BackingField", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                if (backingField != null) {
+                    backingField.SetValue(obj, value);
+                    return;
+                }
+
+                type = type.BaseType;
+            }
+
+            throw new InvalidOperationException($"Backing field of property '{propName}' not found on the provided object.");
+        }
     }
 }

@@ -30,6 +30,7 @@ public sealed class MetallurgyPlusMod : IMod
         registrator.RegisterAllProducts();
         registrator.RegisterData<ProductData>();
         registrator.RegisterData<OpenHearthFurnaceData>();
+        registrator.RegisterData<MachineData>();
         registrator.RegisterData<RecipesData>();
         registrator.RegisterDataWithInterface<IResearchNodesData>();
         registrator.RegisterData<TradeData>();
