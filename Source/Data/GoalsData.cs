@@ -29,7 +29,7 @@ internal class GoalsData : IModData
         var goalBuildFurnace = protosDb.GetOrThrow<GoalToConstructStaticEntity.Proto>(MakeGoalID("BuildFurnace"));
         KeyValuePair<StaticEntityProto, int>[] toBuild = [
             Make.Kvp(protosDb.GetOrThrow<StaticEntityProto>(ModIDs.Machines.OpenHearthFurnace), 1),
-            Make.Kvp(protosDb.GetOrThrow<StaticEntityProto>(Ids.Machines.Caster), 1),
+            Make.Kvp(protosDb.GetOrThrow<StaticEntityProto>(Ids.Machines.Caster), 2),
             Make.Kvp(protosDb.GetOrThrow<StaticEntityProto>(Ids.Machines.SmokeStack), 1)
         ];
         goalBuildFurnace.SetField(nameof(GoalToConstructStaticEntity.Proto.ProtosToBuild), toBuild.ToImmutableArray());

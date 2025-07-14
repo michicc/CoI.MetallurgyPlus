@@ -35,11 +35,11 @@ internal class OpenHearthFurnaceData : IModData
         // Recipe: Molten steel from scrap.
         registrator.RecipeProtoBuilder
             .Start("Iron scrap smelting", ModIDs.Recipes.SteelFromScrapT1, proto)
-            .AddInput(12, Ids.Products.IronScrap, "B")
-            .AddInput(6, ModIDs.Products.Charcoal, "C")
+            .AddInput(24, Ids.Products.IronScrap, "B")
+            .AddInput(12, ModIDs.Products.Charcoal, "C")
             .SetDurationSeconds(120)
-            .AddOutput(12, Ids.Products.MoltenSteel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddOutput(15, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
+            .AddOutput(24, Ids.Products.MoltenSteel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddOutput(30, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
             .BuildAndAdd();
     }
 }
