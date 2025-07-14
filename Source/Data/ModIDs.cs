@@ -27,5 +27,8 @@ public static class ModIDs
 
         public static readonly RecipeID CpAssemblySteelT1 = Ids.Recipes.CreateId("MP_CpAssemblySteelT1");
         public static readonly RecipeID CpAssemblySteelT2 = Ids.Recipes.CreateId("MP_CpAssemblySteelT2");
+
+        public static readonly RecipeID MechPartsAssemblyT1Steel = Ids.Recipes.CreateId("MP_MechPartsAssemblyT1Steel");
+        public static readonly RecipeID MechPartsAssemblyT2Steel = Ids.Recipes.CreateId("MP_MechPartsAssemblyT2Steel");
     }
 }

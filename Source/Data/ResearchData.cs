@@ -57,6 +57,8 @@ internal class ResearchData : IResearchNodesData
         proto.UnitsAsEditable()
             .AddRecipeUnlock(protosDb, ModIDs.Recipes.CpAssemblySteelT1)
             .RemoveRecipeUnlock(Ids.Recipes.CpAssemblyT1)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.MechPartsAssemblyT1Steel)
+            .RemoveRecipeUnlock(Ids.Recipes.MechPartsAssemblyT1)
             .SetToResearch(proto);
 
         // Construction II
@@ -64,24 +66,29 @@ internal class ResearchData : IResearchNodesData
         proto.UnitsAsEditable()
             .AddRecipeUnlock(protosDb, ModIDs.Recipes.CpAssemblySteelT2)
             .RemoveRecipeUnlock(Ids.Recipes.CpAssemblyT2)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.MechPartsAssemblyT2Steel)
+            .RemoveRecipeUnlock(Ids.Recipes.MechPartsAssemblyT2)
             .SetToResearch(proto);
 
         // Construction III
         proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Cp3Packing);
         proto.UnitsAsEditable()
             .RemoveRecipeUnlock(Ids.Recipes.CpAssemblyT3)
+            .RemoveRecipeUnlock(Ids.Recipes.MechPartsAssemblyT3Iron)
             .SetToResearch(proto);
 
         // Robotic assembly
         proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.RoboticAssembly);
         proto.UnitsAsEditable()
             .RemoveRecipeUnlock(Ids.Recipes.CpAssemblyT4)
+            .RemoveRecipeUnlock(Ids.Recipes.MechPartsAssemblyT4Iron)
             .SetToResearch(proto);
 
         // Robotic assembly II
         proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Assembler3);
         proto.UnitsAsEditable()
             .RemoveRecipeUnlock(Ids.Recipes.CpAssemblyT5)
+            .RemoveRecipeUnlock(Ids.Recipes.MechPartsAssemblyT5Iron)
             .SetToResearch(proto);
     }
 }

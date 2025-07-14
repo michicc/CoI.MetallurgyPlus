@@ -19,6 +19,7 @@ internal class GoalsData : IModData
         OverrideIronProductionGoal(registrator.PrototypesDb);
         OverrideCpIProduction(registrator.PrototypesDb);
         OverrideSetupTradings(registrator.PrototypesDb);
+        OverrideMaintenance(registrator.PrototypesDb);
     }
 
     private void OverrideIronProductionGoal(ProtosDb protosDb)
@@ -54,6 +55,12 @@ internal class GoalsData : IModData
 
         var goalTradeForBricks = protosDb.GetOrThrow<GoalToReachProductStatsValue.Proto>(MakeGoalID("TradeForBricks"));
         goalTradeForBricks.SetField("m_formatFunc", (string _) => tradeConcreteTitle);
+    }
+
+    private void OverrideMaintenance(ProtosDb protosDb)
+    {
+        var goalMaintenanceAssembly = protosDb.GetOrThrow<GoalToActivateRecipe.Proto>(MakeGoalID("MaintenanceAssembly"));
+        goalMaintenanceAssembly.MachineRecipeToActivate = ImmutableArray.Create(Make.Kvp(Ids.Machines.AssemblyManual, ModIDs.Recipes.MechPartsAssemblyT1Steel), Make.Kvp(Ids.Machines.AssemblyElectrified, ModIDs.Recipes.MechPartsAssemblyT2Steel));
     }
 
     private static Proto.ID MakeGoalID(string goalName) => new("Goal_" + goalName);

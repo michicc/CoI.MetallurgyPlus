@@ -54,6 +54,21 @@ internal class RecipesData : IModData
             .AddOutput(4, Ids.Products.ConstructionParts, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .BuildAndAdd();
 
+        // Mech. parts assembly steel.
+        registrator.RecipeProtoBuilder
+            .Start("Mech. parts assembly (T1-2)", ModIDs.Recipes.MechPartsAssemblyT1Steel, Ids.Machines.AssemblyManual)
+            .AddInput(2, Ids.Products.Steel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(40)
+            .AddOutput(4, Ids.Products.MechanicalParts, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .BuildAndAdd();
+
+        registrator.RecipeProtoBuilder
+            .Start("Mech. parts assembly (T2-2)", ModIDs.Recipes.MechPartsAssemblyT2Steel, Ids.Machines.AssemblyElectrified)
+            .AddInput(4, Ids.Products.Steel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(40)
+            .AddOutput(8, Ids.Products.MechanicalParts, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .BuildAndAdd();
+
         // Apply overrides for existing recipes.
         ApplyOverrides(registrator.PrototypesDb);
     }
@@ -73,5 +88,12 @@ internal class RecipesData : IModData
         protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.CpAssemblyT3).MarkAsObsolete();
         protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.CpAssemblyT4).MarkAsObsolete();
         protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.CpAssemblyT5).MarkAsObsolete();
+
+        // Remove iron mechanical components recipes.
+        protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.MechPartsAssemblyT1).MarkAsObsolete();
+        protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.MechPartsAssemblyT2).MarkAsObsolete();
+        protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.MechPartsAssemblyT3Iron).MarkAsObsolete();
+        protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.MechPartsAssemblyT4Iron).MarkAsObsolete();
+        protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.MechPartsAssemblyT5Iron).MarkAsObsolete();
     }
 }
