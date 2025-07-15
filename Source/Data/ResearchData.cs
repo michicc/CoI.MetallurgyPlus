@@ -1,7 +1,9 @@
 ﻿using CoI.MetallurgyPlus.Extensions;
+using Mafi;
 using Mafi.Base;
 using Mafi.Core.Factory.Machines;
 using Mafi.Core.Mods;
+using Mafi.Core.PropertiesDb;
 using Mafi.Core.Prototypes;
 using Mafi.Core.Research;
 
@@ -11,6 +13,8 @@ internal class ResearchData : IResearchNodesData
 {
     public void RegisterData(ProtoRegistrator registrator)
     {
+        AddCharcoalRecipes(registrator.PrototypesDb);
+
         OverrideIronSmeltingScrap(registrator.PrototypesDb);
         OverrideVehicleAndMining(registrator.PrototypesDb);
         OverrideConstruction(registrator.PrototypesDb);
@@ -89,6 +93,27 @@ internal class ResearchData : IResearchNodesData
         proto.UnitsAsEditable()
             .RemoveRecipeUnlock(Ids.Recipes.CpAssemblyT5)
             .RemoveRecipeUnlock(Ids.Recipes.MechPartsAssemblyT5Iron)
+            .SetToResearch(proto);
+    }
+
+    private void AddCharcoalRecipes(ProtosDb protosDb)
+    {
+        // Basic concrete.
+        var proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.BricksProduction);
+        proto.UnitsAsEditable()
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SimpleConcreteCharcoal)
+            .SetToResearch(proto);
+
+        // Basic diesel
+        proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.BasicDiesel);
+        proto.UnitsAsEditable()
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.DieselDistillationCharcoal)
+            .SetToResearch(proto);
+
+        // Basic desalination
+        proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.ThermalDesalinationBasic);
+        proto.UnitsAsEditable()
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.WaterDesalinationCharcoal)
             .SetToResearch(proto);
     }
 }

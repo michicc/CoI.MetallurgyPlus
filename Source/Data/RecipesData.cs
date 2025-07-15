@@ -11,29 +11,8 @@ internal class RecipesData : IModData
 {
     public void RegisterData(ProtoRegistrator registrator)
     {
-        // Wood to charcoal.
-        registrator.RecipeProtoBuilder
-            .Start("Charcoal making", ModIDs.Recipes.CharcoalFromWood, Ids.Machines.CharcoalMaker)
-            .AddInput(10, Ids.Products.Wood, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .SetDurationSeconds(30)
-            .AddOutput(6, ModIDs.Products.Charcoal, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddOutput(3, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
-            .BuildAndAdd();
-
-        // Basic steel casting.
-        registrator.RecipeProtoBuilder
-            .Start("Steel casting", ModIDs.Recipes.SteelCasting, Ids.Machines.Caster)
-            .AddInput(6, Ids.Products.MoltenSteel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .SetDurationSeconds(60)
-            .AddOutput(6, Ids.Products.Steel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .BuildAndAdd();
-        // Basic steel casting (T2).
-        registrator.RecipeProtoBuilder
-            .Start("Steel casting", ModIDs.Recipes.SteelCastingT2, Ids.Machines.CasterT2)
-            .AddInput(6, Ids.Products.MoltenSteel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .SetDurationSeconds(30)
-            .AddOutput(6, Ids.Products.Steel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .BuildAndAdd();
+        AddCharcoalRecipes(registrator);
+        AddSmeltingRecipes(registrator);
 
         // CP assembly steel.
         registrator.RecipeProtoBuilder
@@ -71,6 +50,69 @@ internal class RecipesData : IModData
 
         // Apply overrides for existing recipes.
         ApplyOverrides(registrator.PrototypesDb);
+    }
+
+    private void AddCharcoalRecipes(ProtoRegistrator registrator)
+    {
+        // Wood to charcoal.
+        registrator.RecipeProtoBuilder
+            .Start("Charcoal making", ModIDs.Recipes.CharcoalFromWood, Ids.Machines.CharcoalMaker)
+            .AddInput(10, Ids.Products.Wood, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(30)
+            .AddOutput(6, ModIDs.Products.Charcoal, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddOutput(3, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
+            .BuildAndAdd();
+
+        // Basic concrete (charcoal).
+        registrator.RecipeProtoBuilder
+            .Start("Simple concrete making (charcaol)", ModIDs.Recipes.SimpleConcreteCharcoal, Ids.Machines.BricksMaker)
+            .AddInput(12, Ids.Products.Limestone, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddInput(3, ModIDs.Products.Charcoal, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddInput(4, Ids.Products.Water, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(40)
+            .AddOutput(8, Ids.Products.ConcreteSlab, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddOutput(8, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .BuildAndAdd();
+
+        // Diesel distillation (basic)
+        registrator.RecipeProtoBuilder
+            .Start("Diesel distillation (basic)", ModIDs.Recipes.DieselDistillationCharcoal, Ids.Machines.BasicDieselDistiller)
+            .AddInput(20, Ids.Products.CrudeOil, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddInput(3, ModIDs.Products.Charcoal, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(20)
+            .AddOutput(9, Ids.Products.Diesel, "X")
+            .AddOutput(5, Ids.Products.WasteWater, "Z")
+            .AddOutput(12, Ids.Products.Exhaust, "S")
+            .BuildAndAdd();
+
+        // Water desalination (basic)
+        registrator.RecipeProtoBuilder
+            .Start("Water desalination (basic)", ModIDs.Recipes.WaterDesalinationCharcoal, Ids.Machines.BasicDieselDistiller)
+            .AddInput(10, Ids.Products.Seawater, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddInput(1, ModIDs.Products.Charcoal, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(10)
+            .AddOutput(6, Ids.Products.Water, "X")
+            .AddOutput(4, Ids.Products.Brine, "Z")
+            .AddOutput(2, Ids.Products.Exhaust, "S", true)
+            .BuildAndAdd();
+    }
+
+    private void AddSmeltingRecipes(ProtoRegistrator registrator)
+    {
+        // Basic steel casting.
+        registrator.RecipeProtoBuilder
+            .Start("Steel casting", ModIDs.Recipes.SteelCasting, Ids.Machines.Caster)
+            .AddInput(6, Ids.Products.MoltenSteel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(60)
+            .AddOutput(6, Ids.Products.Steel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .BuildAndAdd();
+        // Basic steel casting (T2).
+        registrator.RecipeProtoBuilder
+            .Start("Steel casting", ModIDs.Recipes.SteelCastingT2, Ids.Machines.CasterT2)
+            .AddInput(6, Ids.Products.MoltenSteel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(30)
+            .AddOutput(6, Ids.Products.Steel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .BuildAndAdd();
     }
 
     private void ApplyOverrides(ProtosDb protosDb)
