@@ -36,6 +36,9 @@ public static class ModIDs
         public static readonly RecipeID SteelFromIronT1 = Ids.Recipes.CreateId("MP_SteelFromIronT1");
         public static readonly RecipeID SteelCasting = Ids.Recipes.CreateId("MP_SteelCasting");
         public static readonly RecipeID SteelCastingT2 = Ids.Recipes.CreateId("MP_SteelCastingT2");
+
+        public static readonly RecipeID CopperSmeltingT1ScrapCharcoal = Ids.Recipes.CreateId("MP_CopperSmeltingT1ScrapCharcoal");
+        public static readonly RecipeID CopperSmeltingT1Charcoal = Ids.Recipes.CreateId("MP_CopperSmeltingT1Charcoal");
         #endregion
 
         #region Steel recipes

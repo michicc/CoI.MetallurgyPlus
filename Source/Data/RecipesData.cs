@@ -130,6 +130,27 @@ internal class RecipesData : IModData
             .AddOutput(5, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
             .BuildAndAdd();
 
+        // Copper scrap smelting (charcoal).
+        registrator.RecipeProtoBuilder
+            .Start("Copper scrap smelting (charcoal)", ModIDs.Recipes.CopperSmeltingT1ScrapCharcoal, Ids.Machines.SmeltingFurnaceT1)
+            .AddInput(8, Ids.Products.CopperScrap, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddInput(3, ModIDs.Products.Charcoal, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(20)
+            .AddOutput(8, Ids.Products.MoltenCopper, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddOutput(6, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
+            .BuildAndAdd();
+
+        // Copper smelting (charcoal).
+        registrator.RecipeProtoBuilder
+            .Start("Copper smelting (charcoal)", ModIDs.Recipes.CopperSmeltingT1Charcoal, Ids.Machines.SmeltingFurnaceT1)
+            .AddInput(10, Ids.Products.CopperOre, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddInput(5, ModIDs.Products.Charcoal, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(20)
+            .AddOutput(8, Ids.Products.MoltenCopper, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddOutput(4, Ids.Products.Slag, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddOutput(8, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
+            .BuildAndAdd();
+
         // Basic steel casting.
         registrator.RecipeProtoBuilder
             .Start("Steel casting", ModIDs.Recipes.SteelCasting, Ids.Machines.Caster)

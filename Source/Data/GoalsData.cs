@@ -22,6 +22,7 @@ internal class GoalsData : IModData
         OverrideSetupTradings(registrator.PrototypesDb);
         OverrideMaintenance(registrator.PrototypesDb);
         OverrideProcessIronOre(registrator.PrototypesDb);
+        OverrideCopperProduction(registrator.PrototypesDb);
     }
 
     private void OverrideIronProductionGoal(ProtosDb protosDb)
@@ -73,7 +74,7 @@ internal class GoalsData : IModData
         GoalProto[] goals = [
             new GoalToResearchNode.Proto("MP_ResearchIronSmeltingOre", protosDb.GetOrThrow<ResearchNodeProto>(ModIDs.Research.IronSmeltingOre)),
             new GoalToConstructStaticEntity.Proto("MP_BuildBlastFurnace", Make.Kvp(protosDb.GetOrThrow<StaticEntityProto>(Ids.Machines.SmeltingFurnaceT1), 1), Make.Kvp(protosDb.GetOrThrow<StaticEntityProto>(Ids.Machines.SmokeStack), 1), Make.Kvp(protosDb.GetOrThrow<StaticEntityProto>(ModIDs.Machines.OpenHearthFurnace), 1), buildBlastStr, lockedByIndex: 0),
-            new GoalToActivateRecipe.Proto("MP_ActiveIronOpenHearthRecipe", ironSteelRecipeStr, ModIDs.Machines.OpenHearthFurnace, ModIDs.Recipes.SteelFromIronT1, tutorial:Ids.Messages.TutorialOnIronOreSmelting, lockedByIndex: 1),
+            new GoalToActivateRecipe.Proto("MP_ActivateIronOpenHearthRecipe", ironSteelRecipeStr, ModIDs.Machines.OpenHearthFurnace, ModIDs.Recipes.SteelFromIronT1, tutorial:Ids.Messages.TutorialOnIronOreSmelting, lockedByIndex: 1),
             protosDb.GetOrThrow<GoalProto>(MakeGoalID("ProcessIronOre")),
             protosDb.GetOrThrow<GoalProto>(MakeGoalID("SetupSlagDumpDesignations")),
             protosDb.GetOrThrow<GoalProto>(MakeGoalID("DumpSlag"))
@@ -82,6 +83,12 @@ internal class GoalsData : IModData
         // Replace goal proto.
         var goalList = protosDb.GetOrThrow<GoalListProto>(new("Goal__ProcessIronOre"));
         goalList.SetField(nameof(GoalListProto.Goals), CreateGoals(protosDb, goals));
+    }
+
+    private void OverrideCopperProduction(ProtosDb protosDb)
+    {
+        var goal = protosDb.GetOrThrow<GoalToActivateRecipe.Proto>(MakeGoalID("ActivateCopperOreRecipe"));
+        goal.MachineRecipeToActivate = ImmutableArray.Create(Make.Kvp(Ids.Machines.SmeltingFurnaceT1, Ids.Recipes.CopperSmeltingT1), Make.Kvp(Ids.Machines.SmeltingFurnaceT1, ModIDs.Recipes.CopperSmeltingT1Charcoal));
     }
 
     private static Proto.ID MakeGoalID(string goalName) => new("Goal_" + goalName);

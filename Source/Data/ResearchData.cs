@@ -17,6 +17,7 @@ internal class ResearchData : IResearchNodesData
         AddCharcoalRecipes(registrator.PrototypesDb);
 
         OverrideIronSmeltingScrap(registrator.PrototypesDb);
+        OverrideCopperRefinement(registrator.PrototypesDb);
         OverrideVehicleAndMining(registrator.PrototypesDb);
         OverrideConstruction(registrator.PrototypesDb);
 
@@ -59,6 +60,16 @@ internal class ResearchData : IResearchNodesData
             .RemoveIcon(Ids.Machines.SmeltingFurnaceT1)
             .AddProtoIcon(protosDb.GetOrThrow<MachineProto>(ModIDs.Machines.OpenHearthFurnace), position: 0)
             .SetToIcons(proto);
+    }
+
+    private void OverrideCopperRefinement(ProtosDb protosDb)
+    {
+        // Copper refinement
+        var proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.CopperRefinement);
+        proto.UnitsAsEditable()
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.CopperSmeltingT1ScrapCharcoal)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.CopperSmeltingT1Charcoal)
+            .SetToResearch(proto);
     }
 
     private void OverrideVehicleAndMining(ProtosDb protosDb)
