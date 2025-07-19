@@ -21,22 +21,30 @@ public static class ModIDs
 
     public static class Recipes
     {
+        #region Charcoal recipes
         public static readonly RecipeID CharcoalFromWood = Ids.Recipes.CreateId("MP_CharcoalFromWood");
         public static readonly RecipeID SimpleConcreteCharcoal = Ids.Recipes.CreateId("MP_SimpleConcreteCharcoal");
         public static readonly RecipeID DieselDistillationCharcoal = Ids.Recipes.CreateId("MP_DieselDistillationCharcoal");
         public static readonly RecipeID WaterDesalinationCharcoal = Ids.Recipes.CreateId("MP_WaterDesalinationCharcoal");
+        public static readonly RecipeID RubberProductionDieselWithCharcaol = Ids.Recipes.CreateId("MP_RubberProductionDieselWithCharcaol");
+        public static readonly RecipeID RubberProductionNaphthaCharcoal = Ids.Recipes.CreateId("MP_RubberProductionNaphthaCharcoal");
+        #endregion
 
+        #region Iron smelting recipes
         public static readonly RecipeID IronSmeltingT1Charcoal = Ids.Recipes.CreateId("MP_IronSmeltingT1Charcoal");
         public static readonly RecipeID SteelFromScrapT1 = Ids.Recipes.CreateId("MP_SteelFromScrapT1");
         public static readonly RecipeID SteelFromIronT1 = Ids.Recipes.CreateId("MP_SteelFromIronT1");
         public static readonly RecipeID SteelCasting = Ids.Recipes.CreateId("MP_SteelCasting");
         public static readonly RecipeID SteelCastingT2 = Ids.Recipes.CreateId("MP_SteelCastingT2");
+        #endregion
 
+        #region Steel recipes
         public static readonly RecipeID CpAssemblySteelT1 = Ids.Recipes.CreateId("MP_CpAssemblySteelT1");
         public static readonly RecipeID CpAssemblySteelT2 = Ids.Recipes.CreateId("MP_CpAssemblySteelT2");
 
         public static readonly RecipeID MechPartsAssemblyT1Steel = Ids.Recipes.CreateId("MP_MechPartsAssemblyT1Steel");
         public static readonly RecipeID MechPartsAssemblyT2Steel = Ids.Recipes.CreateId("MP_MechPartsAssemblyT2Steel");
+        #endregion
     }
 
     public static class Research

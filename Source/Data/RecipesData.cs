@@ -95,6 +95,26 @@ internal class RecipesData : IModData
             .AddOutput(4, Ids.Products.Brine, "Z")
             .AddOutput(2, Ids.Products.Exhaust, "S", true)
             .BuildAndAdd();
+
+        // Rubber production (charcoal)
+        registrator.RecipeProtoBuilder
+            .Start("Rubber production (charcoal)", ModIDs.Recipes.RubberProductionNaphthaCharcoal, Ids.Machines.VacuumDistillationTower)
+            .AddInput(4, Ids.Products.Naphtha, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddInput(2, ModIDs.Products.Charcoal, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(30)
+            .AddOutput(8, Ids.Products.Rubber, "X")
+            .AddOutput(1, Ids.Products.WasteWater, "Y")
+            .BuildAndAdd();
+
+        // Rubber production (charcoal) (alt)
+        registrator.RecipeProtoBuilder
+            .Start("Rubber production (charcoal) (alt)", ModIDs.Recipes.RubberProductionDieselWithCharcaol, Ids.Machines.VacuumDistillationTower)
+            .AddInput(4, Ids.Products.Diesel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddInput(2, ModIDs.Products.Charcoal, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(30)
+            .AddOutput(8, Ids.Products.Rubber, "X")
+            .AddOutput(2, Ids.Products.WasteWater, "Y")
+            .BuildAndAdd();
     }
 
     private void AddSmeltingRecipes(ProtoRegistrator registrator)

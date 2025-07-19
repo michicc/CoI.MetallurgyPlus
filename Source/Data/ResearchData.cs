@@ -131,5 +131,17 @@ internal class ResearchData : IResearchNodesData
         proto.UnitsAsEditable()
             .AddRecipeUnlock(protosDb, ModIDs.Recipes.WaterDesalinationCharcoal)
             .SetToResearch(proto);
+
+        // Synthetic rubber
+        proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.RubberProduction);
+        proto.UnitsAsEditable()
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.RubberProductionDieselWithCharcaol)
+            .SetToResearch(proto);
+
+        // Naphtha processing
+        proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.NaphthaProcessing);
+        proto.UnitsAsEditable()
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.RubberProductionNaphthaCharcoal)
+            .SetToResearch(proto);
     }
 }
