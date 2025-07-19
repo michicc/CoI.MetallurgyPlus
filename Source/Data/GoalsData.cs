@@ -25,6 +25,7 @@ internal class GoalsData : IModData
         OverrideProcessIronOre(registrator.PrototypesDb);
         OverrideStockpileProducts(registrator.PrototypesDb);
         OverrideCopperProduction(registrator.PrototypesDb);
+        OverrideMineCoal(registrator.PrototypesDb);
     }
 
     private void OverrideIronProductionGoal(ProtosDb protosDb)
@@ -108,6 +109,24 @@ internal class GoalsData : IModData
     {
         var goal = protosDb.GetOrThrow<GoalToActivateRecipe.Proto>(MakeGoalID("ActivateCopperOreRecipe"));
         goal.MachineRecipeToActivate = ImmutableArray.Create(Make.Kvp(Ids.Machines.SmeltingFurnaceT1, Ids.Recipes.CopperSmeltingT1), Make.Kvp(Ids.Machines.SmeltingFurnaceT1, ModIDs.Recipes.CopperSmeltingT1Charcoal));
+    }
+
+    private void OverrideMineCoal(ProtosDb protosDb)
+    {
+        var copperRecipeStr = Loc.Str4("Goal__MP_CopperWithCoal", "Switch recipes in <bc>{0}</bc> and <bc>{1}</bc> to use <bc>{2}</bc> to save on <bc>{3}</bc>", "goal text")
+            .Format(protosDb.GetOrThrow<Proto>(Ids.Machines.BricksMaker).Strings.Name.TranslatedString, protosDb.GetOrThrow<Proto>(Ids.Machines.VacuumDistillationTower).Strings.Name.TranslatedString,
+                    protosDb.GetOrThrow<Proto>(Ids.Products.Coal).Strings.Name.TranslatedString, protosDb.GetOrThrow<Proto>(ModIDs.Products.Charcoal).Strings.Name.TranslatedString);
+
+        GoalProto[] goals = [
+            protosDb.GetOrThrow<GoalProto>(MakeGoalID("ConstructExcavator2")),
+            protosDb.GetOrThrow<GoalProto>(MakeGoalID("ConstructTruck2")),
+            protosDb.GetOrThrow<GoalProto>(MakeGoalID("MineCoal")),
+            new GoalToActivateRecipe.Proto("MP_CopperWithCoal", copperRecipeStr, Make.Kvp(Ids.Machines.BricksMaker, Ids.Recipes.SimpleConcreteMaking), Make.Kvp(Ids.Machines.VacuumDistillationTower, Ids.Recipes.DieselDistillationBasic), 2)
+        ];
+
+        // Replace goal list.
+        var goalList = protosDb.GetOrThrow<GoalListProto>(new("Goal__MineCoal"));
+        goalList.SetField(nameof(GoalListProto.Goals), CreateGoals(protosDb, goals));
     }
 
     private static Proto.ID MakeGoalID(string goalName) => new("Goal_" + goalName);
