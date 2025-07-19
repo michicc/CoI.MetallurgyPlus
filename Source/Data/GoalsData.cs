@@ -2,6 +2,7 @@
 using Mafi;
 using Mafi.Base;
 using Mafi.Collections.ImmutableCollections;
+using Mafi.Core.Buildings.Storages;
 using Mafi.Core.Entities.Static;
 using Mafi.Core.Messages.Goals;
 using Mafi.Core.Mods;
@@ -22,6 +23,7 @@ internal class GoalsData : IModData
         OverrideSetupTradings(registrator.PrototypesDb);
         OverrideMaintenance(registrator.PrototypesDb);
         OverrideProcessIronOre(registrator.PrototypesDb);
+        OverrideStockpileProducts(registrator.PrototypesDb);
         OverrideCopperProduction(registrator.PrototypesDb);
     }
 
@@ -80,9 +82,26 @@ internal class GoalsData : IModData
             protosDb.GetOrThrow<GoalProto>(MakeGoalID("DumpSlag"))
         ];
 
-        // Replace goal proto.
+        // Replace goal list.
         var goalList = protosDb.GetOrThrow<GoalListProto>(new("Goal__ProcessIronOre"));
         goalList.SetField(nameof(GoalListProto.Goals), CreateGoals(protosDb, goals));
+    }
+
+    private void OverrideStockpileProducts(ProtosDb protosDb)
+    {
+        var goalCpAssembly = protosDb.GetOrThrow<GoalToActivateRecipe.Proto>(MakeGoalID("AnotherCpAssembly"));
+        goalCpAssembly.MachineRecipeToActivate = ImmutableArray.Create(Make.Kvp(Ids.Machines.AssemblyManual, ModIDs.Recipes.CpAssemblySteelT1), Make.Kvp(Ids.Machines.AssemblyElectrified, ModIDs.Recipes.CpAssemblySteelT2));
+
+        var unitStorage = protosDb.GetOrThrow<StorageProto>(Ids.Buildings.StorageUnit);
+        var steel = protosDb.GetOrThrow<ProductProto>(Ids.Products.Steel);
+
+        var ironStorageGoal = protosDb.GetOrThrow<GoalToBuildStorage.Proto>(MakeGoalID("BuildIronStorage"));
+        ironStorageGoal.SetField(nameof(GoalToBuildStorage.Proto.Title), GoalToBuildStorage.Proto.TITLE_BUILD_STORAGE.Format($"<bc>{unitStorage.Strings.Name}</bc>", $"<bc>{steel.Strings.Name}</bc>"));
+        ironStorageGoal.SetField(nameof(GoalToBuildStorage.Proto.ProductStoredId), steel.Id);
+
+        var stockpileGoal = protosDb.GetOrThrow<GoalToStockpileProducts.Proto>(MakeGoalID("FillIronStorage"));
+        stockpileGoal.SetField(nameof(GoalToStockpileProducts.Proto.ProductToStoreId), steel.Id);
+        stockpileGoal.SetField(nameof(GoalToStockpileProducts.Proto.Title), GoalToStockpileProducts.Proto.TITLE_STORE.Format($"<bc>{steel.Strings.Name}</bc>", unitStorage.Strings.Name.TranslatedString));
     }
 
     private void OverrideCopperProduction(ProtosDb protosDb)
