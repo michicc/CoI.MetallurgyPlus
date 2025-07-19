@@ -99,6 +99,17 @@ internal class RecipesData : IModData
 
     private void AddSmeltingRecipes(ProtoRegistrator registrator)
     {
+        // Iron ore smelting (charcoal).
+        registrator.RecipeProtoBuilder
+            .Start("Iron smelting (charcoal)", ModIDs.Recipes.IronSmeltingT1Charcoal, Ids.Machines.SmeltingFurnaceT1)
+            .AddInput(10, Ids.Products.IronOre, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddInput(3, ModIDs.Products.Charcoal, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(20)
+            .AddOutput(5, Ids.Products.MoltenIron, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddOutput(5, Ids.Products.Slag, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddOutput(5, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
+            .BuildAndAdd();
+
         // Basic steel casting.
         registrator.RecipeProtoBuilder
             .Start("Steel casting", ModIDs.Recipes.SteelCasting, Ids.Machines.Caster)
@@ -119,6 +130,10 @@ internal class RecipesData : IModData
     {
         // Remove coal to wood recipe.
         protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.CharcoalBurning).MarkAsObsolete();
+
+        // Remove smelting recipes.
+        protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.IronSmeltingT1Coal).MarkAsObsolete();
+        protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.IronSmeltingT1Scrap).MarkAsObsolete();
 
         // Remove iron casting recipes.
         protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.IronCasting).MarkAsObsolete();

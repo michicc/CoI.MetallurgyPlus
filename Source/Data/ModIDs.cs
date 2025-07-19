@@ -2,6 +2,7 @@
 using MachineID = Mafi.Core.Factory.Machines.MachineProto.ID;
 using ProductID = Mafi.Core.Products.ProductProto.ID;
 using RecipeID = Mafi.Core.Factory.Recipes.RecipeProto.ID;
+using ResearchID = Mafi.Core.Research.ResearchNodeProto.ID;
 
 namespace CoI.MetallurgyPlus.Data;
 
@@ -24,7 +25,10 @@ public static class ModIDs
         public static readonly RecipeID SimpleConcreteCharcoal = Ids.Recipes.CreateId("MP_SimpleConcreteCharcoal");
         public static readonly RecipeID DieselDistillationCharcoal = Ids.Recipes.CreateId("MP_DieselDistillationCharcoal");
         public static readonly RecipeID WaterDesalinationCharcoal = Ids.Recipes.CreateId("MP_WaterDesalinationCharcoal");
+
+        public static readonly RecipeID IronSmeltingT1Charcoal = Ids.Recipes.CreateId("MP_IronSmeltingT1Charcoal");
         public static readonly RecipeID SteelFromScrapT1 = Ids.Recipes.CreateId("MP_SteelFromScrapT1");
+        public static readonly RecipeID SteelFromIronT1 = Ids.Recipes.CreateId("MP_SteelFromIronT1");
         public static readonly RecipeID SteelCasting = Ids.Recipes.CreateId("MP_SteelCasting");
         public static readonly RecipeID SteelCastingT2 = Ids.Recipes.CreateId("MP_SteelCastingT2");
 
@@ -33,5 +37,10 @@ public static class ModIDs
 
         public static readonly RecipeID MechPartsAssemblyT1Steel = Ids.Recipes.CreateId("MP_MechPartsAssemblyT1Steel");
         public static readonly RecipeID MechPartsAssemblyT2Steel = Ids.Recipes.CreateId("MP_MechPartsAssemblyT2Steel");
+    }
+
+    public static class Research
+    {
+        public static readonly ResearchID IronSmeltingOre = Ids.Research.CreateId("MP_IronSmeltingOre");
     }
 }

@@ -13,11 +13,31 @@ internal class ResearchData : IResearchNodesData
 {
     public void RegisterData(ProtoRegistrator registrator)
     {
+        AddIronSmeltingOre(registrator);
         AddCharcoalRecipes(registrator.PrototypesDb);
 
         OverrideIronSmeltingScrap(registrator.PrototypesDb);
         OverrideVehicleAndMining(registrator.PrototypesDb);
         OverrideConstruction(registrator.PrototypesDb);
+
+        // Adjust positions of existing research items.
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Beacon).GridPosition = new Vector2i(12, 5);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.RepairDock).GridPosition = new Vector2i(16, 5);
+    }
+
+    private void AddIronSmeltingOre(ProtoRegistrator registrator)
+    {
+        var proto = registrator.ResearchNodeProtoBuilder
+            .Start("Iron ore smelting", ModIDs.Research.IronSmeltingOre, 2)
+            .Description("Production of iron from iron ore.")
+            .AddMachineToUnlock(Ids.Machines.SmeltingFurnaceT1)
+            .AddRecipeToUnlock(ModIDs.Recipes.IronSmeltingT1Charcoal)
+            .AddRecipeToUnlock(ModIDs.Recipes.SteelFromIronT1)
+            .SetGridPosition(new Vector2i(12, 10))
+            .AddParents(registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.VehicleAndMining))
+            .BuildAndAdd();
+
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.CopperRefinement).AddParent(proto);
     }
 
     private void OverrideIronSmeltingScrap(ProtosDb protosDb)
@@ -46,12 +66,8 @@ internal class ResearchData : IResearchNodesData
         // Vehicles & mining
         var proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.VehicleAndMining);
         proto.UnitsAsEditable()
-            .AddMachineUnlock(protosDb, Ids.Machines.SmeltingFurnaceT1)
+            .RemoveRecipeUnlock(Ids.Recipes.IronSmeltingT1Coal)
             .SetToResearch(proto);
-
-        proto.IconsAsEditable()
-            .AddProtoIcon(protosDb.GetOrThrow<MachineProto>(Ids.Machines.SmeltingFurnaceT1))
-            .SetToIcons(proto);
     }
 
     private void OverrideConstruction(ProtosDb protosDb)
