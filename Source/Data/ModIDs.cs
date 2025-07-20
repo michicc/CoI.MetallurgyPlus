@@ -33,7 +33,11 @@ public static class ModIDs
         #region Iron smelting recipes
         public static readonly RecipeID IronSmeltingT1Charcoal = Ids.Recipes.CreateId("MP_IronSmeltingT1Charcoal");
         public static readonly RecipeID SteelFromScrapT1 = Ids.Recipes.CreateId("MP_SteelFromScrapT1");
+        public static readonly RecipeID SteelFromScrapT1Coal = Ids.Recipes.CreateId("MP_SteelFromScrapT1Coal");
+        public static readonly RecipeID SteelFromScrapT1FG = Ids.Recipes.CreateId("MP_SteelFromScrapT1FG");
         public static readonly RecipeID SteelFromIronT1 = Ids.Recipes.CreateId("MP_SteelFromIronT1");
+        public static readonly RecipeID SteelFromIronT1Coal = Ids.Recipes.CreateId("MP_SteelFromIronT1Coal");
+        public static readonly RecipeID SteelFromIronT1FG = Ids.Recipes.CreateId("MP_SteelFromIronT1FG");
         public static readonly RecipeID SteelCasting = Ids.Recipes.CreateId("MP_SteelCasting");
         public static readonly RecipeID SteelCastingT2 = Ids.Recipes.CreateId("MP_SteelCastingT2");
 

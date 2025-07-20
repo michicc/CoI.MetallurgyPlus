@@ -42,6 +42,26 @@ internal class OpenHearthFurnaceData : IModData
             .AddOutput(24, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
             .BuildAndAdd();
 
+        // Recipe: Molten steel from scrap (coal).
+        registrator.RecipeProtoBuilder
+            .Start("Iron scrap smelting (coal)", ModIDs.Recipes.SteelFromScrapT1Coal, proto)
+            .AddInput(24, Ids.Products.IronScrap, "B")
+            .AddInput(16, Ids.Products.Coal, "C")
+            .SetDurationSeconds(120)
+            .AddOutput(24, Ids.Products.MoltenSteel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddOutput(48, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
+            .BuildAndAdd();
+
+        // Recipe: Molten steel from scrap (FG).
+        registrator.RecipeProtoBuilder
+            .Start("Iron scrap smelting (fuel gas)", ModIDs.Recipes.SteelFromScrapT1FG, proto)
+            .AddInput(24, Ids.Products.IronScrap, "B")
+            .AddInput(36, Ids.Products.FuelGas, "D")
+            .SetDurationSeconds(120)
+            .AddOutput(24, Ids.Products.MoltenSteel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddOutput(36, Ids.Products.CarbonDioxide, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
+            .BuildAndAdd();
+
         // Recipe: Molten steel from molten iron.
         registrator.RecipeProtoBuilder
             .Start("Steel smelting", ModIDs.Recipes.SteelFromIronT1, proto)
@@ -51,6 +71,28 @@ internal class OpenHearthFurnaceData : IModData
             .AddOutput(24, Ids.Products.MoltenSteel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .AddOutput(6, Ids.Products.Slag, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .AddOutput(16, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
+            .BuildAndAdd();
+
+        // Recipe: Molten steel from molten iron (coal).
+        registrator.RecipeProtoBuilder
+            .Start("Steel smelting (coal)", ModIDs.Recipes.SteelFromIronT1Coal, proto)
+            .AddInput(30, Ids.Products.MoltenIron, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddInput(12, Ids.Products.Coal, "C")
+            .SetDurationSeconds(120)
+            .AddOutput(24, Ids.Products.MoltenSteel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddOutput(6, Ids.Products.Slag, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddOutput(36, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
+            .BuildAndAdd();
+
+        // Recipe: Molten steel from molten iron (FG).
+        registrator.RecipeProtoBuilder
+            .Start("Steel smelting (coal)", ModIDs.Recipes.SteelFromIronT1FG, proto)
+            .AddInput(30, Ids.Products.MoltenIron, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddInput(24, Ids.Products.FuelGas, "D")
+            .SetDurationSeconds(120)
+            .AddOutput(24, Ids.Products.MoltenSteel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddOutput(6, Ids.Products.Slag, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddOutput(24, Ids.Products.CarbonDioxide, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
             .BuildAndAdd();
     }
 }

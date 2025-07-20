@@ -20,6 +20,7 @@ internal class ResearchData : IResearchNodesData
         OverrideCopperRefinement(registrator.PrototypesDb);
         OverrideVehicleAndMining(registrator.PrototypesDb);
         OverrideConstruction(registrator.PrototypesDb);
+        OverrideGasCombustion(registrator.PrototypesDb);
 
         // Adjust positions of existing research items.
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Beacon).GridPosition = new Vector2i(12, 5);
@@ -34,6 +35,7 @@ internal class ResearchData : IResearchNodesData
             .AddMachineToUnlock(Ids.Machines.SmeltingFurnaceT1)
             .AddRecipeToUnlock(ModIDs.Recipes.IronSmeltingT1Charcoal)
             .AddRecipeToUnlock(ModIDs.Recipes.SteelFromIronT1)
+            .AddRecipeToUnlock(ModIDs.Recipes.SteelFromIronT1Coal)
             .SetGridPosition(new Vector2i(12, 10))
             .AddParents(registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.VehicleAndMining))
             .BuildAndAdd();
@@ -78,6 +80,7 @@ internal class ResearchData : IResearchNodesData
         var proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.VehicleAndMining);
         proto.UnitsAsEditable()
             .RemoveRecipeUnlock(Ids.Recipes.IronSmeltingT1Coal)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelFromScrapT1Coal)
             .SetToResearch(proto);
     }
 
@@ -120,6 +123,16 @@ internal class ResearchData : IResearchNodesData
         proto.UnitsAsEditable()
             .RemoveRecipeUnlock(Ids.Recipes.CpAssemblyT5)
             .RemoveRecipeUnlock(Ids.Recipes.MechPartsAssemblyT5Iron)
+            .SetToResearch(proto);
+    }
+
+    private void OverrideGasCombustion(ProtosDb protosDb)
+    {
+        // Gas combustion
+        var proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.GasCombustion);
+        proto.UnitsAsEditable()
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelFromScrapT1FG)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelFromIronT1FG)
             .SetToResearch(proto);
     }
 
