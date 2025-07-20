@@ -114,14 +114,14 @@ internal class GoalsData : IModData
     private void OverrideMineCoal(ProtosDb protosDb)
     {
         var copperRecipeStr = Loc.Str4("Goal__MP_CopperWithCoal", "Switch recipes in <bc>{0}</bc> and <bc>{1}</bc> to use <bc>{2}</bc> to save on <bc>{3}</bc>", "goal text")
-            .Format(protosDb.GetOrThrow<Proto>(Ids.Machines.BricksMaker).Strings.Name.TranslatedString, protosDb.GetOrThrow<Proto>(Ids.Machines.VacuumDistillationTower).Strings.Name.TranslatedString,
+            .Format(protosDb.GetOrThrow<Proto>(Ids.Machines.BricksMaker).Strings.Name.TranslatedString, protosDb.GetOrThrow<Proto>(Ids.Machines.BasicDieselDistiller).Strings.Name.TranslatedString,
                     protosDb.GetOrThrow<Proto>(Ids.Products.Coal).Strings.Name.TranslatedString, protosDb.GetOrThrow<Proto>(ModIDs.Products.Charcoal).Strings.Name.TranslatedString);
 
         GoalProto[] goals = [
             protosDb.GetOrThrow<GoalProto>(MakeGoalID("ConstructExcavator2")),
             protosDb.GetOrThrow<GoalProto>(MakeGoalID("ConstructTruck2")),
             protosDb.GetOrThrow<GoalProto>(MakeGoalID("MineCoal")),
-            new GoalToActivateRecipe.Proto("MP_CopperWithCoal", copperRecipeStr, Make.Kvp(Ids.Machines.BricksMaker, Ids.Recipes.SimpleConcreteMaking), Make.Kvp(Ids.Machines.VacuumDistillationTower, Ids.Recipes.DieselDistillationBasic), 2)
+            new GoalToActivateRecipe.Proto("MP_CopperWithCoal", copperRecipeStr, Make.Kvp(Ids.Machines.BricksMaker, Ids.Recipes.SimpleConcreteMaking), Make.Kvp(Ids.Machines.BasicDieselDistiller, Ids.Recipes.DieselDistillationBasic), 2)
         ];
 
         // Replace goal list.
