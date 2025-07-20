@@ -54,15 +54,6 @@ internal class RecipesData : IModData
 
     private void AddCharcoalRecipes(ProtoRegistrator registrator)
     {
-        // Wood to charcoal.
-        registrator.RecipeProtoBuilder
-            .Start("Charcoal making", ModIDs.Recipes.CharcoalFromWood, Ids.Machines.CharcoalMaker)
-            .AddInput(10, Ids.Products.Wood, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .SetDurationSeconds(30)
-            .AddOutput(6, ModIDs.Products.Charcoal, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddOutput(3, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
-            .BuildAndAdd();
-
         // Basic concrete (charcoal).
         registrator.RecipeProtoBuilder
             .Start("Simple concrete making (charcaol)", ModIDs.Recipes.SimpleConcreteCharcoal, Ids.Machines.BricksMaker)
@@ -113,7 +104,7 @@ internal class RecipesData : IModData
             .AddInput(2, ModIDs.Products.Charcoal, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .SetDurationSeconds(30)
             .AddOutput(8, Ids.Products.Rubber, "X")
-            .AddOutput(2, Ids.Products.WasteWater, "Y")
+            .AddOutput(3, Ids.Products.WasteWater, "Y")
             .BuildAndAdd();
     }
 
@@ -169,9 +160,6 @@ internal class RecipesData : IModData
 
     private void ApplyOverrides(ProtosDb protosDb)
     {
-        // Remove coal to wood recipe.
-        protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.CharcoalBurning).MarkAsObsolete();
-
         // Remove smelting recipes.
         protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.IronSmeltingT1Coal).MarkAsObsolete();
         protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.IronSmeltingT1Scrap).MarkAsObsolete();
