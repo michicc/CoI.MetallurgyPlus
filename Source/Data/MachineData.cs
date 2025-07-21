@@ -1,6 +1,8 @@
 ﻿using CoI.MetallurgyPlus.Extensions;
 using Mafi;
 using Mafi.Base;
+using Mafi.Core.Entities.Static.Layout;
+using Mafi.Core.Factory.Machines;
 using Mafi.Core.Factory.Recipes;
 using Mafi.Core.Mods;
 using Mafi.Core.Prototypes;
@@ -13,6 +15,7 @@ internal class MachineData : IModData
     public void RegisterData(ProtoRegistrator registrator)
     {
         OverrideCharcoalMaker(registrator);
+        OverrideRotaryKiln(registrator);
     }
 
     private void OverrideCharcoalMaker(ProtoRegistrator registrator)
@@ -34,5 +37,29 @@ internal class MachineData : IModData
 
         // Remove coal to wood recipe.
         registrator.PrototypesDb.GetOrThrow<RecipeProto>(Ids.Recipes.CharcoalBurning).MarkAsObsolete();
+    }
+
+    private void OverrideRotaryKiln(ProtoRegistrator registrator)
+    {
+        // Change port layout of rotary kiln to match gas rotary kiln.
+        var layoutString = new string[] {
+            "A~>[7][7][7][6][6][2][2][2][2][2][2][2][2][2]   ",
+            "   [7][7][7][6][6][2][2][2][2][2][2][2][2][2]>#X",
+            "   [2][2][2][2][2][2][2][2][2][2][2][3][2][2]>~Y",
+            "B~>[2][2][2][2][2][2][2][2][2][2][2][3][2][2]>@E"
+        };
+
+        var kilnProto = registrator.PrototypesDb.GetOrThrow<MachineProto>(Ids.Machines.RotaryKiln);
+        kilnProto.UpdateLayout(new EntityLayoutParser(registrator.PrototypesDb).ParseLayoutOrThrow(layoutString));
+
+        // Direct iron reduction.
+        registrator.RecipeProtoBuilder
+            .Start("Direct iron reduction", ModIDs.Recipes.IronReductionT1, Ids.Machines.RotaryKiln)
+            .AddInput(6, Ids.Products.IronOre, "A")
+            .AddInput(2, Ids.Products.Coal, "B")
+            .SetDurationSeconds(15)
+            .AddOutput(6, ModIDs.Products.SpongeIron, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddOutput(8, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .BuildAndAdd();
     }
 }

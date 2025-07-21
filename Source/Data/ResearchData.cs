@@ -3,7 +3,6 @@ using Mafi;
 using Mafi.Base;
 using Mafi.Core.Factory.Machines;
 using Mafi.Core.Mods;
-using Mafi.Core.PropertiesDb;
 using Mafi.Core.Prototypes;
 using Mafi.Core.Research;
 
@@ -14,6 +13,7 @@ internal class ResearchData : IResearchNodesData
     public void RegisterData(ProtoRegistrator registrator)
     {
         AddIronSmeltingOre(registrator);
+        AddIronDirectReduction(registrator);
         AddCharcoalRecipes(registrator.PrototypesDb);
 
         OverrideIronSmeltingScrap(registrator.PrototypesDb);
@@ -25,6 +25,18 @@ internal class ResearchData : IResearchNodesData
         // Adjust positions of existing research items.
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Beacon).GridPosition = new Vector2i(12, 5);
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.RepairDock).GridPosition = new Vector2i(16, 5);
+
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.FuelStation).GridPosition = new Vector2i(24, 15);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.AdvancedLogisticsControl).GridPosition = new Vector2i(28, 15);
+
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.ConveyorBelts).GridPosition = new Vector2i(24, 24);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.TransportsLifts).GridPosition = new Vector2i(28, 24);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.TransportsBalancing).GridPosition = new Vector2i(28, 20);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.ConveyorRouting).GridPosition = new Vector2i(32, 20);
+
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.UndergroundWater).GridPosition = new Vector2i(24, 28);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.SettlementWater).GridPosition = new Vector2i(28, 28);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Housing2).GridPosition = new Vector2i(32, 28);
     }
 
     private void AddIronSmeltingOre(ProtoRegistrator registrator)
@@ -41,6 +53,20 @@ internal class ResearchData : IResearchNodesData
             .BuildAndAdd();
 
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.CopperRefinement).AddParent(proto);
+    }
+
+    private void AddIronDirectReduction(ProtoRegistrator registrator)
+    {
+        var proto = registrator.ResearchNodeProtoBuilder
+            .Start("Direct iron reduction", ModIDs.Research.DirectIronReduction, 16)
+            .Description("Process to reduce iron ore to iron without melting it.")
+            .AddProductIcon(ModIDs.Products.SpongeIron)
+            .AddRecipeToUnlock(ModIDs.Recipes.IronReductionT1)
+            .AddRecipeToUnlock(ModIDs.Recipes.SteelFromSpongeT1)
+            .AddRecipeToUnlock(ModIDs.Recipes.SteelFromSpongeT1Coal)
+            .SetGridPosition(new Vector2i(28, 11))
+            .AddParents(registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.ConcreteAdvanced))
+            .BuildAndAdd();
     }
 
     private void OverrideIronSmeltingScrap(ProtosDb protosDb)
@@ -133,6 +159,7 @@ internal class ResearchData : IResearchNodesData
         proto.UnitsAsEditable()
             .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelFromScrapT1FG)
             .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelFromIronT1FG)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelFromSpongeT1FG)
             .SetToResearch(proto);
     }
 
