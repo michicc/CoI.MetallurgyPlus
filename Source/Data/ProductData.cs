@@ -9,6 +9,7 @@ using Mafi.Core.Fleet;
 using Mafi.Core.Mods;
 using Mafi.Core.Products;
 using Mafi.Core.Prototypes;
+using Mafi.Core.Terrain;
 using Mafi.Core.World.Entities;
 using System.Linq;
 
@@ -19,6 +20,10 @@ internal class ProductData : IModData
     public void RegisterData(ProtoRegistrator registrator)
     {
         SwitchIronToSteel(registrator.PrototypesDb);
+
+        // Tile surfaces.
+        var surfaceProto = registrator.PrototypesDb.GetOrThrow<TerrainTileSurfaceProto>(Ids.TerrainTileSurfaces.Metal2);
+        surfaceProto.SetField(nameof(TerrainTileSurfaceProto.CostPerTile), new ProductQuantity(registrator.PrototypesDb.GetOrThrow<ProductProto>(Ids.Products.Steel), new Quantity(1)));
     }
 
     public void SwitchIronToSteel(ProtosDb protosDb)
