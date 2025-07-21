@@ -194,5 +194,17 @@ internal class ResearchData : IResearchNodesData
         proto.UnitsAsEditable()
             .AddRecipeUnlock(protosDb, ModIDs.Recipes.RubberProductionNaphthaCharcoal)
             .SetToResearch(proto);
+
+        // Power generation II
+        proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.PowerGeneration2);
+        proto.UnitsAsEditable()
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteamGenerationCharcoal)
+            .SetToResearch(proto);
+
+        // Advanced diesel
+        proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.CrudeOilDistillation);
+        proto.UnitsAsEditable()
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteamGenerationCharcoal)
+            .SetToResearch(proto);
     }
 }

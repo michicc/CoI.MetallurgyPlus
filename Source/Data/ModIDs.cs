@@ -26,6 +26,7 @@ public static class ModIDs
     {
         #region Charcoal recipes
         public static readonly RecipeID CharcoalFromWood = Ids.Recipes.CreateId("MP_CharcoalFromWood");
+        public static readonly RecipeID SteamGenerationCharcoal = Ids.Recipes.CreateId("MP_SteamGenerationCharcoal");
         public static readonly RecipeID SimpleConcreteCharcoal = Ids.Recipes.CreateId("MP_SimpleConcreteCharcoal");
         public static readonly RecipeID DieselDistillationCharcoal = Ids.Recipes.CreateId("MP_DieselDistillationCharcoal");
         public static readonly RecipeID WaterDesalinationCharcoal = Ids.Recipes.CreateId("MP_WaterDesalinationCharcoal");

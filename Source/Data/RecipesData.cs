@@ -3,6 +3,7 @@ using Mafi;
 using Mafi.Base;
 using Mafi.Core.Factory.Recipes;
 using Mafi.Core.Mods;
+using Mafi.Core.Products;
 using Mafi.Core.Prototypes;
 
 namespace CoI.MetallurgyPlus.Data;
@@ -54,6 +55,16 @@ internal class RecipesData : IModData
 
     private void AddCharcoalRecipes(ProtoRegistrator registrator)
     {
+        // Steam generation from charcoal.
+        registrator.RecipeProtoBuilder
+            .Start("Steam generation", ModIDs.Recipes.SteamGenerationCharcoal, Ids.Machines.BoilerCoal)
+            .AddInput(8, Ids.Products.Water, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddInput(5, ModIDs.Products.Charcoal, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(10)
+            .AddOutput(8, Ids.Products.SteamHi, "X")
+            .AddOutput(5, Ids.Products.Exhaust, "Y")
+            .BuildAndAdd();
+
         // Basic concrete (charcoal).
         registrator.RecipeProtoBuilder
             .Start("Simple concrete making (charcaol)", ModIDs.Recipes.SimpleConcreteCharcoal, Ids.Machines.BricksMaker)

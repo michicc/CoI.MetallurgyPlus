@@ -66,7 +66,7 @@ internal class OpenHearthFurnaceData : IModData
         registrator.RecipeProtoBuilder
             .Start("Steel smelting", ModIDs.Recipes.SteelFromIronT1, proto)
             .AddInput(30, Ids.Products.MoltenIron, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddInput(8, ModIDs.Products.Charcoal, "D")
+            .AddInput(6, ModIDs.Products.Charcoal, "D")
             .SetDurationSeconds(120)
             .AddOutput(24, Ids.Products.MoltenSteel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .AddOutput(6, Ids.Products.Slag, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
@@ -77,7 +77,7 @@ internal class OpenHearthFurnaceData : IModData
         registrator.RecipeProtoBuilder
             .Start("Steel smelting (coal)", ModIDs.Recipes.SteelFromIronT1Coal, proto)
             .AddInput(30, Ids.Products.MoltenIron, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddInput(12, Ids.Products.Coal, "D")
+            .AddInput(8, Ids.Products.Coal, "D")
             .SetDurationSeconds(120)
             .AddOutput(24, Ids.Products.MoltenSteel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .AddOutput(6, Ids.Products.Slag, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
