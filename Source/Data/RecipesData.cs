@@ -117,6 +117,17 @@ internal class RecipesData : IModData
             .AddOutput(8, Ids.Products.Rubber, "X")
             .AddOutput(3, Ids.Products.WasteWater, "Y")
             .BuildAndAdd();
+
+        // Copper smelting (charcoal).
+        registrator.RecipeProtoBuilder
+            .Start("Copper smelting (charcoal)", ModIDs.Recipes.CopperSmeltingT1Charcoal, Ids.Machines.SmeltingFurnaceT1)
+            .AddInput(10, Ids.Products.CopperOre, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddInput(5, ModIDs.Products.Charcoal, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(20)
+            .AddOutput(8, Ids.Products.MoltenCopper, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddOutput(4, Ids.Products.Slag, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddOutput(8, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
+            .BuildAndAdd();
     }
 
     private void AddSmeltingRecipes(ProtoRegistrator registrator)
@@ -142,15 +153,50 @@ internal class RecipesData : IModData
             .AddOutput(6, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
             .BuildAndAdd();
 
-        // Copper smelting (charcoal).
+        // Steel smelting.
         registrator.RecipeProtoBuilder
-            .Start("Copper smelting (charcoal)", ModIDs.Recipes.CopperSmeltingT1Charcoal, Ids.Machines.SmeltingFurnaceT1)
-            .AddInput(10, Ids.Products.CopperOre, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddInput(5, ModIDs.Products.Charcoal, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .SetDurationSeconds(20)
-            .AddOutput(8, Ids.Products.MoltenCopper, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddOutput(4, Ids.Products.Slag, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddOutput(8, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
+            .Start("Steel smelting", ModIDs.Recipes.SteelSmelting, Ids.Machines.OxygenFurnace)
+            .AddInput(10, Ids.Products.MoltenIron, "A")
+            .AddInput(2, Ids.Products.IronScrap, "C")
+            .AddInput(12, Ids.Products.Oxygen, "B")
+            .SetDurationSeconds(40)
+            .AddOutput(10, Ids.Products.MoltenSteel, "X")
+            .AddOutput(2, Ids.Products.Slag, "Y")
+            .AddOutput(16, Ids.Products.Exhaust, "S")
+            .BuildAndAdd();
+        // Steel smelting DRI.
+        registrator.RecipeProtoBuilder
+            .Start("Steel smelting", ModIDs.Recipes.SteelSmeltingDIR, Ids.Machines.OxygenFurnace)
+            .AddInput(10, Ids.Products.MoltenIron, "A")
+            .AddInput(2, ModIDs.Products.SpongeIron, "C")
+            .AddInput(12, Ids.Products.Oxygen, "B")
+            .SetDurationSeconds(40)
+            .AddOutput(10, Ids.Products.MoltenSteel, "X")
+            .AddOutput(2, Ids.Products.Slag, "Y")
+            .AddOutput(16, Ids.Products.Exhaust, "S")
+            .BuildAndAdd();
+
+        // Steel smelting (T2).
+        registrator.RecipeProtoBuilder
+            .Start("Steel smelting", ModIDs.Recipes.SteelSmeltingT2, Ids.Machines.OxygenFurnaceT2)
+            .AddInput(20, Ids.Products.MoltenIron, "A")
+            .AddInput(4, Ids.Products.IronScrap, "C")
+            .AddInput(12, Ids.Products.Oxygen, "B")
+            .SetDurationSeconds(40)
+            .AddOutput(20, Ids.Products.MoltenSteel, "X")
+            .AddOutput(4, Ids.Products.Slag, "Y")
+            .AddOutput(24, Ids.Products.Exhaust, "S")
+            .BuildAndAdd();
+        // Steel smelting DRI (T2).
+        registrator.RecipeProtoBuilder
+            .Start("Steel smelting", ModIDs.Recipes.SteelSmeltingT2DRI, Ids.Machines.OxygenFurnaceT2)
+            .AddInput(20, Ids.Products.MoltenIron, "A")
+            .AddInput(4, ModIDs.Products.SpongeIron, "C")
+            .AddInput(12, Ids.Products.Oxygen, "B")
+            .SetDurationSeconds(40)
+            .AddOutput(20, Ids.Products.MoltenSteel, "X")
+            .AddOutput(4, Ids.Products.Slag, "Y")
+            .AddOutput(24, Ids.Products.Exhaust, "S")
             .BuildAndAdd();
 
         // Basic steel casting.
@@ -167,6 +213,24 @@ internal class RecipesData : IModData
             .SetDurationSeconds(30)
             .AddOutput(6, Ids.Products.Steel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .BuildAndAdd();
+        // Cooled steel casting.
+        registrator.PrototypesDb.RemoveRecipeFromMachine(Ids.Machines.CasterCooled, Ids.Recipes.SteelCastingCooled);
+        registrator.RecipeProtoBuilder
+            .Start("Steel casting (cooled)", ModIDs.Recipes.SteelCastingCooled, Ids.Machines.CasterCooled)
+            .AddInput(10, Ids.Products.MoltenSteel, "A")
+            .AddInput(2, Ids.Products.Water, "B")
+            .SetDurationSeconds(40)
+            .AddOutput(10, Ids.Products.Steel, "X")
+            .BuildAndAdd();
+        // Cooled steel casting (T2).
+        registrator.PrototypesDb.RemoveRecipeFromMachine(Ids.Machines.CasterCooledT2, Ids.Recipes.SteelCastingCooledT2);
+        registrator.RecipeProtoBuilder
+            .Start("Steel casting (cooled)", ModIDs.Recipes.SteelCastingCooledT2, Ids.Machines.CasterCooledT2)
+            .AddInput(10, Ids.Products.MoltenSteel, "A")
+            .AddInput(2, Ids.Products.Water, "B")
+            .SetDurationSeconds(20)
+            .AddOutput(10, Ids.Products.Steel, "X")
+            .BuildAndAdd();
     }
 
     private void ApplyOverrides(ProtosDb protosDb)
@@ -174,10 +238,14 @@ internal class RecipesData : IModData
         // Remove smelting recipes.
         protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.IronSmeltingT1Coal).MarkAsObsolete();
         protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.IronSmeltingT1Scrap).MarkAsObsolete();
+        protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.SteelSmelting).MarkAsObsolete();
+        protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.SteelSmeltingT2).MarkAsObsolete();
 
         // Remove iron casting recipes.
         protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.IronCasting).MarkAsObsolete();
         protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.IronCastingT2).MarkAsObsolete();
+        protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.SteelCastingCooled).MarkAsObsolete();
+        protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.SteelCastingCooledT2).MarkAsObsolete();
 
         // Remove iron construction part recipes.
         protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.CpAssemblyT1).MarkAsObsolete();

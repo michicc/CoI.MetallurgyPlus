@@ -45,13 +45,21 @@ public static class ModIDs
         public static readonly RecipeID SteelFromIronT1 = Ids.Recipes.CreateId("MP_SteelFromIronT1");
         public static readonly RecipeID SteelFromIronT1Coal = Ids.Recipes.CreateId("MP_SteelFromIronT1Coal");
         public static readonly RecipeID SteelFromIronT1FG = Ids.Recipes.CreateId("MP_SteelFromIronT1FG");
-        public static readonly RecipeID SteelCasting = Ids.Recipes.CreateId("MP_SteelCasting");
-        public static readonly RecipeID SteelCastingT2 = Ids.Recipes.CreateId("MP_SteelCastingT2");
 
         public static readonly RecipeID IronReductionT1 = Ids.Recipes.CreateId("MP_IronReductionT1");
         public static readonly RecipeID SteelFromSpongeT1 = Ids.Recipes.CreateId("MP_SteelFromSpongeT1");
         public static readonly RecipeID SteelFromSpongeT1Coal = Ids.Recipes.CreateId("MP_SteelFromSpongeT1Coal");
         public static readonly RecipeID SteelFromSpongeT1FG = Ids.Recipes.CreateId("MP_SteelFromSpongeT1FG");
+
+        public static readonly RecipeID SteelSmelting = Ids.Recipes.CreateId("MP_SteelSmelting");
+        public static readonly RecipeID SteelSmeltingDIR = Ids.Recipes.CreateId("MP_SteelSmeltingDRI");
+        public static readonly RecipeID SteelSmeltingT2 = Ids.Recipes.CreateId("MP_SteelSmeltingT2");
+        public static readonly RecipeID SteelSmeltingT2DRI = Ids.Recipes.CreateId("MP_SteelSmeltingT2DRI");
+
+        public static readonly RecipeID SteelCasting = Ids.Recipes.CreateId("MP_SteelCasting");
+        public static readonly RecipeID SteelCastingT2 = Ids.Recipes.CreateId("MP_SteelCastingT2");
+        public static readonly RecipeID SteelCastingCooled = Ids.Recipes.CreateId("MP_SteelCastingCooled");
+        public static readonly RecipeID SteelCastingCooledT2 = Ids.Recipes.CreateId("MP_SteelCastingCooledT2");
         #endregion
 
         #region Steel recipes
@@ -60,6 +68,8 @@ public static class ModIDs
 
         public static readonly RecipeID MechPartsAssemblyT1Steel = Ids.Recipes.CreateId("MP_MechPartsAssemblyT1Steel");
         public static readonly RecipeID MechPartsAssemblyT2Steel = Ids.Recipes.CreateId("MP_MechPartsAssemblyT2Steel");
+
+        public static readonly RecipeID ShreddingSteel = Ids.Recipes.CreateId("MP_ShreddingSteel");
         #endregion
     }
 

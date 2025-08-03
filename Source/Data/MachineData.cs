@@ -1,12 +1,15 @@
 ﻿using CoI.MetallurgyPlus.Extensions;
 using Mafi;
 using Mafi.Base;
+using Mafi.Collections;
 using Mafi.Core.Entities.Static.Layout;
 using Mafi.Core.Factory.Machines;
 using Mafi.Core.Factory.Recipes;
 using Mafi.Core.Mods;
 using Mafi.Core.Prototypes;
 using Mafi.Localization;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace CoI.MetallurgyPlus.Data;
 
@@ -16,6 +19,8 @@ internal class MachineData : IModData
     {
         OverrideCharcoalMaker(registrator);
         OverrideRotaryKiln(registrator);
+        OverrideOxygenFurnace(registrator);
+        OverrideShredder(registrator);
     }
 
     private void OverrideCharcoalMaker(ProtoRegistrator registrator)
@@ -60,6 +65,55 @@ internal class MachineData : IModData
             .SetDurationSeconds(15)
             .AddOutput(6, ModIDs.Products.SpongeIron, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .AddOutput(8, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .BuildAndAdd();
+    }
+
+    private void OverrideOxygenFurnace(ProtoRegistrator registrator)
+    {
+        // Add more ports to the oxygen furnaces.
+        var layoutString = new string[] {
+            "                     ^@S   ",
+            "   [6][6][6][6][6][6][1]   ",
+            "   [6][6][6][6][6][6][2]>~Y",
+            "A'>[6][6][6][6][6][6][2]>'X",
+            "C~>[6][6][6][6][6][6][2]   ",
+            "   [6][6][6][6][6][6][2]   ",
+            "                     B@^   "
+        };
+        var parsed = new EntityLayoutParser(registrator.PrototypesDb).ParseLayoutOrThrow(layoutString);
+
+        var oxyT1 = registrator.PrototypesDb.GetOrThrow<MachineProto>(Ids.Machines.OxygenFurnace);
+        oxyT1.UpdateLayout(parsed);
+        oxyT1.Graphics.ReplacePrefabWith("Assets/CoI.Metallurgy+/OxygenFurnace.prefab");
+        oxyT1.Graphics.SetField("m_instancedRenderingAnimationMaterialSwap", new Dict<string, string>());
+        oxyT1.Graphics.SetField("m_instancedRenderingAnimationProtoSwap", null);
+        oxyT1.Graphics.SetField("UseSemiInstancedRendering", false);
+
+        var oxyT2 = registrator.PrototypesDb.GetOrThrow<MachineProto>(Ids.Machines.OxygenFurnaceT2);
+        oxyT2.UpdateLayout(parsed);
+        oxyT2.Graphics.ReplacePrefabWith("Assets/CoI.Metallurgy+/OxygenFurnaceT2.prefab");
+        oxyT2.Graphics.SetField("m_instancedRenderingAnimationMaterialSwap", new Dict<string, string>());
+        oxyT2.Graphics.SetField("m_instancedRenderingAnimationProtoSwap", null);
+        oxyT2.Graphics.SetField("UseSemiInstancedRendering", false);
+    }
+
+    private void OverrideShredder(ProtoRegistrator registrator)
+    {
+        // Add 'iron smelting' category to shredder.
+        var proto = registrator.PrototypesDb.GetOrThrow<MachineProto>(Ids.Machines.Shredder);
+        var categories = proto.Graphics.Categories.ToLyst();
+        categories.Add(new ToolbarEntryData(registrator.PrototypesDb.GetOrThrow<ToolbarCategoryProto>(Ids.ToolbarCategories.Smelting_Iron), true));
+        proto.Graphics.SetProperty(nameof(MachineProto.Gfx.Categories), categories.ToImmutableArray());
+
+        EntityCostsTpl newCosts = Costs.Build.CP2(50).Workers(1).MaintenanceT1(1);
+        proto.SetProperty(nameof(MachineProto.Costs), newCosts.MapToEntityCosts(registrator));
+
+        // Steel shredding.
+        registrator.RecipeProtoBuilder
+            .Start("Shredding steel", ModIDs.Recipes.ShreddingSteel, Ids.Machines.Shredder)
+            .AddInput(2, Ids.Products.Steel)
+            .SetDurationSeconds(10)
+            .AddOutput(2, Ids.Products.IronScrap, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .BuildAndAdd();
     }
 }

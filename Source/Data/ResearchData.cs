@@ -90,6 +90,7 @@ internal class ResearchData : IResearchNodesData
     {
         // Iron smelting (from scrap)
         var proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.IronSmeltingScrap);
+        proto.SetName(Ids.Research.IronSmeltingScrap + "_MP__name", "Steel smelting (from scrap)", "title of a research node in the research tree");
         proto.UnitsAsEditable()
             .AddRecipeUnlock(protosDb, ModIDs.Recipes.CharcoalFromWood)
             .RemoveRecipeUnlock(Ids.Recipes.CharcoalBurning)
@@ -104,7 +105,38 @@ internal class ResearchData : IResearchNodesData
         proto.IconsAsEditable()
             .RemoveIcon(Ids.Machines.SmeltingFurnaceT1)
             .AddProtoIcon(protosDb.GetOrThrow<MachineProto>(ModIDs.Machines.OpenHearthFurnace), position: 0)
+            .AddProductIcon(protosDb.GetOrThrow<ProductProto>(Ids.Products.Steel), position: 3)
             .SetToIcons(proto);
+
+        // Steel smelting
+        proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.SteelSmelting);
+        proto.SetName(Ids.Research.SteelSmelting + "_MP__name", "Oxygen furnace", "title of a research node in the research tree");
+        proto.UnitsAsEditable()
+            .RemoveRecipeUnlock(Ids.Recipes.SteelSmelting)
+            .RemoveRecipeUnlock(Ids.Recipes.SteelCastingCooled)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelSmelting)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelSmeltingDIR)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelCastingCooled)
+            .AddMachineUnlock(protosDb, Ids.Machines.Shredder, unlockAllRecipes: false)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.ShreddingSteel)
+            .SetToResearch(proto);
+
+        proto.IconsAsEditable()
+            .RemoveIcon(Ids.Products.Steel)
+            .AddProtoIcon(protosDb.GetOrThrow<MachineProto>(Ids.Machines.Shredder), position: 3)
+            .SetToIcons(proto);
+
+        // Advanced smelting
+        proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.AdvancedSmelting);
+        proto.UnitsAsEditable()
+            .RemoveRecipeUnlock(Ids.Recipes.SteelSmeltingT2)
+            .RemoveRecipeUnlock(Ids.Recipes.SteelCastingCooledT2)
+            .RemoveRecipeUnlock(Ids.Recipes.IronCastingT2)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelSmeltingT2)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelSmeltingT2DRI)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelCastingCooledT2)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelCastingT2)
+            .SetToResearch(proto);
     }
 
     private void OverrideCopperRefinement(ProtosDb protosDb)

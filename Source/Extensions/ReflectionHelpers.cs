@@ -12,12 +12,22 @@ internal static class ReflectionHelpers
     /// <param name="obj">Instance to set the field on</param>
     /// <param name="fieldName">Name of the field</param>
     /// <param name="value">Value to set the field to</param>
-    public static void SetField<T>(this T obj, string fieldName, object value) where T : class
+    public static void SetField<T>(this T obj, string fieldName, object? value) where T : class
     {
         if (obj is null) throw new ArgumentNullException(nameof(obj));
 
-        var field = obj.GetType().GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-        field.SetValue(obj, value);
+        var type = obj.GetType();
+        while (type is not null) {
+            var field = type.GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+            if (field is not null) {
+                field.SetValue(obj, value);
+                return;
+            }
+
+            type = type.BaseType;
+        }
+
+        throw new InvalidOperationException($"Field '{fieldName}' not found on the provided object of type '{obj.GetType().FullName}'.");
     }
 
     /// <summary>
