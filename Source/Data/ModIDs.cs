@@ -67,5 +67,6 @@ public static class ModIDs
     {
         public static readonly ResearchID IronSmeltingOre = Ids.Research.CreateId("MP_IronSmeltingOre");
         public static readonly ResearchID DirectIronReduction = Ids.Research.CreateId("MP_DirectIronReduction");
+        public static readonly ResearchID GasPoweredFurnace = Ids.Research.CreateId("MP_GasPoweredFurnace");
     }
 }

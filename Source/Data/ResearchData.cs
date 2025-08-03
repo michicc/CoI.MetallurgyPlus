@@ -3,6 +3,7 @@ using Mafi;
 using Mafi.Base;
 using Mafi.Core.Factory.Machines;
 using Mafi.Core.Mods;
+using Mafi.Core.Products;
 using Mafi.Core.Prototypes;
 using Mafi.Core.Research;
 
@@ -14,13 +15,13 @@ internal class ResearchData : IResearchNodesData
     {
         AddIronSmeltingOre(registrator);
         AddIronDirectReduction(registrator);
+        AddGasPoweredFurnace(registrator);
         AddCharcoalRecipes(registrator.PrototypesDb);
 
-        OverrideIronSmeltingScrap(registrator.PrototypesDb);
+        OverrideIronSmelting(registrator.PrototypesDb);
         OverrideCopperRefinement(registrator.PrototypesDb);
         OverrideVehicleAndMining(registrator.PrototypesDb);
         OverrideConstruction(registrator.PrototypesDb);
-        OverrideGasCombustion(registrator.PrototypesDb);
 
         // Adjust positions of existing research items.
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Beacon).GridPosition = new Vector2i(12, 5);
@@ -69,7 +70,23 @@ internal class ResearchData : IResearchNodesData
             .BuildAndAdd();
     }
 
-    private void OverrideIronSmeltingScrap(ProtosDb protosDb)
+    private void AddGasPoweredFurnace(ProtoRegistrator registrator)
+    {
+        var ohFurnace = registrator.PrototypesDb.GetOrThrow<MachineProto>(ModIDs.Machines.OpenHearthFurnace);
+
+        var proto = registrator.ResearchNodeProtoBuilder
+            .Start("Gas-heated furnace", ModIDs.Research.GasPoweredFurnace, 216)
+            .Description("Gas can be used to heat our furnaces, too.")
+            .AddRecipeToUnlock(ModIDs.Recipes.SteelFromScrapT1FG)
+            .AddRecipeToUnlock(ModIDs.Recipes.SteelFromIronT1FG)
+            .AddRecipeToUnlock(ModIDs.Recipes.SteelFromSpongeT1FG)
+            .AddIcon(ohFurnace, ohFurnace.IconPath)
+            .AddParents(registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.GasCombustion))
+            .SetGridPosition(new Vector2i(48, 33))
+            .BuildAndAdd();
+    }
+
+    private void OverrideIronSmelting(ProtosDb protosDb)
     {
         // Iron smelting (from scrap)
         var proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.IronSmeltingScrap);
@@ -149,17 +166,6 @@ internal class ResearchData : IResearchNodesData
         proto.UnitsAsEditable()
             .RemoveRecipeUnlock(Ids.Recipes.CpAssemblyT5)
             .RemoveRecipeUnlock(Ids.Recipes.MechPartsAssemblyT5Iron)
-            .SetToResearch(proto);
-    }
-
-    private void OverrideGasCombustion(ProtosDb protosDb)
-    {
-        // Gas combustion
-        var proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.GasCombustion);
-        proto.UnitsAsEditable()
-            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelFromScrapT1FG)
-            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelFromIronT1FG)
-            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelFromSpongeT1FG)
             .SetToResearch(proto);
     }
 

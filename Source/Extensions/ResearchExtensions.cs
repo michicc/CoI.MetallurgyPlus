@@ -1,9 +1,12 @@
 ﻿using Mafi;
 using Mafi.Collections;
 using Mafi.Collections.ImmutableCollections;
+using Mafi.Core.Entities;
 using Mafi.Core.Entities.Static.Layout;
 using Mafi.Core.Factory.Machines;
 using Mafi.Core.Factory.Recipes;
+using Mafi.Core.PathFinding.Goals;
+using Mafi.Core.Products;
 using Mafi.Core.Prototypes;
 using Mafi.Core.Research;
 using Mafi.Core.UnlockingTree;
@@ -74,12 +77,15 @@ internal static class ResearchExtensions
         return icons;
     }
 
-    public static Lyst<KeyValuePair<Option<Proto>, string>> AddProtoIcon(this Lyst<KeyValuePair<Option<Proto>, string>> icons, LayoutEntityProto entity, int position = -1)
+    public static Lyst<KeyValuePair<Option<Proto>, string>> AddProtoIcon(this Lyst<KeyValuePair<Option<Proto>, string>> icons, LayoutEntityProto entity, int position = -1) => AddIcon(icons, entity, entity.IconPath, position);
+    public static Lyst<KeyValuePair<Option<Proto>, string>> AddProductIcon(this Lyst<KeyValuePair<Option<Proto>, string>> icons, ProductProto entity, int position = -1) => AddIcon(icons, entity, entity.IconPath, position);
+
+    private static Lyst<KeyValuePair<Option<Proto>, string>> AddIcon(Lyst<KeyValuePair<Option<Proto>, string>> icons, Proto proto, string iconPath, int position = -1)
     {
         // Don't add duplicate icons.
-        if (icons.Contains(x => x.Value == entity.IconPath)) return icons;
+        if (icons.Contains(x => x.Value == iconPath)) return icons;
 
-        var icon = new KeyValuePair<Option<Proto>, string>(entity.SomeOption().As<Proto>(), entity.IconPath);
+        var icon = new KeyValuePair<Option<Proto>, string>(proto.SomeOption(), iconPath);
         if (position >= 0) {
             icons.Insert(position, icon);
         } else {
