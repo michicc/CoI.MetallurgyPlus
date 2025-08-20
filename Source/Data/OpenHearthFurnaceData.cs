@@ -29,7 +29,7 @@ internal class OpenHearthFurnaceData : IModData
             .SetPrefabPath("Assets/CoI.Metallurgy+/OpenHearthFurnace.prefab")
             .SetEmissionWhenWorking(3)
             .SetMachineSound("Assets/Base/Machines/MetalWorks/BlastFurnaceT1/BlastFurnace_Sound.prefab")
-            .SetCustomIconPath("Assets/CoI.Metallurgy+/OpenHearthFurnace/OpenHearthFurnace.png")
+            .SetCustomIconPath("Assets/CoI.Metallurgy+/Icons/OpenHearthFurnace.png")
             .BuildAndAdd();
 
         // Recipe: Molten steel from scrap.

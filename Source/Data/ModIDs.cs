@@ -10,10 +10,10 @@ public static class ModIDs
 {
     public static class Products
     {
-        [LooseProduct(material: "Assets/CoI.Metallurgy+/Materials/Charcoal.mat", icon: "Assets/CoI.Metallurgy+/ProductIcons/Charcoal.png", useRoughPileMeshes: true, resourceColor: 4210752, pinToHomeScreen: true, doNotTrackSourceProducts: true)]
+        [LooseProduct(material: "Assets/CoI.Metallurgy+/Materials/Charcoal.mat", icon: "Assets/CoI.Metallurgy+/Icons/Charcoal.png", useRoughPileMeshes: true, resourceColor: 4210752, pinToHomeScreen: true, doNotTrackSourceProducts: true)]
         public static readonly ProductID Charcoal = Ids.Products.CreateId("MP_Charcoal");
 
-        [LooseProduct(material: "Assets/CoI.Metallurgy+/Materials/SpongeIron.mat", icon: "Assets/CoI.Metallurgy+/ProductIcons/SpongeIron.png", useRoughPileMeshes: false)]
+        [LooseProduct(material: "Assets/CoI.Metallurgy+/Materials/SpongeIron.mat", icon: "Assets/CoI.Metallurgy+/Icons/SpongeIron.png", useRoughPileMeshes: false)]
         public static readonly ProductID SpongeIron = Ids.Products.CreateId("MP_SpongeIron");
     }
 
