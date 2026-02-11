@@ -1,0 +1,51 @@
+﻿using Mafi;
+using Mafi.Base;
+using Mafi.Collections;
+using Mafi.Collections.ImmutableCollections;
+using Mafi.Core.Entities.Animations;
+using Mafi.Core.Entities.Static.Layout;
+using Mafi.Core.Factory.Recipes;
+using Mafi.Core.Mods;
+using System.Collections.Generic;
+
+namespace CoI.MetallurgyPlus.Data;
+
+internal class CokingOven : IModData
+{
+    public void RegisterData(ProtoRegistrator registrator)
+    {
+        var layoutString = new string[] {
+            "   [4][6][6][6][4]>@Y",
+            "A~>[4][6][6][6][4]   ",
+            "   [4][6][6][6][4]>@X",
+            "      [3][2][3]      ",
+            "B@>[2][3][2][3][1]>@Z",
+            "      [3][2][3][1]   ",
+            "      [3][2][3][1]>~W",
+            "      [3][2][3][1]   ",
+        };
+        var portHeights = new Lyst<KeyValuePair<char, int>> { Make.Kvp('B', 2) };
+
+        // Machine: Coking oven.
+        var proto = registrator.MachineProtoBuilder
+            .Start("Coking oven", ModIDs.Machines.CokingOven)
+            .Description("Creates metallurgical coke from coal.")
+            .SetCategories([Ids.ToolbarCategories.Smelting_Iron])
+            .SetCost(Costs.Build.CP3(50).Workers(4).MaintenanceT1(4))
+            .SetElectricityConsumption(50.Kw())
+            .SetLayout(new EntityLayoutParams(customPortHeights: portHeights), layoutString)
+            .SetPrefabPath("TODO")
+            .BuildAndAdd();
+
+        registrator.RecipeProtoBuilder
+            .Start("Coke making", ModIDs.Recipes.CokeFromCoal, ModIDs.Machines.CokingOven)
+            .AddInput(10, Ids.Products.Coal, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddInput(4, Ids.Products.Water, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(40)
+            .AddOutput(8, ModIDs.Products.Coke, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddOutput(8, ModIDs.Products.CoalTar, "X")
+            .AddOutput(20, Ids.Products.Exhaust, "Y")
+            .AddOutput(4, Ids.Products.WasteWater, "Z")
+            .BuildAndAdd();
+    }
+}

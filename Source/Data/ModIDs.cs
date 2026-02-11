@@ -13,13 +13,20 @@ public static class ModIDs
         [LooseProduct(material: "Assets/CoI.Metallurgy+/Materials/Charcoal.mat", icon: "Assets/CoI.Metallurgy+/Icons/Charcoal.png", useRoughPileMeshes: true, resourceColor: 4210752, pinToHomeScreen: true, doNotTrackSourceProducts: true)]
         public static readonly ProductID Charcoal = Ids.Products.CreateId("MP_Charcoal");
 
+        [LooseProduct(material: "Assets/CoI.Metallurgy+/Materials/Coke.mat", icon: "Assets/CoI.Metallurgy+/Icons/Coke.png", useRoughPileMeshes: false, doNotTrackSourceProducts: true)]
+        public static readonly ProductID Coke = Ids.Products.CreateId("MP_Coke");
+
         [LooseProduct(material: "Assets/CoI.Metallurgy+/Materials/SpongeIron.mat", icon: "Assets/CoI.Metallurgy+/Icons/SpongeIron.png", useRoughPileMeshes: false)]
         public static readonly ProductID SpongeIron = Ids.Products.CreateId("MP_SpongeIron");
+
+        [FluidProduct(color: 0x161616, icon: "Assets/CoI.Metallurgy+/Icons/CoalTar.png", pipeColor: 0x151515, accentColor: 13017404, canBeDiscarded: true)]
+        public static readonly ProductID CoalTar = Ids.Products.CreateId("MP_CoalTar");
     }
 
     public static class Machines
     {
         public static readonly MachineID OpenHearthFurnace = Ids.Machines.CreateId("MP_OpenHearthFurnace");
+        public static readonly MachineID CokingOven = Ids.Machines.CreateId("MP_CokingOven");
     }
 
     public static class Recipes
@@ -37,8 +44,16 @@ public static class ModIDs
         public static readonly RecipeID CopperSmeltingT1Charcoal = Ids.Recipes.CreateId("MP_CopperSmeltingT1Charcoal");
         #endregion
 
+        #region Coke recipes
+        public static readonly RecipeID CokeFromCoal = Ids.Recipes.CreateId("MP_CokeFromCoal");
+
+        public static readonly RecipeID SteamGenerationCoke = Ids.Recipes.CreateId("MP_SteamGenerationCoke");
+        public static readonly RecipeID FlareCoalTar = Ids.Recipes.CreateId("MP_FlareCoalTar");
+        #endregion
+
         #region Iron smelting recipes
         public static readonly RecipeID IronSmeltingT1Charcoal = Ids.Recipes.CreateId("MP_IronSmeltingT1Charcoal");
+        public static readonly RecipeID IronSmeltingT1Coke = Ids.Recipes.CreateId("MP_IronSmeltingT1Coke");
         public static readonly RecipeID SteelFromScrapT1 = Ids.Recipes.CreateId("MP_SteelFromScrapT1");
         public static readonly RecipeID SteelFromScrapT1Coal = Ids.Recipes.CreateId("MP_SteelFromScrapT1Coal");
         public static readonly RecipeID SteelFromScrapT1FG = Ids.Recipes.CreateId("MP_SteelFromScrapT1FG");
@@ -78,5 +93,7 @@ public static class ModIDs
         public static readonly ResearchID IronSmeltingOre = Ids.Research.CreateId("MP_IronSmeltingOre");
         public static readonly ResearchID DirectIronReduction = Ids.Research.CreateId("MP_DirectIronReduction");
         public static readonly ResearchID GasPoweredFurnace = Ids.Research.CreateId("MP_GasPoweredFurnace");
+        public static readonly ResearchID CokeMaking = Ids.Research.CreateId("MP_CokeMaking");
+        public static readonly ResearchID SteamGenerationCoke = Ids.Research.CreateId("MP_SteamGenerationCoke");
     }
 }

@@ -1,11 +1,8 @@
 ﻿using Mafi;
 using Mafi.Collections;
-using Mafi.Collections.ImmutableCollections;
-using Mafi.Core.Entities;
 using Mafi.Core.Entities.Static.Layout;
 using Mafi.Core.Factory.Machines;
 using Mafi.Core.Factory.Recipes;
-using Mafi.Core.PathFinding.Goals;
 using Mafi.Core.Products;
 using Mafi.Core.Prototypes;
 using Mafi.Core.Research;
@@ -19,30 +16,33 @@ namespace CoI.MetallurgyPlus.Extensions;
 internal static class ResearchExtensions
 {
     #region Unlock units
-    public static Set<IUnlockNodeUnit> UnitsAsEditable(this ResearchNodeProto proto) => new(proto.Units);
+    public static Lyst<IUnlockNodeUnit> UnitsAsEditable(this ResearchNodeProto proto) => [.. proto.Units.AsEnumerable()];
 
-    public static void SetToResearch(this Set<IUnlockNodeUnit> units, ResearchNodeProto proto) => proto.SetField("Units", units.ToImmutableArray());
+    public static void SetToResearch(this Lyst<IUnlockNodeUnit> units, ResearchNodeProto proto) => proto.SetField("Units", units.ToImmutableArray());
 
-    public static Set<IUnlockNodeUnit> AddRecipeUnlock(this Set<IUnlockNodeUnit> units, ProtosDb protosDb, RecipeProto.ID protoId, bool hideInUi = false, bool ensureMachineIsUnlocked = false)
+    public static Lyst<IUnlockNodeUnit> AddRecipeUnlock(this Lyst<IUnlockNodeUnit> units, ProtosDb protosDb, RecipeProto.ID protoId, bool hideInUi = false, bool ensureMachineIsUnlocked = false, int position =  -1)
     {
         var proto = protosDb.GetOrThrow<RecipeProto>(protoId);
         var machine = protosDb.All<MachineProto>().FirstOrDefault(x => x.Recipes.Contains(proto)) ?? throw new InvalidOperationException(string.Format("No machine that can execute {0} the given recipe was found", proto.Id));
 
-        units.Add(new RecipeUnlock(proto, machine, hideInUi, ensureMachineIsUnlocked));
+        var unlock = new RecipeUnlock(proto, machine, hideInUi, ensureMachineIsUnlocked);
+        if (position >= 0) {
+            units.Insert(position, unlock);
+        } else {
+            units.Add(unlock);
+        }
 
         return units;
     }
 
-    public static Set<IUnlockNodeUnit> RemoveRecipeUnlock(this Set<IUnlockNodeUnit> units, RecipeProto.ID protoId)
+    public static Lyst<IUnlockNodeUnit> RemoveRecipeUnlock(this Lyst<IUnlockNodeUnit> units, RecipeProto.ID protoId)
     {
-        var recipeUnlocks = units.OfType<RecipeUnlock>().Where(x => x.Proto.Id == protoId).ToLyst();
-
-        units.RemoveRange(recipeUnlocks);
+        units.RemoveAll(x => x is RecipeUnlock u && u.Proto.Id == protoId);
 
         return units;
     }
 
-    public static Set<IUnlockNodeUnit> AddMachineUnlock(this Set<IUnlockNodeUnit> units, ProtosDb protosDb, MachineProto.ID protoId, bool unlockAllRecipes = false, bool hideAllRecipeInUi = false)
+    public static Lyst<IUnlockNodeUnit> AddMachineUnlock(this Lyst<IUnlockNodeUnit> units, ProtosDb protosDb, MachineProto.ID protoId, bool unlockAllRecipes = false, bool hideAllRecipeInUi = false)
     {
         var proto = protosDb.GetOrThrow<MachineProto>(protoId);
         if (unlockAllRecipes) {
@@ -56,11 +56,9 @@ internal static class ResearchExtensions
         return units;
     }
 
-    public static Set<IUnlockNodeUnit> RemoveMachineUnlock(this Set<IUnlockNodeUnit> units, MachineProto.ID protoId)
+    public static Lyst<IUnlockNodeUnit> RemoveMachineUnlock(this Lyst<IUnlockNodeUnit> units, MachineProto.ID protoId)
     {
-        var machineUnlocks = units.OfType<ProtoWithIconUnlock>().Where(x => x.Proto.Id == protoId).ToLyst();
-
-        units.RemoveRange(machineUnlocks);
+        units.RemoveAll(x => x is ProtoWithIconUnlock u && u.Proto.Id == protoId);
 
         return units;
     }

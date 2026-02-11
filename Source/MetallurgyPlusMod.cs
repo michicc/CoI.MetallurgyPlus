@@ -30,6 +30,7 @@ public sealed class MetallurgyPlusMod : IMod
         registrator.RegisterAllProducts();
         registrator.RegisterData<ProductData>();
         registrator.RegisterData<OpenHearthFurnaceData>();
+        registrator.RegisterData<CokingOven>();
         registrator.RegisterData<MachineData>();
         registrator.RegisterData<RecipesData>();
         registrator.RegisterDataWithInterface<IResearchNodesData>();
@@ -38,6 +39,7 @@ public sealed class MetallurgyPlusMod : IMod
     }
 
     public void RegisterDependencies(DependencyResolverBuilder depBuilder, ProtosDb protosDb, bool gameWasLoaded) { }
+
     public void EarlyInit(DependencyResolver resolver) { }
 
     public void Initialize(DependencyResolver resolver, bool gameWasLoaded)

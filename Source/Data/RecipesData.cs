@@ -14,40 +14,8 @@ internal class RecipesData : IModData
     {
         AddCharcoalRecipes(registrator);
         AddSmeltingRecipes(registrator);
-
-        // CP assembly steel.
-        registrator.RecipeProtoBuilder
-            .Start("CP assembly steel (T1)", ModIDs.Recipes.CpAssemblySteelT1, Ids.Machines.AssemblyManual)
-            .AddInput(2, Ids.Products.Steel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddInput(2, Ids.Products.Wood, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddInput(3, Ids.Products.ConcreteSlab, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .SetDurationSeconds(40)
-            .AddOutput(4, Ids.Products.ConstructionParts, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .BuildAndAdd();
-
-        registrator.RecipeProtoBuilder
-            .Start("CP assembly steel (T2)", ModIDs.Recipes.CpAssemblySteelT2, Ids.Machines.AssemblyElectrified)
-            .AddInput(2, Ids.Products.Steel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddInput(2, Ids.Products.Wood, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddInput(3, Ids.Products.ConcreteSlab, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .SetDurationSeconds(20)
-            .AddOutput(4, Ids.Products.ConstructionParts, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .BuildAndAdd();
-
-        // Mech. parts assembly steel.
-        registrator.RecipeProtoBuilder
-            .Start("Mech. parts assembly (T1-2)", ModIDs.Recipes.MechPartsAssemblyT1Steel, Ids.Machines.AssemblyManual)
-            .AddInput(2, Ids.Products.Steel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .SetDurationSeconds(40)
-            .AddOutput(4, Ids.Products.MechanicalParts, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .BuildAndAdd();
-
-        registrator.RecipeProtoBuilder
-            .Start("Mech. parts assembly (T2-2)", ModIDs.Recipes.MechPartsAssemblyT2Steel, Ids.Machines.AssemblyElectrified)
-            .AddInput(4, Ids.Products.Steel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .SetDurationSeconds(40)
-            .AddOutput(8, Ids.Products.MechanicalParts, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .BuildAndAdd();
+        AddSecondaryRecipes(registrator);
+        AddAssemblyRecipes(registrator);
 
         // Apply overrides for existing recipes.
         ApplyOverrides(registrator.PrototypesDb);
@@ -143,6 +111,17 @@ internal class RecipesData : IModData
             .AddOutput(5, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
             .BuildAndAdd();
 
+        // Iron ore smelting (coke).
+        registrator.RecipeProtoBuilder
+            .Start("Iron smelting (coke)", ModIDs.Recipes.IronSmeltingT1Coke, Ids.Machines.SmeltingFurnaceT1)
+            .AddInput(10, Ids.Products.IronOre, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddInput(3, ModIDs.Products.Coke, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(20)
+            .AddOutput(5, Ids.Products.MoltenIron, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddOutput(5, Ids.Products.Slag, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddOutput(4, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
+            .BuildAndAdd();
+
         // Copper scrap smelting (charcoal).
         registrator.RecipeProtoBuilder
             .Start("Copper scrap smelting (charcoal)", ModIDs.Recipes.CopperSmeltingT1ScrapCharcoal, Ids.Machines.SmeltingFurnaceT1)
@@ -230,6 +209,66 @@ internal class RecipesData : IModData
             .AddInput(2, Ids.Products.Water, "B")
             .SetDurationSeconds(20)
             .AddOutput(10, Ids.Products.Steel, "X")
+            .BuildAndAdd();
+    }
+
+    private void AddSecondaryRecipes(ProtoRegistrator registrator)
+    {
+        // Flaring of coal tar.
+        registrator.RecipeProtoBuilder
+            .Start("Coal tar disposal", ModIDs.Recipes.FlareCoalTar, Ids.Machines.Flare)
+            .SetProductsDestroyReason(DestroyReason.DumpedOnTerrain)
+            .AddInput(8, ModIDs.Products.CoalTar, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddOutput(RecipeProtoBuilder.VIRTUAL_PORT, Ids.Products.PollutedAir, 6.Quantity())
+            .EnablePartialExecution(1.Percent())
+            .SetDurationSeconds(20)
+            .BuildAndAdd();
+
+        // Steam generation from coke.
+        registrator.RecipeProtoBuilder
+            .Start("Steam generation", ModIDs.Recipes.SteamGenerationCoke, Ids.Machines.BoilerCoal)
+            .AddInput(8, Ids.Products.Water, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddInput(4, ModIDs.Products.Coke, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(10)
+            .AddOutput(8, Ids.Products.SteamHi, "X")
+            .AddOutput(5, Ids.Products.CarbonDioxide, "Y")
+            .BuildAndAdd();
+    }
+
+    private void AddAssemblyRecipes(ProtoRegistrator registrator)
+    {
+        // CP assembly steel.
+        registrator.RecipeProtoBuilder
+            .Start("CP assembly steel (T1)", ModIDs.Recipes.CpAssemblySteelT1, Ids.Machines.AssemblyManual)
+            .AddInput(2, Ids.Products.Steel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddInput(2, Ids.Products.Wood, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddInput(3, Ids.Products.ConcreteSlab, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(40)
+            .AddOutput(4, Ids.Products.ConstructionParts, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .BuildAndAdd();
+
+        registrator.RecipeProtoBuilder
+            .Start("CP assembly steel (T2)", ModIDs.Recipes.CpAssemblySteelT2, Ids.Machines.AssemblyElectrified)
+            .AddInput(2, Ids.Products.Steel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddInput(2, Ids.Products.Wood, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddInput(3, Ids.Products.ConcreteSlab, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(20)
+            .AddOutput(4, Ids.Products.ConstructionParts, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .BuildAndAdd();
+
+        // Mech. parts assembly steel.
+        registrator.RecipeProtoBuilder
+            .Start("Mech. parts assembly (T1-2)", ModIDs.Recipes.MechPartsAssemblyT1Steel, Ids.Machines.AssemblyManual)
+            .AddInput(2, Ids.Products.Steel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(40)
+            .AddOutput(4, Ids.Products.MechanicalParts, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .BuildAndAdd();
+
+        registrator.RecipeProtoBuilder
+            .Start("Mech. parts assembly (T2-2)", ModIDs.Recipes.MechPartsAssemblyT2Steel, Ids.Machines.AssemblyElectrified)
+            .AddInput(4, Ids.Products.Steel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(40)
+            .AddOutput(8, Ids.Products.MechanicalParts, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .BuildAndAdd();
     }
 

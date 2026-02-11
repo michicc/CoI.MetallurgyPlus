@@ -16,6 +16,7 @@ internal class ResearchData : IResearchNodesData
         AddIronSmeltingOre(registrator);
         AddIronDirectReduction(registrator);
         AddGasPoweredFurnace(registrator);
+        AddCokingOven(registrator);
         AddCharcoalRecipes(registrator.PrototypesDb);
 
         OverrideIronSmelting(registrator.PrototypesDb);
@@ -38,6 +39,13 @@ internal class ResearchData : IResearchNodesData
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.UndergroundWater).GridPosition = new Vector2i(24, 28);
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.SettlementWater).GridPosition = new Vector2i(28, 28);
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Housing2).GridPosition = new Vector2i(32, 28);
+
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.CargoDepot2).GridPosition = new Vector2i(56, -1);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.ConveyorBeltsT2).GridPosition = new Vector2i(56, 3);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Trains).GridPosition = new Vector2i(56, 14);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.TrainDepotAddon).GridPosition = new Vector2i(60, 14);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.VehicleCapIncrease3).GridPosition = new Vector2i(60, 41);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.CopperRefinement2).GridPosition = new Vector2i(68, 21);
     }
 
     private void AddIronSmeltingOre(ProtoRegistrator registrator)
@@ -75,7 +83,7 @@ internal class ResearchData : IResearchNodesData
         var ohFurnace = registrator.PrototypesDb.GetOrThrow<MachineProto>(ModIDs.Machines.OpenHearthFurnace);
 
         var proto = registrator.ResearchNodeProtoBuilder
-            .Start("Gas-heated furnace", ModIDs.Research.GasPoweredFurnace, 216)
+            .Start("Gas-heated furnace", ModIDs.Research.GasPoweredFurnace, 36)
             .Description("Gas can be used to heat our furnaces, too.")
             .AddRecipeToUnlock(ModIDs.Recipes.SteelFromScrapT1FG)
             .AddRecipeToUnlock(ModIDs.Recipes.SteelFromIronT1FG)
@@ -83,6 +91,32 @@ internal class ResearchData : IResearchNodesData
             .AddIcon(ohFurnace, ohFurnace.IconPath)
             .AddParents(registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.GasCombustion))
             .SetGridPosition(new Vector2i(48, 33))
+            .BuildAndAdd();
+    }
+
+    private void AddCokingOven(ProtoRegistrator registrator)
+    {
+        var cokeProto = registrator.ResearchNodeProtoBuilder
+            .Start("Coke making", ModIDs.Research.CokeMaking, 48)
+            .Description("Manufacturing of metallurgical coke as an alternative to charcoal from wood for blast furnaces.")
+            .AddProductIcon(ModIDs.Products.Coke)
+            .AddMachineToUnlock(ModIDs.Machines.CokingOven, unlockAllRecipes: true)
+            .AddRecipeToUnlock(ModIDs.Recipes.IronSmeltingT1Coke)
+            .AddRecipeToUnlock(ModIDs.Recipes.FlareCoalTar)
+            .AddParents(registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Cp3Packing))
+            .SetGridPosition(new Vector2i(56, 28))
+            .BuildAndAdd();
+
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.AdvancedSmelting).AddParent(cokeProto);
+
+        var boiler = registrator.PrototypesDb.GetOrThrow<MachineProto>(Ids.Machines.BoilerCoal);
+        var steamProto = registrator.ResearchNodeProtoBuilder
+            .Start("Steam from coke", ModIDs.Research.SteamGenerationCoke, 42)
+            .Description("With small changes to the boiler, coke can be used to generate steam, too.")
+            .AddIcon(boiler, boiler.IconPath)
+            .AddRecipeToUnlock(ModIDs.Recipes.SteamGenerationCoke)
+            .AddParents(cokeProto, registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.PowerGeneration2))
+            .SetGridPosition(new Vector2i(60, 36))
             .BuildAndAdd();
     }
 
@@ -236,13 +270,13 @@ internal class ResearchData : IResearchNodesData
         // Power generation II
         proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.PowerGeneration2);
         proto.UnitsAsEditable()
-            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteamGenerationCharcoal)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteamGenerationCharcoal, position: 1)
             .SetToResearch(proto);
 
         // Advanced diesel
         proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.CrudeOilDistillation);
         proto.UnitsAsEditable()
-            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteamGenerationCharcoal)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteamGenerationCharcoal, position: 1)
             .SetToResearch(proto);
     }
 }

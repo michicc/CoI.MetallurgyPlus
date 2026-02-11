@@ -2,14 +2,14 @@
 using Mafi;
 using Mafi.Base;
 using Mafi.Collections;
+using Mafi.Core.Entities;
 using Mafi.Core.Entities.Static.Layout;
 using Mafi.Core.Factory.Machines;
 using Mafi.Core.Factory.Recipes;
 using Mafi.Core.Mods;
 using Mafi.Core.Prototypes;
 using Mafi.Localization;
-using System.Collections.Generic;
-using System.Diagnostics;
+using System;
 
 namespace CoI.MetallurgyPlus.Data;
 
@@ -21,6 +21,7 @@ internal class MachineData : IModData
         OverrideRotaryKiln(registrator);
         OverrideOxygenFurnace(registrator);
         OverrideShredder(registrator);
+        OverrideFlare(registrator);
     }
 
     private void OverrideCharcoalMaker(ProtoRegistrator registrator)
@@ -115,5 +116,27 @@ internal class MachineData : IModData
             .SetDurationSeconds(10)
             .AddOutput(2, Ids.Products.IronScrap, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .BuildAndAdd();
+    }
+
+    private void OverrideFlare(ProtoRegistrator registrator)
+    {
+        // Update Flare particles for burning coal tar.
+        var proto = registrator.PrototypesDb.GetOrThrow<MachineProto>(Ids.Machines.Flare);
+
+        var particles = proto.Graphics.ParticlesParams.ToLyst();
+        var clean = particles.Find(p => p.SystemId == "FireClean");
+        if (clean is not null) {
+            var lambda = clean.SupportedRecipesSelector;
+            if (lambda.HasValue) {
+                clean.SetField(nameof(ParticlesParams.SupportedRecipesSelector), Option<Func<RecipeProto, bool>>.Create(r => lambda.Value(r) && !IsCoalTarRecipe(r)));
+            } else {
+                clean.SetField(nameof(ParticlesParams.SupportedRecipesSelector), Option<Func<RecipeProto, bool>>.Create(IsCoalTarRecipe));
+            }
+        }
+        particles.Add(ParticlesParams.Loop("FireSmokeDark", false, IsCoalTarRecipe, null));
+
+        proto.Graphics.SetField(nameof(MachineProto.Gfx.ParticlesParams), particles.ToImmutableArray());
+
+        static bool IsCoalTarRecipe(RecipeProto r) => r.Id == ModIDs.Recipes.FlareCoalTar;
     }
 }
