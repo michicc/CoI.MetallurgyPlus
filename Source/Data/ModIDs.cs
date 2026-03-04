@@ -54,9 +54,11 @@ public static class ModIDs
         #region Iron smelting recipes
         public static readonly RecipeID IronSmeltingT1Charcoal = Ids.Recipes.CreateId("MP_IronSmeltingT1Charcoal");
         public static readonly RecipeID IronSmeltingT1Coke = Ids.Recipes.CreateId("MP_IronSmeltingT1Coke");
+        public static readonly RecipeID IronSmeltingT2 = Ids.Recipes.CreateId("MP_IronSmeltingT2");
         public static readonly RecipeID SteelFromScrapT1 = Ids.Recipes.CreateId("MP_SteelFromScrapT1");
         public static readonly RecipeID SteelFromScrapT1Coal = Ids.Recipes.CreateId("MP_SteelFromScrapT1Coal");
         public static readonly RecipeID SteelFromScrapT1FG = Ids.Recipes.CreateId("MP_SteelFromScrapT1FG");
+        public static readonly RecipeID SteelFromScrapT1Arc = Ids.Recipes.CreateId("MP_SteelFromScrapT1Arc");
         public static readonly RecipeID SteelFromIronT1 = Ids.Recipes.CreateId("MP_SteelFromIronT1");
         public static readonly RecipeID SteelFromIronT1Coal = Ids.Recipes.CreateId("MP_SteelFromIronT1Coal");
         public static readonly RecipeID SteelFromIronT1FG = Ids.Recipes.CreateId("MP_SteelFromIronT1FG");
@@ -65,6 +67,7 @@ public static class ModIDs
         public static readonly RecipeID SteelFromSpongeT1 = Ids.Recipes.CreateId("MP_SteelFromSpongeT1");
         public static readonly RecipeID SteelFromSpongeT1Coal = Ids.Recipes.CreateId("MP_SteelFromSpongeT1Coal");
         public static readonly RecipeID SteelFromSpongeT1FG = Ids.Recipes.CreateId("MP_SteelFromSpongeT1FG");
+        public static readonly RecipeID SteelFromSpongeT1Arc = Ids.Recipes.CreateId("MP_SteelFromSpongeT1Arc");
 
         public static readonly RecipeID SteelSmelting = Ids.Recipes.CreateId("MP_SteelSmelting");
         public static readonly RecipeID SteelSmeltingDIR = Ids.Recipes.CreateId("MP_SteelSmeltingDRI");

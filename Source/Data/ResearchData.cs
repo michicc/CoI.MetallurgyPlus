@@ -163,13 +163,25 @@ internal class ResearchData : IResearchNodesData
         // Advanced smelting
         proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.AdvancedSmelting);
         proto.UnitsAsEditable()
+            .RemoveRecipeUnlock(Ids.Recipes.IronSmeltingT2)
+            .RemoveRecipeUnlock(Ids.Recipes.IronSmeltingT2Scrap)
             .RemoveRecipeUnlock(Ids.Recipes.SteelSmeltingT2)
             .RemoveRecipeUnlock(Ids.Recipes.SteelCastingCooledT2)
             .RemoveRecipeUnlock(Ids.Recipes.IronCastingT2)
-            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelSmeltingT2)
-            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelSmeltingT2DRI)
-            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelCastingCooledT2)
-            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelCastingT2)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.IronSmeltingT2, position: 0)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelSmeltingT2, position: 5)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelSmeltingT2DRI, position: 6)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelCastingCooledT2, position: 7)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelCastingT2, position: 8)
+            .SetToResearch(proto);
+
+        // Arc furnace I
+        proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.ArcFurnaceT1);
+        proto.UnitsAsEditable()
+            .RemoveRecipeUnlock(Ids.Recipes.IronSmeltingArcT1)
+            .RemoveRecipeUnlock(Ids.Recipes.IronSmeltingArcScrapT1)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelFromScrapT1Arc, position: 0)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelFromSpongeT1Arc, position: 1)
             .SetToResearch(proto);
     }
 

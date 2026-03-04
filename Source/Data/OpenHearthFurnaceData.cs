@@ -124,11 +124,11 @@ internal class OpenHearthFurnaceData : IModData
             .Start("Iron sponge smelting (fuel gas)", ModIDs.Recipes.SteelFromSpongeT1FG, proto)
             .AddInput(48, ModIDs.Products.SpongeIron, "BC")
             .AddInput(6, Ids.Products.Limestone, "BC")
-            .AddInput(36, Ids.Products.FuelGas, "E")
+            .AddInput(48, Ids.Products.FuelGas, "E")
             .SetDurationSeconds(120)
             .AddOutput(24, Ids.Products.MoltenSteel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .AddOutput(30, Ids.Products.Slag, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddOutput(36, Ids.Products.CarbonDioxide, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
+            .AddOutput(48, Ids.Products.CarbonDioxide, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
             .BuildAndAdd();
     }
 }

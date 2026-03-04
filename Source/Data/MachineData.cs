@@ -19,6 +19,7 @@ internal class MachineData : IModData
     {
         OverrideCharcoalMaker(registrator);
         OverrideRotaryKiln(registrator);
+        OverrideSmeltingFurnaces(registrator);
         OverrideOxygenFurnace(registrator);
         OverrideShredder(registrator);
         OverrideFlare(registrator);
@@ -67,6 +68,15 @@ internal class MachineData : IModData
             .AddOutput(6, ModIDs.Products.SpongeIron, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .AddOutput(8, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .BuildAndAdd();
+    }
+
+    private void OverrideSmeltingFurnaces(ProtoRegistrator registrator)
+    {
+        // Modify maintenance of arc furnace I.
+        var arcT1 = registrator.PrototypesDb.GetOrThrow<MachineProto>(Ids.Machines.ArcFurnace);
+
+        EntityCostsTpl newCosts = Costs.Build.CP3(160).Workers(12).MaintenanceT1(12);
+        arcT1.SetProperty(nameof(MachineProto.Costs), newCosts.MapToEntityCosts(registrator));
     }
 
     private void OverrideOxygenFurnace(ProtoRegistrator registrator)
