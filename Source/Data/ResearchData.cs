@@ -38,14 +38,25 @@ internal class ResearchData : IResearchNodesData
 
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.UndergroundWater).GridPosition = new Vector2i(24, 28);
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.SettlementWater).GridPosition = new Vector2i(28, 28);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.RetainingWalls).GridPosition = new Vector2i(28, 11);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Stacker).GridPosition = new Vector2i(32, 11);
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Housing2).GridPosition = new Vector2i(32, 28);
 
-        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.CargoDepot2).GridPosition = new Vector2i(56, -1);
-        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.ConveyorBeltsT2).GridPosition = new Vector2i(56, 3);
-        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Trains).GridPosition = new Vector2i(56, 14);
-        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.TrainDepotAddon).GridPosition = new Vector2i(60, 14);
-        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.VehicleCapIncrease3).GridPosition = new Vector2i(60, 41);
-        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.CopperRefinement2).GridPosition = new Vector2i(68, 21);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.MaintenanceDepot).GridPosition = new Vector2i(40, 4);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.CargoDepot).GridPosition = new Vector2i(40, 9);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Biofuel).GridPosition = new Vector2i(40, 15);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Storage2).GridPosition = new Vector2i(44, 9);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.FoodMarket2).GridPosition = new Vector2i(48, 9);
+
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.CargoDepot2).GridPosition = new Vector2i(56, -2);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.VehicleAssembly2).GridPosition = new Vector2i(56, 5);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Recycling).GridPosition = new Vector2i(60, 1);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Compactor).GridPosition = new Vector2i(64, -2);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.VehiclesAmphibious).GridPosition = new Vector2i(64, 3);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Bridges).GridPosition = new Vector2i(68, 3);
+
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.AdvancedSmelting).GridPosition = new Vector2i(80, 19);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.ArcFurnaceT1).GridPosition = new Vector2i(88, 19);
     }
 
     private void AddIronSmeltingOre(ProtoRegistrator registrator)
@@ -73,7 +84,7 @@ internal class ResearchData : IResearchNodesData
             .AddRecipeToUnlock(ModIDs.Recipes.IronReductionT1)
             .AddRecipeToUnlock(ModIDs.Recipes.SteelFromSpongeT1)
             .AddRecipeToUnlock(ModIDs.Recipes.SteelFromSpongeT1Coal)
-            .SetGridPosition(new Vector2i(28, 11))
+            .SetGridPosition(new Vector2i(28, 7))
             .AddParents(registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.ConcreteAdvanced))
             .BuildAndAdd();
     }
