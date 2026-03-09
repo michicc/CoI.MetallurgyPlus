@@ -88,7 +88,7 @@ internal class ResearchData : IResearchNodesData
             .AddRecipeToUnlock(ModIDs.Recipes.SteelFromScrapT1FG)
             .AddRecipeToUnlock(ModIDs.Recipes.SteelFromIronT1FG)
             .AddRecipeToUnlock(ModIDs.Recipes.SteelFromSpongeT1FG)
-            .AddIcon(ohFurnace, ohFurnace.IconPath)
+            .AddIcon(ohFurnace)
             .AddParents(registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.GasCombustion))
             .SetGridPosition(new Vector2i(48, 33))
             .BuildAndAdd();
@@ -113,7 +113,7 @@ internal class ResearchData : IResearchNodesData
         var steamProto = registrator.ResearchNodeProtoBuilder
             .Start("Steam from coke", ModIDs.Research.SteamGenerationCoke, 42)
             .Description("With small changes to the boiler, coke can be used to generate steam, too.")
-            .AddIcon(boiler, boiler.IconPath)
+            .AddIcon(boiler)
             .AddRecipeToUnlock(ModIDs.Recipes.SteamGenerationCoke)
             .AddParents(cokeProto, registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.PowerGeneration2))
             .SetGridPosition(new Vector2i(60, 36))
@@ -138,9 +138,9 @@ internal class ResearchData : IResearchNodesData
 
         proto.IconsAsEditable()
             .RemoveIcon(Ids.Machines.SmeltingFurnaceT1)
-            .AddProtoIcon(protosDb.GetOrThrow<MachineProto>(ModIDs.Machines.OpenHearthFurnace), position: 0)
-            .AddProductIcon(protosDb.GetOrThrow<ProductProto>(Ids.Products.Steel), position: 3)
-            .SetToIcons(proto);
+            .AddIcon(protosDb.GetOrThrow<MachineProto>(ModIDs.Machines.OpenHearthFurnace), position: 0)
+            .AddIcon(protosDb.GetOrThrow<ProductProto>(Ids.Products.Steel), position: 3)
+            .ApplyTo(proto);
 
         // Steel smelting
         proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.SteelSmelting);
@@ -157,8 +157,8 @@ internal class ResearchData : IResearchNodesData
 
         proto.IconsAsEditable()
             .RemoveIcon(Ids.Products.Steel)
-            .AddProtoIcon(protosDb.GetOrThrow<MachineProto>(Ids.Machines.Shredder), position: 3)
-            .SetToIcons(proto);
+            .AddIcon(protosDb.GetOrThrow<MachineProto>(Ids.Machines.Shredder), position: 3)
+            .ApplyTo(proto);
 
         // Advanced smelting
         proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.AdvancedSmelting);

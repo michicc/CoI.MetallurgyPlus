@@ -36,9 +36,9 @@ internal class ProductData : IModData
         foreach (EntityProto entity in protosDb.All(typeof(EntityProto)).Cast<EntityProto>()) {
             // Any iron in the costs?
             var cost = entity.Costs;
-            if (cost.Price.GetQuantityOf(ironProto).IsNotZero) {
+            if (cost.BaseConstructionCost.GetQuantityOf(ironProto).IsNotZero) {
                 // Set new costs.
-                var newPrice = new AssetValue(cost.Price.Products.Map(MapIronToSteel));
+                var newPrice = new AssetValue(cost.BaseConstructionCost.Products.Map(MapIronToSteel));
                 entity.SetProperty(nameof(EntityProto.Costs), new EntityCosts(newPrice, cost.DefaultPriority, cost.Workers, cost.Maintenance));
 
                 if (entity is DrivingEntityProto vehicle) {

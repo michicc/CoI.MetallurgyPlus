@@ -1,6 +1,7 @@
 ﻿using CoI.MetallurgyPlus.Data;
 using Mafi;
 using Mafi.Base;
+using Mafi.Collections;
 using Mafi.Core;
 using Mafi.Core.Game;
 using Mafi.Core.Mods;
@@ -10,17 +11,20 @@ namespace CoI.MetallurgyPlus;
 
 public sealed class MetallurgyPlusMod : IMod
 {
-    public string Name => "Metallurgy+ Mod";
-
-    public int Version => 0;
-
     public bool IsUiOnly => false;
 
     public Option<IConfig> ModConfig => default;
 
-    public MetallurgyPlusMod(CoreMod coreMod, BaseMod baseMod)
+    public ModManifest Manifest { get; private set; }
+
+    public ModJsonConfig JsonConfig { get; }
+
+    public MetallurgyPlusMod(ModManifest manifest)
     {
-        Log.Debug("[Metallurgy+] Instance constructed");
+        Manifest = manifest;
+        JsonConfig = new(this);
+
+        Log.Info($"{manifest.DisplayName} v{manifest.Version}");
     }
 
     public void RegisterPrototypes(ProtoRegistrator registrator)
@@ -46,4 +50,8 @@ public sealed class MetallurgyPlusMod : IMod
     {
         ProductData.OnInitialize(resolver, gameWasLoaded);
     }
+
+    public void MigrateJsonConfig(VersionSlim savedVersion, Dict<string, object> savedValues) { }
+
+    public void Dispose() { }
 }
