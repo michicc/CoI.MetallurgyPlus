@@ -11,8 +11,6 @@
     <EnableDefaultItems>false</EnableDefaultItems>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AccelerateBuildsInVisualStudio>false</AccelerateBuildsInVisualStudio>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,9 +24,7 @@
   <ItemGroup>
     <Content Include="AssetBundles\**" Exclude="AssetBundles\**\*.manifest;AssetBundles\AssetBundles;**\.gitignore" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="AssetBundles\mafi_bundles.manifest" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="manifest.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="manifest.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>
