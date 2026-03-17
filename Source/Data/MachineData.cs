@@ -23,6 +23,7 @@ internal class MachineData : IModData
         OverrideOxygenFurnace(registrator);
         OverrideShredder(registrator);
         OverrideFlare(registrator);
+        OverrideSmokeStack(registrator);
     }
 
     private void OverrideCharcoalMaker(ProtoRegistrator registrator)
@@ -67,6 +68,16 @@ internal class MachineData : IModData
             .SetDurationSeconds(15)
             .AddOutput(6, ModIDs.Products.SpongeIron, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .AddOutput(8, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .BuildAndAdd();
+
+        // Direct iron reduction (fuel gas).
+        registrator.RecipeProtoBuilder
+            .Start("Direct iron reduction (Fuel gas)", ModIDs.Recipes.IronReductionT2, Ids.Machines.RotaryKilnGas)
+            .AddInput(5, Ids.Products.IronOreCrushed, "A")
+            .AddInput(3, ModIDs.Products.Syngas, "B")
+            .SetDurationSeconds(10)
+            .AddOutput(5, ModIDs.Products.SpongeIron, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddOutput(3, ModIDs.Products.SyngasUsed, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .BuildAndAdd();
     }
 
@@ -148,5 +159,29 @@ internal class MachineData : IModData
         proto.Graphics.SetField(nameof(MachineProto.Gfx.ParticlesParams), particles.ToImmutableArray());
 
         static bool IsCoalTarRecipe(RecipeProto r) => r.Id == ModIDs.Recipes.FlareCoalTar;
+    }
+
+    private void OverrideSmokeStack(ProtoRegistrator registrator)
+    {
+        OverrideSmokeStackProto(registrator.PrototypesDb.GetOrThrow<MachineProto>(Ids.Machines.SmokeStack));
+        OverrideSmokeStackProto(registrator.PrototypesDb.GetOrThrow<MachineProto>(Ids.Machines.SmokeStackLarge));
+    }
+
+    private void OverrideSmokeStackProto(MachineProto proto)
+    {
+        // Update particles for dumping used syngas.
+        var particles = proto.Graphics.ParticlesParams.ToLyst();
+
+        var white = particles.Find(p => p.SystemId == "SmokeWhite");
+        var steam = particles.Find(p => p.SystemId == "Steam");
+        if (white is not null && steam is not null) {
+            var lambdaWhite = white.SupportedRecipesSelector;
+            var lambdaSteam = steam.SupportedRecipesSelector;
+
+            white.SetField(nameof(ParticlesParams.SupportedRecipesSelector), Option<Func<RecipeProto, bool>>.Create(r => lambdaWhite.Value(r) || IsSyngasRecipe(r)));
+            steam.SetField(nameof(ParticlesParams.SupportedRecipesSelector), Option<Func<RecipeProto, bool>>.Create(r => lambdaSteam.Value(r) && !IsSyngasRecipe(r)));
+        }
+
+        static bool IsSyngasRecipe(RecipeProto r) => r.Id == ModIDs.Recipes.SyngasSmokeStack || r.Id == ModIDs.Recipes.SyngasSmokeStackLarge;
     }
 }

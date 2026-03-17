@@ -19,8 +19,17 @@ public static class ModIDs
         [LooseProduct(material: "Assets/CoI.Metallurgy+/Materials/SpongeIron.mat", icon: "Assets/CoI.Metallurgy+/Icons/SpongeIron.png", useRoughPileMeshes: false)]
         public static readonly ProductID SpongeIron = Ids.Products.CreateId("MP_SpongeIron");
 
-        [FluidProduct(color: 0x161616, icon: "Assets/CoI.Metallurgy+/Icons/CoalTar.png", pipeColor: 0x151515, accentColor: 13017404, canBeDiscarded: true)]
+        [FluidProduct(color: 0x161616, icon: "Assets/CoI.Metallurgy+/Icons/CoalTar.png", pipeColor: 0x151515, accentColor: 0xC6A13C, canBeDiscarded: true)]
         public static readonly ProductID CoalTar = Ids.Products.CreateId("MP_CoalTar");
+
+        [FluidProduct(0x7B9E7D, "Assets/CoI.Metallurgy+/Icons/Argon.png", pipeColor: 0x1B7A22, accentColor: 0xBBBBBB, canBeDiscarded: true)]
+        public static readonly ProductID Argon = Ids.Products.CreateId("MP_Argon");
+
+        [FluidProduct(0x659DA5, "Assets/CoI.Metallurgy+/Icons/Syngas.png", pipeColor: 0x197887, accentColor: 0x96C4CC, canBeDiscarded: true)]
+        public static readonly ProductID Syngas = Ids.Products.CreateId("MP_Syngas");
+
+        [FluidProduct(0x96C4CC, "Assets/CoI.Metallurgy+/Icons/SyngasUsed.png", name: "Syngas (used)", pipeColor: 0x96C4CC, accentColor: 0x197887, canBeDiscarded: true)]
+        public static readonly ProductID SyngasUsed = Ids.Products.CreateId("MP_SyngasUsed");
     }
 
     public static class Machines
@@ -64,6 +73,7 @@ public static class ModIDs
         public static readonly RecipeID SteelFromIronT1FG = Ids.Recipes.CreateId("MP_SteelFromIronT1FG");
 
         public static readonly RecipeID IronReductionT1 = Ids.Recipes.CreateId("MP_IronReductionT1");
+        public static readonly RecipeID IronReductionT2 = Ids.Recipes.CreateId("MP_IronReductionT2");
         public static readonly RecipeID SteelFromSpongeT1 = Ids.Recipes.CreateId("MP_SteelFromSpongeT1");
         public static readonly RecipeID SteelFromSpongeT1Coal = Ids.Recipes.CreateId("MP_SteelFromSpongeT1Coal");
         public static readonly RecipeID SteelFromSpongeT1FG = Ids.Recipes.CreateId("MP_SteelFromSpongeT1FG");
@@ -89,6 +99,13 @@ public static class ModIDs
 
         public static readonly RecipeID ShreddingSteel = Ids.Recipes.CreateId("MP_ShreddingSteel");
         #endregion
+
+        #region Misc recipes
+        public static readonly RecipeID SyngasProduction = Ids.Recipes.CreateId("MP_SyngasProduction");
+        public static readonly RecipeID SyngasProductionInitial = Ids.Recipes.CreateId("MP_SyngasProductionInitial");
+        public static readonly RecipeID SyngasSmokeStack = Ids.Recipes.CreateId("MP_SyngasSmokeStack");
+        public static readonly RecipeID SyngasSmokeStackLarge = Ids.Recipes.CreateId("MP_SyngasSmokeStackLarge");
+        #endregion
     }
 
     public static class Research
@@ -98,5 +115,6 @@ public static class ModIDs
         public static readonly ResearchID GasPoweredFurnace = Ids.Research.CreateId("MP_GasPoweredFurnace");
         public static readonly ResearchID CokeMaking = Ids.Research.CreateId("MP_CokeMaking");
         public static readonly ResearchID SteamGenerationCoke = Ids.Research.CreateId("MP_SteamGenerationCoke");
+        public static readonly ResearchID DirectIronReductionFG = Ids.Research.CreateId("MP_DirectIronReductionFG");
     }
 }

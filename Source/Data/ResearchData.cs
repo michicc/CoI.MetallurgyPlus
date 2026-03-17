@@ -55,8 +55,17 @@ internal class ResearchData : IResearchNodesData
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.VehiclesAmphibious).GridPosition = new Vector2i(64, 3);
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Bridges).GridPosition = new Vector2i(68, 3);
 
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Storage3).GridPosition = new Vector2i(80, -3);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.RecyclingEdict).GridPosition = new Vector2i(76, 1);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.RecyclingForSettlement).GridPosition = new Vector2i(80, 1);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.RecyclingEdict1).GridPosition = new Vector2i(84, 1);
+
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.HouseholdGoods).GridPosition = new Vector2i(76, 9);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.VehicleCapIncrease4).GridPosition = new Vector2i(76, 21);
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.AdvancedSmelting).GridPosition = new Vector2i(80, 19);
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.ArcFurnaceT1).GridPosition = new Vector2i(88, 19);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.NaphthaProcessing).GridPosition = new Vector2i(80, 5);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.NaphthaReforming).GridPosition = new Vector2i(84, 5);
     }
 
     private void AddIronSmeltingOre(ProtoRegistrator registrator)
@@ -86,6 +95,20 @@ internal class ResearchData : IResearchNodesData
             .AddRecipeToUnlock(ModIDs.Recipes.SteelFromSpongeT1Coal)
             .SetGridPosition(new Vector2i(28, 7))
             .AddParents(registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.ConcreteAdvanced))
+            .BuildAndAdd();
+
+        registrator.ResearchNodeProtoBuilder
+            .Start("Direct iron reduction (gas)", ModIDs.Research.DirectIronReductionFG, 68)
+            .Description("Process for using fuel gas to reduce iron ore.")
+            .AddMachineToUnlock(Ids.Machines.HydrogenReformer)
+            .AddProductIcon(ModIDs.Products.Syngas)
+            .AddRecipeToUnlock(ModIDs.Recipes.IronReductionT2)
+            .AddRecipeToUnlock(ModIDs.Recipes.SyngasProduction)
+            .AddRecipeToUnlock(ModIDs.Recipes.SyngasProductionInitial)
+            .AddRecipeToUnlock(ModIDs.Recipes.SyngasSmokeStack)
+            .AddRecipeToUnlock(ModIDs.Recipes.SyngasSmokeStackLarge)
+            .SetGridPosition(new Vector2i(92, 7))
+            .AddParents(registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.RotaryKilnGas), proto)
             .BuildAndAdd();
     }
 

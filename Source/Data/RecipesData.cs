@@ -268,6 +268,41 @@ internal class RecipesData : IModData
             .AddOutput(8, Ids.Products.SteamHi, "X")
             .AddOutput(5, Ids.Products.CarbonDioxide, "Y")
             .BuildAndAdd();
+
+        // Syngas reforming.
+        registrator.RecipeProtoBuilder
+            .Start("Syngas reformation (cycle)", ModIDs.Recipes.SyngasProduction, Ids.Machines.HydrogenReformer)
+            .AddInput(18, ModIDs.Products.SyngasUsed, "A")
+            .AddInput(18, Ids.Products.FuelGas, "B")
+            .SetDurationSeconds(30)
+            .AddOutput(18, ModIDs.Products.Syngas, "X")
+            .AddOutput(18, Ids.Products.CarbonDioxide, "Y")
+            .BuildAndAdd();
+        registrator.RecipeProtoBuilder
+            .Start("Syngas reformation", ModIDs.Recipes.SyngasProductionInitial, Ids.Machines.HydrogenReformer)
+            .AddInput(18, Ids.Products.FuelGas, "B")
+            .SetDurationSeconds(30)
+            .AddOutput(9, ModIDs.Products.Syngas, "X")
+            .AddOutput(9, Ids.Products.CarbonDioxide, "Y")
+            .BuildAndAdd();
+
+        // Smoke stack for used syngas.
+        registrator.RecipeProtoBuilder
+            .Start("Product disposal", ModIDs.Recipes.SyngasSmokeStack, Ids.Machines.SmokeStack)
+            .SetProductsDestroyReason(DestroyReason.DumpedOnTerrain)
+            .SetDurationSeconds(20)
+            .EnablePartialExecution(25.Percent())
+            .AddInput(20, ModIDs.Products.SyngasUsed, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddOutput(10, Ids.Products.PollutedAir, RecipeProtoBuilder.VIRTUAL_PORT)
+            .BuildAndAdd();
+        registrator.RecipeProtoBuilder
+            .Start("Product disposal", ModIDs.Recipes.SyngasSmokeStackLarge, Ids.Machines.SmokeStackLarge)
+            .SetProductsDestroyReason(DestroyReason.DumpedOnTerrain)
+            .SetDurationSeconds(20)
+            .EnablePartialExecution(25.Percent())
+            .AddInput(20 * 15, ModIDs.Products.SyngasUsed, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddOutput(10 * 15, Ids.Products.PollutedAir, RecipeProtoBuilder.VIRTUAL_PORT)
+            .BuildAndAdd();
     }
 
     private void AddAssemblyRecipes(ProtoRegistrator registrator)
