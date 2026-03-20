@@ -161,6 +161,15 @@ internal class ResearchData : IResearchNodesData
             .AddParents(cokeProto, registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.PowerGeneration2))
             .SetGridPosition(new Vector2i(60, 36))
             .BuildAndAdd();
+
+        // Super steam from coke.
+        registrator.ResearchNodeProtoBuilder
+            .Start("Super heated boiler", ModIDs.Research.SuperSteamFromCoke, 192)
+            .Description("With some modifications to how our boiler works, we can use the high heat from coke to produce super pressurized steam.")
+            .AddRecipeToUnlock(ModIDs.Recipes.SuperSteamGenerationCoke)
+            .AddParents(registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.SuperPressSteam))
+            .SetGridPosition(new Vector2i(160, 35))
+            .BuildAndAdd();
     }
 
     private void OverrideIronSmelting(ProtosDb protosDb)

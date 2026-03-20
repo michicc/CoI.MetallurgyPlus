@@ -58,6 +58,7 @@ public static class ModIDs
         public static readonly RecipeID CokeFromCoal = Ids.Recipes.CreateId("MP_CokeFromCoal");
 
         public static readonly RecipeID SteamGenerationCoke = Ids.Recipes.CreateId("MP_SteamGenerationCoke");
+        public static readonly RecipeID SuperSteamGenerationCoke = Ids.Recipes.CreateId("MP_SuperSteamGenerationCoke");
         public static readonly RecipeID FlareCoalTar = Ids.Recipes.CreateId("MP_FlareCoalTar");
         #endregion
 
@@ -123,5 +124,6 @@ public static class ModIDs
         public static readonly ResearchID SteamGenerationCoke = Ids.Research.CreateId("MP_SteamGenerationCoke");
         public static readonly ResearchID DirectIronReductionFG = Ids.Research.CreateId("MP_DirectIronReductionFG");
         public static readonly ResearchID HydrogenSteelSmelting = Ids.Research.CreateId("MP_HydrogenSteelSmelting");
+        public static readonly ResearchID SuperSteamFromCoke = Ids.Research.CreateId("MP_SuperSteamFromCoke");
     }
 }

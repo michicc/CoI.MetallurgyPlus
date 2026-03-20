@@ -311,6 +311,16 @@ internal class RecipesData : IModData
             .AddOutput(5, Ids.Products.CarbonDioxide, "Y")
             .BuildAndAdd();
 
+        // Super steam from coke.
+        registrator.RecipeProtoBuilder
+            .Start("Super steam (coke)", ModIDs.Recipes.SuperSteamGenerationCoke, Ids.Machines.BoilerCoal)
+            .AddInput(4, Ids.Products.Water, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddInput(4, ModIDs.Products.Coke, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(10)
+            .AddOutput(4, Ids.Products.SteamSp, "X")
+            .AddOutput(5, Ids.Products.CarbonDioxide, "Y")
+            .BuildAndAdd();
+
         // Syngas reforming.
         registrator.RecipeProtoBuilder
             .Start("Syngas reformation (cycle)", ModIDs.Recipes.SyngasProduction, Ids.Machines.HydrogenReformer)
