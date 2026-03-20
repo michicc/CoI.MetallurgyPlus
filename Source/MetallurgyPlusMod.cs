@@ -34,6 +34,7 @@ public sealed class MetallurgyPlusMod : IMod
         registrator.RegisterData<ProductData>();
         registrator.RegisterData<OpenHearthFurnaceData>();
         registrator.RegisterData<CokingOven>();
+        registrator.RegisterData<AirSeparatorData>();
         registrator.RegisterData<MachineData>();
         registrator.RegisterData<RecipesData>();
         registrator.RegisterDataWithInterface<IResearchNodesData>();
@@ -49,6 +50,7 @@ public sealed class MetallurgyPlusMod : IMod
     {
         ProductData.OnInitialize(resolver, gameWasLoaded);
         MachineData.OnInitialize(resolver, gameWasLoaded);
+        AirSeparatorData.OnInitialize(resolver, gameWasLoaded);
     }
 
     public void MigrateJsonConfig(VersionSlim savedVersion, Dict<string, object> savedValues) { }

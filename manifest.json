@@ -3,7 +3,7 @@
 	"version": "0.1.0",
 	"display_name": "Metallurgy+ Mod",
 	"authors": [ "michi_cc" ],
-	"description_short": "In the <b>Metallurgy+ Mod</b>, the blast furnacer isn't evertything. Fun ensues.",
+	"description_short": "In the <b>Metallurgy+ Mod</b>, the blast furnace isn't evertything. Fun ensues.",
 	"min_game_version": "0.8",
 	"mod_dependencies": [],
 	"optional_mod_dependencies": [],

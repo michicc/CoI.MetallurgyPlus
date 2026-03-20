@@ -97,6 +97,20 @@ internal class MachineData : IModData
 
         EntityCostsTpl newCosts = Costs.Build.CP3(160).Workers(12).MaintenanceT1(12);
         arcT1.SetProperty(nameof(MachineProto.Costs), newCosts.MapToEntityCosts(registrator));
+
+        // Add more ports to the arc furnace II.
+        var arcT2Layout = new string[] {
+            "C#>[6][6][6][6][6][6][6][6][6]>~Y",
+            "   [2][7][7][6][6][6][6][4][3]>@Z",
+            "A~>[3][7][7][6][7][7][6][4][3]>'V",
+            "B~>[3][7][7][6][7][7][6][4][3]>'W",
+            "   [2][7][7][6][6][6][6][6][3]   ",
+            "D@>[6][6][6][6][6][6][6][6][6]>@E",
+            "   F@^                           "
+        };
+
+        var arcT2 = registrator.PrototypesDb.GetOrThrow<MachineProto>(Ids.Machines.ArcFurnace2);
+        arcT2.UpdateLayout(new EntityLayoutParser(registrator.PrototypesDb).ParseLayoutOrThrow(arcT2Layout));
     }
 
     private void OverrideOxygenFurnace(ProtoRegistrator registrator)

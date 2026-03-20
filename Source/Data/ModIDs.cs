@@ -36,6 +36,7 @@ public static class ModIDs
     {
         public static readonly MachineID OpenHearthFurnace = Ids.Machines.CreateId("MP_OpenHearthFurnace");
         public static readonly MachineID CokingOven = Ids.Machines.CreateId("MP_CokingOven");
+        public static readonly MachineID AirSeparatorT2 = Ids.Machines.CreateId("MP_AirSeparatorT2");
     }
 
     public static class Recipes
@@ -64,10 +65,12 @@ public static class ModIDs
         public static readonly RecipeID IronSmeltingT1Charcoal = Ids.Recipes.CreateId("MP_IronSmeltingT1Charcoal");
         public static readonly RecipeID IronSmeltingT1Coke = Ids.Recipes.CreateId("MP_IronSmeltingT1Coke");
         public static readonly RecipeID IronSmeltingT2 = Ids.Recipes.CreateId("MP_IronSmeltingT2");
+        public static readonly RecipeID IronSmeltingArc = Ids.Recipes.CreateId("MP_IronSmeltingArc");
         public static readonly RecipeID SteelFromScrapT1 = Ids.Recipes.CreateId("MP_SteelFromScrapT1");
         public static readonly RecipeID SteelFromScrapT1Coal = Ids.Recipes.CreateId("MP_SteelFromScrapT1Coal");
         public static readonly RecipeID SteelFromScrapT1FG = Ids.Recipes.CreateId("MP_SteelFromScrapT1FG");
         public static readonly RecipeID SteelFromScrapT1Arc = Ids.Recipes.CreateId("MP_SteelFromScrapT1Arc");
+        public static readonly RecipeID SteelFromScrapT2Arc = Ids.Recipes.CreateId("MP_SteelFromScrapT2Arc");
         public static readonly RecipeID SteelFromIronT1 = Ids.Recipes.CreateId("MP_SteelFromIronT1");
         public static readonly RecipeID SteelFromIronT1Coal = Ids.Recipes.CreateId("MP_SteelFromIronT1Coal");
         public static readonly RecipeID SteelFromIronT1FG = Ids.Recipes.CreateId("MP_SteelFromIronT1FG");
@@ -78,6 +81,7 @@ public static class ModIDs
         public static readonly RecipeID SteelFromSpongeT1Coal = Ids.Recipes.CreateId("MP_SteelFromSpongeT1Coal");
         public static readonly RecipeID SteelFromSpongeT1FG = Ids.Recipes.CreateId("MP_SteelFromSpongeT1FG");
         public static readonly RecipeID SteelFromSpongeT1Arc = Ids.Recipes.CreateId("MP_SteelFromSpongeT1Arc");
+        public static readonly RecipeID SteelFromSpongeT2Arc = Ids.Recipes.CreateId("MP_SteelFromSpongeT2Arc");
 
         public static readonly RecipeID SteelSmelting = Ids.Recipes.CreateId("MP_SteelSmelting");
         public static readonly RecipeID SteelSmeltingDIR = Ids.Recipes.CreateId("MP_SteelSmeltingDRI");
@@ -105,6 +109,8 @@ public static class ModIDs
         public static readonly RecipeID SyngasProductionInitial = Ids.Recipes.CreateId("MP_SyngasProductionInitial");
         public static readonly RecipeID SyngasSmokeStack = Ids.Recipes.CreateId("MP_SyngasSmokeStack");
         public static readonly RecipeID SyngasSmokeStackLarge = Ids.Recipes.CreateId("MP_SyngasSmokeStackLarge");
+
+        public static readonly RecipeID AirSeparationT2 = Ids.Recipes.CreateId("MP_AirSeparationT2");
         #endregion
     }
 
@@ -116,5 +122,6 @@ public static class ModIDs
         public static readonly ResearchID CokeMaking = Ids.Research.CreateId("MP_CokeMaking");
         public static readonly ResearchID SteamGenerationCoke = Ids.Research.CreateId("MP_SteamGenerationCoke");
         public static readonly ResearchID DirectIronReductionFG = Ids.Research.CreateId("MP_DirectIronReductionFG");
+        public static readonly ResearchID HydrogenSteelSmelting = Ids.Research.CreateId("MP_HydrogenSteelSmelting");
     }
 }

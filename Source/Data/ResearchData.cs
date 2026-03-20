@@ -82,6 +82,15 @@ internal class ResearchData : IResearchNodesData
             .BuildAndAdd();
 
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.CopperRefinement).AddParent(proto);
+
+        registrator.ResearchNodeProtoBuilder
+            .Start("Hydrogen iron ore smelting", ModIDs.Research.HydrogenSteelSmelting, 108)
+            .Description("Direct steel production using hydrogen.")
+            .AddRecipeToUnlock(ModIDs.Recipes.IronSmeltingArc)
+            .AddMachineToUnlock(ModIDs.Machines.AirSeparatorT2, unlockAllRecipes: true)
+            .SetGridPosition(new Vector2i(124, 11))
+            .AddParents(registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.ArcFurnace2))
+            .BuildAndAdd();
     }
 
     private void AddIronDirectReduction(ProtoRegistrator registrator)
@@ -216,6 +225,15 @@ internal class ResearchData : IResearchNodesData
             .RemoveRecipeUnlock(Ids.Recipes.IronSmeltingArcScrapT1)
             .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelFromScrapT1Arc, position: 0)
             .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelFromSpongeT1Arc, position: 1)
+            .SetToResearch(proto);
+
+        // Arc furnace II
+        proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.ArcFurnace2);
+        proto.UnitsAsEditable()
+            .RemoveRecipeUnlock(Ids.Recipes.IronSmeltingArc)
+            .RemoveRecipeUnlock(Ids.Recipes.IronSmeltingArcScrap)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelFromScrapT2Arc, position: 0)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelFromSpongeT2Arc, position: 1)
             .SetToResearch(proto);
     }
 
