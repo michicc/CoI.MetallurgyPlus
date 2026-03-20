@@ -26,6 +26,15 @@ internal class MachineData : IModData
         OverrideSmokeStack(registrator);
     }
 
+    public static void OnInitialize(DependencyResolver resolver, bool gameWasLoaded)
+    {
+        var protosDb = resolver.GetResolvedDependency<ProtosDb>().ValueOrThrow("Missing ProtosDb");
+
+        // Update asset path for instanced rendering.
+        protosDb.GetOrThrow<MachineProto>(Ids.Machines.OxygenFurnace).SetAssetPathToSelf();
+        protosDb.GetOrThrow<MachineProto>(Ids.Machines.OxygenFurnaceT2).SetAssetPathToSelf();
+    }
+
     private void OverrideCharcoalMaker(ProtoRegistrator registrator)
     {
         var name = Loc.Str(Ids.Machines.CharcoalMaker.Value + "_MP__name", "Charcoal maker", "name of a machine");
@@ -107,16 +116,10 @@ internal class MachineData : IModData
         var oxyT1 = registrator.PrototypesDb.GetOrThrow<MachineProto>(Ids.Machines.OxygenFurnace);
         oxyT1.UpdateLayout(parsed);
         oxyT1.Graphics.ReplacePrefabWith("Assets/CoI.Metallurgy+/OxygenFurnace.prefab");
-        oxyT1.Graphics.SetField("m_instancedRenderingAnimationMaterialSwap", new Dict<string, string>());
-        oxyT1.Graphics.SetField("m_instancedRenderingAnimationProtoSwap", null);
-        oxyT1.Graphics.SetField("UseSemiInstancedRendering", false);
 
         var oxyT2 = registrator.PrototypesDb.GetOrThrow<MachineProto>(Ids.Machines.OxygenFurnaceT2);
         oxyT2.UpdateLayout(parsed);
         oxyT2.Graphics.ReplacePrefabWith("Assets/CoI.Metallurgy+/OxygenFurnaceT2.prefab");
-        oxyT2.Graphics.SetField("m_instancedRenderingAnimationMaterialSwap", new Dict<string, string>());
-        oxyT2.Graphics.SetField("m_instancedRenderingAnimationProtoSwap", null);
-        oxyT2.Graphics.SetField("UseSemiInstancedRendering", false);
     }
 
     private void OverrideShredder(ProtoRegistrator registrator)

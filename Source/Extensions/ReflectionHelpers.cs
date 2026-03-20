@@ -42,8 +42,15 @@ internal static class ReflectionHelpers
     {
         if (obj is null) throw new ArgumentNullException(nameof(obj));
 
-        var field = obj.GetType().GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-        return (V)field.GetValue(obj);
+        var type = obj.GetType();
+        while (type is not null) {
+            var field = type.GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+            if (field is not null) return (V)field.GetValue(obj);
+
+            type = type.BaseType;
+        }
+
+        throw new InvalidOperationException($"Field '{fieldName}' not found on the provided object of type '{obj.GetType().FullName}'.");
     }
 
     /// <summary>

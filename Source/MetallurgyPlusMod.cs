@@ -2,7 +2,6 @@
 using Mafi;
 using Mafi.Base;
 using Mafi.Collections;
-using Mafi.Core;
 using Mafi.Core.Game;
 using Mafi.Core.Mods;
 using Mafi.Core.Prototypes;
@@ -49,6 +48,7 @@ public sealed class MetallurgyPlusMod : IMod
     public void Initialize(DependencyResolver resolver, bool gameWasLoaded)
     {
         ProductData.OnInitialize(resolver, gameWasLoaded);
+        MachineData.OnInitialize(resolver, gameWasLoaded);
     }
 
     public void MigrateJsonConfig(VersionSlim savedVersion, Dict<string, object> savedValues) { }
