@@ -1,9 +1,9 @@
 {
-	"id": "CoI.Metallurgy+",
-	"version": "0.0.1",
+	"id": "MetallurgyPlus",
+	"version": "0.1.0",
 	"display_name": "Metallurgy+ Mod",
 	"authors": [ "michi_cc" ],
-	"description_short": "<b>Metallurgy+ Mod</b> brings all the fun of petrochemicals to iron production.",
+	"description_short": "In the <b>Metallurgy+ Mod</b>, the blast furnacer isn't evertything. Fun ensues.",
 	"min_game_version": "0.8",
 	"mod_dependencies": [],
 	"optional_mod_dependencies": [],
