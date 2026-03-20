@@ -152,6 +152,13 @@ internal class ResearchData : IResearchNodesData
 
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.AdvancedSmelting).AddParent(cokeProto);
 
+        registrator.ResearchNodeProtoBuilder
+            .Start("Coke making II", ModIDs.Research.CokeMakingT2, 96)
+            .AddMachineToUnlock(ModIDs.Machines.CokingOvenT2, unlockAllRecipes: true)
+            .AddParents(registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.ResearchLab4))
+            .SetGridPosition(new Vector2i(116, 11))
+            .BuildAndAdd();
+
         var boiler = registrator.PrototypesDb.GetOrThrow<MachineProto>(Ids.Machines.BoilerCoal);
         var steamProto = registrator.ResearchNodeProtoBuilder
             .Start("Steam from coke", ModIDs.Research.SteamGenerationCoke, 42)

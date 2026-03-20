@@ -36,6 +36,7 @@ public static class ModIDs
     {
         public static readonly MachineID OpenHearthFurnace = Ids.Machines.CreateId("MP_OpenHearthFurnace");
         public static readonly MachineID CokingOven = Ids.Machines.CreateId("MP_CokingOven");
+        public static readonly MachineID CokingOvenT2 = Ids.Machines.CreateId("MP_CokingOvenT2");
         public static readonly MachineID AirSeparatorT2 = Ids.Machines.CreateId("MP_AirSeparatorT2");
     }
 
@@ -56,6 +57,7 @@ public static class ModIDs
 
         #region Coke recipes
         public static readonly RecipeID CokeFromCoal = Ids.Recipes.CreateId("MP_CokeFromCoal");
+        public static readonly RecipeID CokeFromCoalT2 = Ids.Recipes.CreateId("MP_CokeFromCoalT2");
 
         public static readonly RecipeID SteamGenerationCoke = Ids.Recipes.CreateId("MP_SteamGenerationCoke");
         public static readonly RecipeID SuperSteamGenerationCoke = Ids.Recipes.CreateId("MP_SuperSteamGenerationCoke");
@@ -121,6 +123,7 @@ public static class ModIDs
         public static readonly ResearchID DirectIronReduction = Ids.Research.CreateId("MP_DirectIronReduction");
         public static readonly ResearchID GasPoweredFurnace = Ids.Research.CreateId("MP_GasPoweredFurnace");
         public static readonly ResearchID CokeMaking = Ids.Research.CreateId("MP_CokeMaking");
+        public static readonly ResearchID CokeMakingT2 = Ids.Research.CreateId("MP_CokeMakingT2");
         public static readonly ResearchID SteamGenerationCoke = Ids.Research.CreateId("MP_SteamGenerationCoke");
         public static readonly ResearchID DirectIronReductionFG = Ids.Research.CreateId("MP_DirectIronReductionFG");
         public static readonly ResearchID HydrogenSteelSmelting = Ids.Research.CreateId("MP_HydrogenSteelSmelting");
