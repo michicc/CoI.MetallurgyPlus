@@ -62,6 +62,8 @@ public static class ModIDs
         public static readonly RecipeID SteamGenerationCoke = Ids.Recipes.CreateId("MP_SteamGenerationCoke");
         public static readonly RecipeID SuperSteamGenerationCoke = Ids.Recipes.CreateId("MP_SuperSteamGenerationCoke");
         public static readonly RecipeID FlareCoalTar = Ids.Recipes.CreateId("MP_FlareCoalTar");
+        public static readonly RecipeID CoalTarProcessing = Ids.Recipes.CreateId("MP_CoalTarProcessing");
+        public static readonly RecipeID SyntheticMorphine = Ids.Recipes.CreateId("MP_SyntheticMorphine");
         #endregion
 
         #region Iron smelting recipes
@@ -125,8 +127,10 @@ public static class ModIDs
         public static readonly ResearchID CokeMaking = Ids.Research.CreateId("MP_CokeMaking");
         public static readonly ResearchID CokeMakingT2 = Ids.Research.CreateId("MP_CokeMakingT2");
         public static readonly ResearchID SteamGenerationCoke = Ids.Research.CreateId("MP_SteamGenerationCoke");
+        public static readonly ResearchID CoalTarProcessing = Ids.Research.CreateId("MP_CoalTarProcessing");
         public static readonly ResearchID DirectIronReductionFG = Ids.Research.CreateId("MP_DirectIronReductionFG");
         public static readonly ResearchID HydrogenSteelSmelting = Ids.Research.CreateId("MP_HydrogenSteelSmelting");
         public static readonly ResearchID SuperSteamFromCoke = Ids.Research.CreateId("MP_SuperSteamFromCoke");
+        public static readonly ResearchID SyntheticMorphine = Ids.Research.CreateId("MP_SyntheticMorphine");
     }
 }

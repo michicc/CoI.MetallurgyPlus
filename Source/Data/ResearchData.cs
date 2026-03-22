@@ -1,6 +1,7 @@
 ﻿using CoI.MetallurgyPlus.Extensions;
 using Mafi;
 using Mafi.Base;
+using Mafi.Collections.ImmutableCollections;
 using Mafi.Core.Factory.Machines;
 using Mafi.Core.Mods;
 using Mafi.Core.Products;
@@ -48,9 +49,13 @@ internal class ResearchData : IResearchNodesData
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Storage2).GridPosition = new Vector2i(44, 9);
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.FoodMarket2).GridPosition = new Vector2i(48, 9);
 
-        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.CargoDepot2).GridPosition = new Vector2i(56, -2);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.CargoDepot2).GridPosition = new Vector2i(56, -7);
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.VehicleAssembly2).GridPosition = new Vector2i(56, 5);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.ConveyorBeltsT2).GridPosition = new Vector2i(56, -3);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Trains).GridPosition = new Vector2i(56, 10);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.StackerT2).GridPosition = new Vector2i(60, -3);
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Recycling).GridPosition = new Vector2i(60, 1);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.TrainDepotAddon).GridPosition = new Vector2i(60, 10);
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Compactor).GridPosition = new Vector2i(64, -2);
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.VehiclesAmphibious).GridPosition = new Vector2i(64, 3);
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Bridges).GridPosition = new Vector2i(68, 3);
@@ -61,6 +66,7 @@ internal class ResearchData : IResearchNodesData
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.RecyclingEdict1).GridPosition = new Vector2i(84, 1);
 
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.HouseholdGoods).GridPosition = new Vector2i(76, 9);
+        registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Housing3).GridPosition = new Vector2i(80, 34);
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.VehicleCapIncrease4).GridPosition = new Vector2i(76, 21);
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.AdvancedSmelting).GridPosition = new Vector2i(80, 19);
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.ArcFurnaceT1).GridPosition = new Vector2i(88, 19);
@@ -147,7 +153,7 @@ internal class ResearchData : IResearchNodesData
             .AddRecipeToUnlock(ModIDs.Recipes.IronSmeltingT1Coke)
             .AddRecipeToUnlock(ModIDs.Recipes.FlareCoalTar)
             .AddParents(registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Cp3Packing))
-            .SetGridPosition(new Vector2i(56, 28))
+            .SetGridPosition(new Vector2i(56, 14))
             .BuildAndAdd();
 
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.AdvancedSmelting).AddParent(cokeProto);
@@ -159,23 +165,43 @@ internal class ResearchData : IResearchNodesData
             .SetGridPosition(new Vector2i(116, 11))
             .BuildAndAdd();
 
-        var boiler = registrator.PrototypesDb.GetOrThrow<MachineProto>(Ids.Machines.BoilerCoal);
-        var steamProto = registrator.ResearchNodeProtoBuilder
+        // Burning coke in boiler.
+        registrator.ResearchNodeProtoBuilder
             .Start("Steam from coke", ModIDs.Research.SteamGenerationCoke, 42)
             .Description("With small changes to the boiler, coke can be used to generate steam, too.")
-            .AddIcon(boiler)
+            .AddMachineToUnlock(Ids.Machines.BoilerCoal)
             .AddRecipeToUnlock(ModIDs.Recipes.SteamGenerationCoke)
-            .AddParents(cokeProto, registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.PowerGeneration2))
-            .SetGridPosition(new Vector2i(60, 36))
+            .AddParents(cokeProto)
+            .SetGridPosition(new Vector2i(60, 14))
+            .BuildAndAdd();
+
+        // Cracking coal tar.
+        registrator.ResearchNodeProtoBuilder
+            .Start("Coal tar processing", ModIDs.Research.CoalTarProcessing, 60)
+            .Description("Distillation to split coal tar into useful products")
+            .AddRecipeToUnlock(ModIDs.Recipes.CoalTarProcessing)
+            .AddProductIcon(ModIDs.Products.CoalTar)
+            .AddParents(cokeProto, registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.ResearchLab3))
+            .SetGridPosition(new Vector2i(76, 16))
             .BuildAndAdd();
 
         // Super steam from coke.
         registrator.ResearchNodeProtoBuilder
             .Start("Super heated boiler", ModIDs.Research.SuperSteamFromCoke, 192)
             .Description("With some modifications to how our boiler works, we can use the high heat from coke to produce super pressurized steam.")
+            .AddMachineToUnlock(Ids.Machines.BoilerCoal)
             .AddRecipeToUnlock(ModIDs.Recipes.SuperSteamGenerationCoke)
             .AddParents(registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.SuperPressSteam))
             .SetGridPosition(new Vector2i(160, 35))
+            .BuildAndAdd();
+
+        // Synthetic morphine production.
+        registrator.ResearchNodeProtoBuilder
+            .Start("Synthetic morphine", ModIDs.Research.SyntheticMorphine, 180)
+            .AddProductIcon(Ids.Products.Morphine)
+            .AddRecipeToUnlock(ModIDs.Recipes.SyntheticMorphine)
+            .AddParents(registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.MedicalSupplies3))
+            .SetGridPosition(new Vector2i(152, 43))
             .BuildAndAdd();
     }
 

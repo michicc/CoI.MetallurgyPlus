@@ -321,6 +321,29 @@ internal class RecipesData : IModData
             .AddOutput(5, Ids.Products.CarbonDioxide, "Y")
             .BuildAndAdd();
 
+        // Coal tar processing.
+        registrator.RecipeProtoBuilder
+            .Start("Coal tar distillation", ModIDs.Recipes.CoalTarProcessing, Ids.Machines.DistillationTowerT1)
+            .AddInput(8, ModIDs.Products.CoalTar, "B")
+            .AddInput(3, Ids.Products.SteamHi, "A")
+            .SetDurationSeconds(20)
+            .AddOutput(4, Ids.Products.MediumOil, "X")
+            .AddOutput(4, Ids.Products.HeavyOil, "Z")
+            .AddOutput(6, Ids.Products.SourWater, "Y")
+            .BuildAndAdd();
+
+        // Synthetic morphine.
+        registrator.RecipeProtoBuilder
+            .Start("Synthetic morphine", ModIDs.Recipes.SyntheticMorphine, Ids.Machines.ChemicalPlant2)
+            .AddInput(4, ModIDs.Products.CoalTar, "A")
+            .AddInput(3, Ids.Products.Chlorine, "B")
+            .AddInput(2, Ids.Products.SteamHi, "C")
+            .AddInput(2, Ids.Products.Glass, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .SetDurationSeconds(20)
+            .AddOutput(8, Ids.Products.Morphine, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .AddOutput(4, Ids.Products.SourWater, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
+            .BuildAndAdd();
+
         // Syngas reforming.
         registrator.RecipeProtoBuilder
             .Start("Syngas reformation (cycle)", ModIDs.Recipes.SyngasProduction, Ids.Machines.HydrogenReformer)
