@@ -15,6 +15,8 @@
 
   <ItemGroup>
     <None Include="Options.user" />
+    <None Include="LICENSE.txt" />
+    <None Include="README.md" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +26,7 @@
   <ItemGroup>
     <Content Include="AssetBundles\**" Exclude="AssetBundles\**\*.manifest;AssetBundles\AssetBundles;**\.gitignore" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="AssetBundles\mafi_bundles.manifest" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="install.txt" CopyToOutputDirectory="PreserveNewest" TargetPath="readme.txt" />
     <Content Include="manifest.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 

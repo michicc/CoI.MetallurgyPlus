@@ -1,4 +1,4 @@
-﻿Copyright © 2025, Michael Lutz (michi_cc)
+﻿Copyright © 2026, Michael Lutz (michi_cc)
 Portions © MaFi Games – used under the Captain of Industry Modding Policy. Not for standalone use.
 
 Redistribution and use in source and binary forms, with or without
