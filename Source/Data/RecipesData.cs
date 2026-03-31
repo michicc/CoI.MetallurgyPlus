@@ -146,7 +146,7 @@ internal class RecipesData : IModData
 
         // Iron ore smelting (arc).
         registrator.RecipeProtoBuilder
-            .Start("", ModIDs.Recipes.IronSmeltingArc, Ids.Machines.ArcFurnace2)
+            .Start("Iron smelting (arc)", ModIDs.Recipes.IronSmeltingArc, Ids.Machines.ArcFurnace2)
             .AddInput(20, Ids.Products.IronOreCrushed, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .AddInput(3, Ids.Products.Limestone, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .AddInput(1, Ids.Products.Graphite, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
