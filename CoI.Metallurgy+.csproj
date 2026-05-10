@@ -28,6 +28,9 @@
     <Content Include="AssetBundles\mafi_bundles.manifest" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="install.txt" CopyToOutputDirectory="PreserveNewest" TargetPath="readme.txt" />
     <Content Include="manifest.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Thumbnail.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

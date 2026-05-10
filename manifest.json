@@ -1,11 +1,11 @@
 {
 	"id": "MetallurgyPlus",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"display_name": "Metallurgy+ Mod",
 	"authors": [ "michi_cc" ],
 	"description_short": "In the <b>Metallurgy+ Mod</b>, the blast furnace isn't everything. Fun ensues.",
 	"description_long": "<b>Metallurgy+</b> aims to improve the game by making metal smelting and production more varied and interesting. Focus is on abstracting real-world processes and enriching gameplay by providing different production chains with their own trade-offs. (And it removes iron plates.)",
-	"min_game_version": "0.8",
+	"min_game_version": "0.8.4",
 	"mod_dependencies": [],
 	"optional_mod_dependencies": [],
 	"incompatible_mods": [],
