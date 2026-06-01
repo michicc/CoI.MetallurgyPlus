@@ -168,10 +168,19 @@ internal class MachineData : IModData
             if (lambda.HasValue) {
                 clean.SetField(nameof(ParticlesParams.SupportedRecipesSelector), Option<Func<RecipeProto, bool>>.Create(r => lambda.Value(r) && !IsCoalTarRecipe(r)));
             } else {
-                clean.SetField(nameof(ParticlesParams.SupportedRecipesSelector), Option<Func<RecipeProto, bool>>.Create(IsCoalTarRecipe));
+                clean.SetField(nameof(ParticlesParams.SupportedRecipesSelector), Option<Func<RecipeProto, bool>>.Create(r => !IsCoalTarRecipe(r)));
             }
         }
-        particles.Add(ParticlesParams.Loop("FireSmokeDark", false, IsCoalTarRecipe, null));
+
+        var dark = particles.Find(p => p.SystemId == "FireSmokeDark");
+        if (dark is not null) {
+            var lambda = dark.SupportedRecipesSelector;
+            if (lambda.HasValue) {
+                dark.SetField(nameof(ParticlesParams.SupportedRecipesSelector), Option<Func<RecipeProto, bool>>.Create(r => lambda.Value(r) || IsCoalTarRecipe(r)));
+            } else {
+                dark.SetField(nameof(ParticlesParams.SupportedRecipesSelector), Option<Func<RecipeProto, bool>>.Create(IsCoalTarRecipe));
+            }
+        }
 
         proto.Graphics.SetField(nameof(MachineProto.Gfx.ParticlesParams), particles.ToImmutableArray());
 

@@ -1,3 +1,6 @@
+v0.2.1 | 2026-06-01
+* Fixed particle effects of flare
+
 v0.2.0 | 2026-05-10
 * Added thumbnail
 * Changed mod license to COI-Open
