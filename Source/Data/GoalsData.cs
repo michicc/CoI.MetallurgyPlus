@@ -30,8 +30,18 @@ internal class GoalsData : IModData
 
     private void OverrideIronProductionGoal(ProtosDb protosDb)
     {
+        var buildAndConnect2 = LocStrHelper.GetExistingLocalizedString2Arg("Goal__BuildAndConnect2", "Build {0} and connect it to {1}", "text for a goal, {0}, {1} - machine / building names");
+
+        var charcoalMaker = protosDb.GetOrThrow<StaticEntityProto>(Ids.Machines.CharcoalMaker);
+        var smokestack = protosDb.GetOrThrow<StaticEntityProto>(Ids.Machines.SmokeStack);
+        string goalBuildCoalMakerMsg = buildAndConnect2.Format($"<bc>{charcoalMaker.Strings.Name}</bc>", $"<bc>{smokestack.Strings.Name}</bc>").Value;
+
+        var goalBuildCoalMaker = protosDb.GetOrThrow<GoalToConstructStaticEntity.Proto>(MakeGoalID("BuildCoalMaker"));
+        goalBuildCoalMaker.SetField(nameof(GoalToConstructStaticEntity.Proto.TitleFunc), (int[] _) => goalBuildCoalMakerMsg);
+
         var goalProduceCoal = protosDb.GetOrThrow<GoalToReachProductStatsValue.Proto>(MakeGoalID("ProduceCoal"));
         goalProduceCoal.SetField(nameof(GoalToReachProductStatsValue.Proto.ProtoToTrack), protosDb.GetOrThrow<ProductProto>(ModIDs.Products.Charcoal));
+        goalProduceCoal.SetField(nameof(GoalToReachProductStatsValue.Proto.MinQuantityRequired), 6.Quantity());
 
         var goalBuildFurnace = protosDb.GetOrThrow<GoalToConstructStaticEntity.Proto>(MakeGoalID("BuildFurnace"));
         KeyValuePair<StaticEntityProto, int>[] toBuild = [
