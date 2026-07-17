@@ -1,6 +1,7 @@
 ﻿using CoI.MetallurgyPlus.Extensions;
 using Mafi;
 using Mafi.Base;
+using Mafi.Base.Prototypes.Products;
 using Mafi.Core;
 using Mafi.Core.Economy;
 using Mafi.Core.Entities;
@@ -19,11 +20,25 @@ internal class ProductData : IModData
 {
     public void RegisterData(ProtoRegistrator registrator)
     {
+        RegisterProducts(registrator);
+
         SwitchIronToSteel(registrator.PrototypesDb);
 
         // Tile surfaces.
         var surfaceProto = registrator.PrototypesDb.GetOrThrow<TerrainTileSurfaceProto>(Ids.TerrainTileSurfaces.Metal2);
         surfaceProto.SetField(nameof(TerrainTileSurfaceProto.CostPerTile), new ProductQuantity(registrator.PrototypesDb.GetOrThrow<ProductProto>(Ids.Products.Steel), new Quantity(1)));
+    }
+
+    private void RegisterProducts(ProtoRegistrator registrator)
+    {
+        ProductBuilder.AddLooseProduct(registrator, ModIDs.Products.Charcoal, "Charcoal", "Assets/CoI.Metallurgy+/Materials/Charcoal.mat", ProductBuilder.PileRough, icon: "Assets/CoI.Metallurgy+/Icons/Charcoal.png", resourceColor: 0x404040, pinToHomeScreen: true, doNotTrackSource: true);
+        ProductBuilder.AddLooseProduct(registrator, ModIDs.Products.Coke, "Coke", "Assets/CoI.Metallurgy+/Materials/Coke.mat", ProductBuilder.PileSmooth, icon: "Assets/CoI.Metallurgy+/Icons/Coke.png", doNotTrackSource: true);
+        ProductBuilder.AddLooseProduct(registrator, ModIDs.Products.SpongeIron, "Sponge iron", "Assets/CoI.Metallurgy+/Materials/SpongeIron.mat", ProductBuilder.PileSmooth, icon: "Assets/CoI.Metallurgy+/Icons/SpongeIron.png");
+
+        ProductBuilder.AddFluidProduct(registrator, ModIDs.Products.CoalTar, "Coal tar", 0x161616, "Assets/CoI.Metallurgy+/Icons/CoalTar.png", pipeColor: 0x151515, accentColor: 0xC6A13C, canBeDiscarded: true);
+        ProductBuilder.AddFluidProduct(registrator, ModIDs.Products.Argon, "Argon", 0x7B9E7D, "Assets/CoI.Metallurgy+/Icons/Argon.png", pipeColor: 0x1B7A22, accentColor: 0xBBBBBB, canBeDiscarded: true);
+        ProductBuilder.AddFluidProduct(registrator, ModIDs.Products.Syngas, "Syngas", 0x659DA5, "Assets/CoI.Metallurgy+/Icons/Syngas.png", pipeColor: 0x197887, accentColor: 0x96C4CC, canBeDiscarded: true);
+        ProductBuilder.AddFluidProduct(registrator, ModIDs.Products.SyngasUsed, "Syngas (used)", 0x96C4CC, "Assets/CoI.Metallurgy+/Icons/SyngasUsed.png", pipeColor: 0x96C4CC, accentColor: 0x197887, canBeDiscarded: true);
     }
 
     public void SwitchIronToSteel(ProtosDb protosDb)

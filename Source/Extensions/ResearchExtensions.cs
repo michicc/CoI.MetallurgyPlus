@@ -1,14 +1,11 @@
 ﻿using Mafi;
 using Mafi.Collections;
-using Mafi.Core.Entities.Static.Layout;
 using Mafi.Core.Factory.Machines;
 using Mafi.Core.Factory.Recipes;
-using Mafi.Core.Products;
 using Mafi.Core.Prototypes;
 using Mafi.Core.Research;
 using Mafi.Core.UnlockingTree;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace CoI.MetallurgyPlus.Extensions;
@@ -20,10 +17,10 @@ internal static class ResearchExtensions
 
     public static void SetToResearch(this Lyst<IUnlockNodeUnit> units, ResearchNodeProto proto) => proto.SetProperty(nameof(ResearchNodeProto.Units), units.ToImmutableArray());
 
-    public static Lyst<IUnlockNodeUnit> AddRecipeUnlock(this Lyst<IUnlockNodeUnit> units, ProtosDb protosDb, RecipeProto.ID protoId, bool hideInUi = false, bool ensureMachineIsUnlocked = false, int position =  -1)
+    public static Lyst<IUnlockNodeUnit> AddRecipeUnlock(this Lyst<IUnlockNodeUnit> units, ProtosDb protosDb, RecipeProto.ID protoId, MachineProto? machine = null,  bool hideInUi = false, bool ensureMachineIsUnlocked = false, int position = -1)
     {
         var proto = protosDb.GetOrThrow<RecipeProto>(protoId);
-        var machine = protosDb.All<MachineProto>().FirstOrDefault(x => x.Recipes.Contains(proto)) ?? throw new InvalidOperationException(string.Format("No machine that can execute {0} the given recipe was found", proto.Id));
+        machine ??= protosDb.All<MachineProto>().FirstOrDefault(x => x.Recipes.Contains(proto)) ?? throw new InvalidOperationException(string.Format("No machine that can execute {0} the given recipe was found", proto.Id));
 
         var unlock = new RecipeUnlock(proto, machine, hideInUi, ensureMachineIsUnlocked);
         if (position >= 0) {

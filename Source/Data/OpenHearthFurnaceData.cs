@@ -34,101 +34,92 @@ internal class OpenHearthFurnaceData : IModData
 
         // Recipe: Molten steel from scrap.
         registrator.RecipeProtoBuilder
-            .Start("Iron scrap smelting", ModIDs.Recipes.SteelFromScrapT1, proto)
+            .Start(ModIDs.Recipes.SteelFromScrapT1)
             .AddInput(24, Ids.Products.IronScrap, "BC")
             .AddInput(12, ModIDs.Products.Charcoal, "D")
-            .SetDurationSeconds(120)
-            .AddOutput(24, Ids.Products.MoltenSteel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddOutput(24, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
-            .BuildAndAdd();
+            .AddOutput(24, Ids.Products.MoltenSteel)
+            .AddOutput(24, Ids.Products.Exhaust, outputAtStart: true)
+            .BuildAndAdd().BindTo(proto, 120.Seconds());
 
         // Recipe: Molten steel from scrap (coal).
         registrator.RecipeProtoBuilder
-            .Start("Iron scrap smelting (coal)", ModIDs.Recipes.SteelFromScrapT1Coal, proto)
+            .Start(ModIDs.Recipes.SteelFromScrapT1Coal)
             .AddInput(24, Ids.Products.IronScrap, "BC")
             .AddInput(16, Ids.Products.Coal, "D")
-            .SetDurationSeconds(120)
-            .AddOutput(24, Ids.Products.MoltenSteel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddOutput(48, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
-            .BuildAndAdd();
+            .AddOutput(24, Ids.Products.MoltenSteel)
+            .AddOutput(48, Ids.Products.Exhaust, outputAtStart: true)
+            .BuildAndAdd().BindTo(proto, 120.Seconds());
 
         // Recipe: Molten steel from scrap (FG).
         registrator.RecipeProtoBuilder
-            .Start("Iron scrap smelting (fuel gas)", ModIDs.Recipes.SteelFromScrapT1FG, proto)
+            .Start(ModIDs.Recipes.SteelFromScrapT1FG)
             .AddInput(24, Ids.Products.IronScrap, "BC")
             .AddInput(36, Ids.Products.FuelGas, "E")
-            .SetDurationSeconds(120)
-            .AddOutput(24, Ids.Products.MoltenSteel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddOutput(36, Ids.Products.CarbonDioxide, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
-            .BuildAndAdd();
+            .AddOutput(24, Ids.Products.MoltenSteel)
+            .AddOutput(36, Ids.Products.CarbonDioxide, outputAtStart: true)
+            .BuildAndAdd().BindTo(proto, 120.Seconds());
 
         // Recipe: Molten steel from molten iron.
         registrator.RecipeProtoBuilder
-            .Start("Steel smelting", ModIDs.Recipes.SteelFromIronT1, proto)
+            .Start(ModIDs.Recipes.SteelFromIronT1)
             .AddInput(30, Ids.Products.MoltenIron, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .AddInput(6, ModIDs.Products.Charcoal, "D")
-            .SetDurationSeconds(120)
-            .AddOutput(24, Ids.Products.MoltenSteel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddOutput(6, Ids.Products.Slag, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddOutput(16, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
-            .BuildAndAdd();
+            .AddOutput(24, Ids.Products.MoltenSteel)
+            .AddOutput(6, Ids.Products.Slag)
+            .AddOutput(16, Ids.Products.Exhaust, outputAtStart: true)
+            .BuildAndAdd().BindTo(proto, 120.Seconds());
 
         // Recipe: Molten steel from molten iron (coal).
         registrator.RecipeProtoBuilder
-            .Start("Steel smelting (coal)", ModIDs.Recipes.SteelFromIronT1Coal, proto)
+            .Start(ModIDs.Recipes.SteelFromIronT1Coal)
             .AddInput(30, Ids.Products.MoltenIron, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .AddInput(8, Ids.Products.Coal, "D")
-            .SetDurationSeconds(120)
-            .AddOutput(24, Ids.Products.MoltenSteel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddOutput(6, Ids.Products.Slag, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddOutput(36, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
-            .BuildAndAdd();
+            .AddOutput(24, Ids.Products.MoltenSteel)
+            .AddOutput(6, Ids.Products.Slag)
+            .AddOutput(36, Ids.Products.Exhaust, outputAtStart: true)
+            .BuildAndAdd().BindTo(proto, 120.Seconds());
 
         // Recipe: Molten steel from molten iron (fuel gas).
         registrator.RecipeProtoBuilder
-            .Start("Steel smelting (fuel gas)", ModIDs.Recipes.SteelFromIronT1FG, proto)
+            .Start(ModIDs.Recipes.SteelFromIronT1FG)
             .AddInput(30, Ids.Products.MoltenIron, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .AddInput(24, Ids.Products.FuelGas, "E")
-            .SetDurationSeconds(120)
-            .AddOutput(24, Ids.Products.MoltenSteel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddOutput(6, Ids.Products.Slag, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddOutput(24, Ids.Products.CarbonDioxide, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
-            .BuildAndAdd();
+            .AddOutput(24, Ids.Products.MoltenSteel)
+            .AddOutput(6, Ids.Products.Slag)
+            .AddOutput(24, Ids.Products.CarbonDioxide, outputAtStart: true)
+            .BuildAndAdd().BindTo(proto, 120.Seconds());
 
         // Recipe: Molten steel from sponge iron.
         registrator.RecipeProtoBuilder
-            .Start("Iron sponge smelting", ModIDs.Recipes.SteelFromSpongeT1, proto)
+            .Start(ModIDs.Recipes.SteelFromSpongeT1)
             .AddInput(48, ModIDs.Products.SpongeIron, "BC")
             .AddInput(6, Ids.Products.Limestone, "BC")
             .AddInput(12, ModIDs.Products.Charcoal, "D")
-            .SetDurationSeconds(120)
-            .AddOutput(24, Ids.Products.MoltenSteel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddOutput(30, Ids.Products.Slag, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddOutput(24, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
-            .BuildAndAdd();
+            .AddOutput(24, Ids.Products.MoltenSteel)
+            .AddOutput(30, Ids.Products.Slag)
+            .AddOutput(24, Ids.Products.Exhaust, outputAtStart: true)
+            .BuildAndAdd().BindTo(proto, 120.Seconds());
 
         // Recipe: Molten steel from sponge iron (coal).
         registrator.RecipeProtoBuilder
-            .Start("Iron sponge smelting (coal)", ModIDs.Recipes.SteelFromSpongeT1Coal, proto)
+            .Start(ModIDs.Recipes.SteelFromSpongeT1Coal)
             .AddInput(48, ModIDs.Products.SpongeIron, "BC")
             .AddInput(6, Ids.Products.Limestone, "BC")
             .AddInput(16, Ids.Products.Coal, "D")
-            .SetDurationSeconds(120)
-            .AddOutput(24, Ids.Products.MoltenSteel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddOutput(30, Ids.Products.Slag, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddOutput(48, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
-            .BuildAndAdd();
+            .AddOutput(24, Ids.Products.MoltenSteel)
+            .AddOutput(30, Ids.Products.Slag)
+            .AddOutput(48, Ids.Products.Exhaust, outputAtStart: true)
+            .BuildAndAdd().BindTo(proto, 120.Seconds());
 
         // Recipe: Molten steel from sponge iron (fuel gas).
         registrator.RecipeProtoBuilder
-            .Start("Iron sponge smelting (fuel gas)", ModIDs.Recipes.SteelFromSpongeT1FG, proto)
+            .Start(ModIDs.Recipes.SteelFromSpongeT1FG)
             .AddInput(48, ModIDs.Products.SpongeIron, "BC")
             .AddInput(6, Ids.Products.Limestone, "BC")
             .AddInput(48, Ids.Products.FuelGas, "E")
-            .SetDurationSeconds(120)
-            .AddOutput(24, Ids.Products.MoltenSteel, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddOutput(30, Ids.Products.Slag, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddOutput(48, Ids.Products.CarbonDioxide, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
-            .BuildAndAdd();
+            .AddOutput(24, Ids.Products.MoltenSteel)
+            .AddOutput(30, Ids.Products.Slag)
+            .AddOutput(48, Ids.Products.CarbonDioxide, outputAtStart: true)
+            .BuildAndAdd().BindTo(proto, 120.Seconds());
     }
 }

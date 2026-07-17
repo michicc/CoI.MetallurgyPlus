@@ -44,15 +44,14 @@ internal class CokingOven : IModData
             .BuildAndAdd();
 
         registrator.RecipeProtoBuilder
-            .Start("Coke making", ModIDs.Recipes.CokeFromCoal, ModIDs.Machines.CokingOven)
+            .Start(ModIDs.Recipes.CokeFromCoal)
             .AddInput(10, Ids.Products.Coal, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .AddInput(4, Ids.Products.Water, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .SetDurationSeconds(40)
             .AddOutput(8, ModIDs.Products.Coke, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .AddOutput(8, ModIDs.Products.CoalTar, "X")
             .AddOutput(20, Ids.Products.Exhaust, "Y")
             .AddOutput(4, Ids.Products.WasteWater, "Z")
-            .BuildAndAdd();
+            .BuildAndAdd().BindTo(proto, 40.Seconds());
     }
 
     private void RegisterCokeMakerT2(ProtoRegistrator registrator)
@@ -83,13 +82,12 @@ internal class CokingOven : IModData
         registrator.PrototypesDb.GetOrThrow<MachineProto>(ModIDs.Machines.CokingOven).SetNextTier(proto);
 
         registrator.RecipeProtoBuilder
-            .Start("Coke making (N2)", ModIDs.Recipes.CokeFromCoalT2, ModIDs.Machines.CokingOvenT2)
+            .Start(ModIDs.Recipes.CokeFromCoalT2)
             .AddInput(10, Ids.Products.Coal, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .AddInput(8, Ids.Products.Nitrogen, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .SetDurationSeconds(20)
             .AddOutput(8, ModIDs.Products.Coke, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
             .AddOutput(6, ModIDs.Products.CoalTar, "X")
             .AddOutput(28, Ids.Products.Exhaust, "Y")
-            .BuildAndAdd();
+            .BuildAndAdd().BindTo(proto, 20.Seconds());
     }
 }

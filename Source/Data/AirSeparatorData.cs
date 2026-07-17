@@ -48,12 +48,11 @@ internal class AirSeparatorData : IModData
 
         // Recipe: Advanced air separation.
         registrator.RecipeProtoBuilder
-            .Start("Air separation (T2)", ModIDs.Recipes.AirSeparationT2, proto)
-            .SetDurationSeconds(20)
+            .Start(ModIDs.Recipes.AirSeparationT2)
             .AddOutput(12, Ids.Products.Oxygen, "Y")
             .AddOutput(12, Ids.Products.Nitrogen, "X")
             .AddOutput(2, ModIDs.Products.Argon, "Z")
-            .BuildAndAdd();
+            .BuildAndAdd().BindTo(proto, 20.Seconds());
     }
 
     public static void OnInitialize(DependencyResolver resolver, bool gameWasLoaded)

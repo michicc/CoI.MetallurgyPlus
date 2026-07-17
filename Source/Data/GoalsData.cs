@@ -49,7 +49,7 @@ internal class GoalsData : IModData
     private void OverrideCpIProduction(ProtosDb protosDb)
     {
         var goalSelectCpRecipe = protosDb.GetOrThrow<GoalToActivateRecipe.Proto>(MakeGoalID("SelectCpRecipe"));
-        goalSelectCpRecipe.MachineRecipeToActivate = ImmutableArray.Create(Make.Kvp(Ids.Machines.AssemblyManual, ModIDs.Recipes.CpAssemblySteelT1));
+        goalSelectCpRecipe.MachineRecipeToActivate = ImmutableArray.Create(Make.Kvp(Ids.Machines.AssemblyManual, Ids.Recipes.CpAssemblySteel));
     }
 
     private void OverrideSetupTradings(ProtosDb protosDb)
@@ -66,7 +66,7 @@ internal class GoalsData : IModData
     private void OverrideMaintenance(ProtosDb protosDb)
     {
         var goalMaintenanceAssembly = protosDb.GetOrThrow<GoalToActivateRecipe.Proto>(MakeGoalID("MaintenanceAssembly"));
-        goalMaintenanceAssembly.MachineRecipeToActivate = ImmutableArray.Create(Make.Kvp(Ids.Machines.AssemblyManual, ModIDs.Recipes.MechPartsAssemblyT1Steel), Make.Kvp(Ids.Machines.AssemblyElectrified, ModIDs.Recipes.MechPartsAssemblyT2Steel));
+        goalMaintenanceAssembly.MachineRecipeToActivate = ImmutableArray.Create(Make.Kvp(Ids.Machines.AssemblyManual, Ids.Recipes.MechPartsSteelAssembly), Make.Kvp(Ids.Machines.AssemblyElectrified, Ids.Recipes.MechPartsSteelAssembly));
     }
 
     private void OverrideProcessIronOre(ProtosDb protosDb)
@@ -91,7 +91,7 @@ internal class GoalsData : IModData
     private void OverrideStockpileProducts(ProtosDb protosDb)
     {
         var goalCpAssembly = protosDb.GetOrThrow<GoalToActivateRecipe.Proto>(MakeGoalID("AnotherCpAssembly"));
-        goalCpAssembly.MachineRecipeToActivate = ImmutableArray.Create(Make.Kvp(Ids.Machines.AssemblyManual, ModIDs.Recipes.CpAssemblySteelT1), Make.Kvp(Ids.Machines.AssemblyElectrified, ModIDs.Recipes.CpAssemblySteelT2));
+        goalCpAssembly.MachineRecipeToActivate = ImmutableArray.Create(Make.Kvp(Ids.Machines.AssemblyManual, Ids.Recipes.CpAssemblySteel), Make.Kvp(Ids.Machines.AssemblyElectrified, Ids.Recipes.CpAssemblySteel));
 
         var unitStorage = protosDb.GetOrThrow<StorageProto>(Ids.Buildings.StorageUnit);
         var steel = protosDb.GetOrThrow<ProductProto>(Ids.Products.Steel);

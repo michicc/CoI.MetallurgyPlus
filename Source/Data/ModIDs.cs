@@ -10,25 +10,13 @@ public static class ModIDs
 {
     public static class Products
     {
-        [LooseProduct(material: "Assets/CoI.Metallurgy+/Materials/Charcoal.mat", icon: "Assets/CoI.Metallurgy+/Icons/Charcoal.png", useRoughPileMeshes: true, resourceColor: 4210752, pinToHomeScreen: true, doNotTrackSourceProducts: true)]
         public static readonly ProductID Charcoal = Ids.Products.CreateId("MP_Charcoal");
-
-        [LooseProduct(material: "Assets/CoI.Metallurgy+/Materials/Coke.mat", icon: "Assets/CoI.Metallurgy+/Icons/Coke.png", useRoughPileMeshes: false, doNotTrackSourceProducts: true)]
         public static readonly ProductID Coke = Ids.Products.CreateId("MP_Coke");
-
-        [LooseProduct(material: "Assets/CoI.Metallurgy+/Materials/SpongeIron.mat", icon: "Assets/CoI.Metallurgy+/Icons/SpongeIron.png", useRoughPileMeshes: false)]
         public static readonly ProductID SpongeIron = Ids.Products.CreateId("MP_SpongeIron");
 
-        [FluidProduct(color: 0x161616, icon: "Assets/CoI.Metallurgy+/Icons/CoalTar.png", pipeColor: 0x151515, accentColor: 0xC6A13C, canBeDiscarded: true)]
         public static readonly ProductID CoalTar = Ids.Products.CreateId("MP_CoalTar");
-
-        [FluidProduct(0x7B9E7D, "Assets/CoI.Metallurgy+/Icons/Argon.png", pipeColor: 0x1B7A22, accentColor: 0xBBBBBB, canBeDiscarded: true)]
         public static readonly ProductID Argon = Ids.Products.CreateId("MP_Argon");
-
-        [FluidProduct(0x659DA5, "Assets/CoI.Metallurgy+/Icons/Syngas.png", pipeColor: 0x197887, accentColor: 0x96C4CC, canBeDiscarded: true)]
         public static readonly ProductID Syngas = Ids.Products.CreateId("MP_Syngas");
-
-        [FluidProduct(0x96C4CC, "Assets/CoI.Metallurgy+/Icons/SyngasUsed.png", name: "Syngas (used)", pipeColor: 0x96C4CC, accentColor: 0x197887, canBeDiscarded: true)]
         public static readonly ProductID SyngasUsed = Ids.Products.CreateId("MP_SyngasUsed");
     }
 
@@ -94,17 +82,11 @@ public static class ModIDs
         public static readonly RecipeID SteelSmeltingT2DRI = Ids.Recipes.CreateId("MP_SteelSmeltingT2DRI");
 
         public static readonly RecipeID SteelCasting = Ids.Recipes.CreateId("MP_SteelCasting");
-        public static readonly RecipeID SteelCastingT2 = Ids.Recipes.CreateId("MP_SteelCastingT2");
         public static readonly RecipeID SteelCastingCooled = Ids.Recipes.CreateId("MP_SteelCastingCooled");
-        public static readonly RecipeID SteelCastingCooledT2 = Ids.Recipes.CreateId("MP_SteelCastingCooledT2");
         #endregion
 
         #region Steel recipes
-        public static readonly RecipeID CpAssemblySteelT1 = Ids.Recipes.CreateId("MP_CpAssemblySteelT1");
-        public static readonly RecipeID CpAssemblySteelT2 = Ids.Recipes.CreateId("MP_CpAssemblySteelT2");
-
-        public static readonly RecipeID MechPartsAssemblyT1Steel = Ids.Recipes.CreateId("MP_MechPartsAssemblyT1Steel");
-        public static readonly RecipeID MechPartsAssemblyT2Steel = Ids.Recipes.CreateId("MP_MechPartsAssemblyT2Steel");
+        public static readonly RecipeID MechPartsAssemblySteel = Ids.Recipes.CreateId("MP_MechPartsAssemblySteel");
 
         public static readonly RecipeID ShreddingSteel = Ids.Recipes.CreateId("MP_ShreddingSteel");
         #endregion

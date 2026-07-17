@@ -1,7 +1,6 @@
 ﻿using CoI.MetallurgyPlus.Extensions;
 using Mafi;
 using Mafi.Base;
-using Mafi.Collections;
 using Mafi.Core.Entities;
 using Mafi.Core.Entities.Static.Layout;
 using Mafi.Core.Factory.Machines;
@@ -45,12 +44,11 @@ internal class MachineData : IModData
 
         // Wood to charcoal.
         registrator.RecipeProtoBuilder
-            .Start("Charcoal making", ModIDs.Recipes.CharcoalFromWood, Ids.Machines.CharcoalMaker)
-            .AddInput(10, Ids.Products.Wood, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .SetDurationSeconds(30)
-            .AddOutput(6, ModIDs.Products.Charcoal, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddOutput(6, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT, true)
-            .BuildAndAdd();
+            .Start(ModIDs.Recipes.CharcoalFromWood)
+            .AddInput(10, Ids.Products.Wood)
+            .AddOutput(6, ModIDs.Products.Charcoal)
+            .AddOutput(6, Ids.Products.Exhaust, outputAtStart: true)
+            .BuildAndAdd().BindTo(registrator.PrototypesDb.GetMachine(Ids.Machines.CharcoalMaker), 30.Seconds());
 
         // Remove coal to wood recipe.
         registrator.PrototypesDb.GetOrThrow<RecipeProto>(Ids.Recipes.CharcoalBurning).MarkAsObsolete();
@@ -71,23 +69,21 @@ internal class MachineData : IModData
 
         // Direct iron reduction.
         registrator.RecipeProtoBuilder
-            .Start("Direct iron reduction", ModIDs.Recipes.IronReductionT1, Ids.Machines.RotaryKiln)
+            .Start(ModIDs.Recipes.IronReductionT1)
             .AddInput(6, Ids.Products.IronOre, "A")
             .AddInput(2, Ids.Products.Coal, "B")
-            .SetDurationSeconds(15)
-            .AddOutput(6, ModIDs.Products.SpongeIron, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddOutput(8, Ids.Products.Exhaust, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .BuildAndAdd();
+            .AddOutput(6, ModIDs.Products.SpongeIron)
+            .AddOutput(8, Ids.Products.Exhaust)
+            .BuildAndAdd().BindTo(kilnProto, 15.Seconds());
 
         // Direct iron reduction (fuel gas).
         registrator.RecipeProtoBuilder
-            .Start("Direct iron reduction (Fuel gas)", ModIDs.Recipes.IronReductionT2, Ids.Machines.RotaryKilnGas)
+            .Start(ModIDs.Recipes.IronReductionT2)
             .AddInput(5, Ids.Products.IronOreCrushed, "A")
             .AddInput(3, ModIDs.Products.Syngas, "B")
-            .SetDurationSeconds(10)
-            .AddOutput(5, ModIDs.Products.SpongeIron, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddOutput(3, ModIDs.Products.SyngasUsed, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .BuildAndAdd();
+            .AddOutput(5, ModIDs.Products.SpongeIron)
+            .AddOutput(3, ModIDs.Products.SyngasUsed)
+            .BuildAndAdd().BindTo(registrator.PrototypesDb.GetMachine(Ids.Machines.RotaryKilnGas), 10.Seconds());
     }
 
     private void OverrideSmeltingFurnaces(ProtoRegistrator registrator)
@@ -149,11 +145,10 @@ internal class MachineData : IModData
 
         // Steel shredding.
         registrator.RecipeProtoBuilder
-            .Start("Shredding steel", ModIDs.Recipes.ShreddingSteel, Ids.Machines.Shredder)
+            .Start(ModIDs.Recipes.ShreddingSteel)
             .AddInput(2, Ids.Products.Steel)
-            .SetDurationSeconds(10)
             .AddOutput(2, Ids.Products.IronScrap, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .BuildAndAdd();
+            .BuildAndAdd().BindTo(proto, 10.Seconds());
     }
 
     private void OverrideFlare(ProtoRegistrator registrator)

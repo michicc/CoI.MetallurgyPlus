@@ -1,7 +1,6 @@
 ﻿using CoI.MetallurgyPlus.Extensions;
 using Mafi;
 using Mafi.Base;
-using Mafi.Collections.ImmutableCollections;
 using Mafi.Core.Factory.Machines;
 using Mafi.Core.Mods;
 using Mafi.Core.Products;
@@ -251,13 +250,13 @@ internal class ResearchData : IResearchNodesData
             .RemoveRecipeUnlock(Ids.Recipes.IronSmeltingT2)
             .RemoveRecipeUnlock(Ids.Recipes.IronSmeltingT2Scrap)
             .RemoveRecipeUnlock(Ids.Recipes.SteelSmeltingT2)
-            .RemoveRecipeUnlock(Ids.Recipes.SteelCastingCooledT2)
-            .RemoveRecipeUnlock(Ids.Recipes.IronCastingT2)
+            .RemoveRecipeUnlock(Ids.Recipes.SteelCastingCooled)
+            .RemoveRecipeUnlock(Ids.Recipes.IronCasting)
             .AddRecipeUnlock(protosDb, ModIDs.Recipes.IronSmeltingT2, position: 0)
             .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelSmeltingT2, position: 5)
             .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelSmeltingT2DRI, position: 6)
-            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelCastingCooledT2, position: 7)
-            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelCastingT2, position: 8)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelCastingCooled, position: 7)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelCasting, position: 8)
             .SetToResearch(proto);
 
         // Arc furnace I
@@ -304,40 +303,40 @@ internal class ResearchData : IResearchNodesData
         // Construction
         var proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.CpPacking);
         proto.UnitsAsEditable()
-            .AddRecipeUnlock(protosDb, ModIDs.Recipes.CpAssemblySteelT1)
-            .RemoveRecipeUnlock(Ids.Recipes.CpAssemblyT1)
-            .AddRecipeUnlock(protosDb, ModIDs.Recipes.MechPartsAssemblyT1Steel)
-            .RemoveRecipeUnlock(Ids.Recipes.MechPartsAssemblyT1)
+            .AddRecipeUnlock(protosDb, Ids.Recipes.CpAssemblySteel, machine: protosDb.GetMachine(Ids.Machines.AssemblyManual))
+            .RemoveRecipeUnlock(Ids.Recipes.CpAssembly)
+            .AddRecipeUnlock(protosDb, Ids.Recipes.MechPartsSteelAssembly, machine: protosDb.GetMachine(Ids.Machines.AssemblyManual))
+            .RemoveRecipeUnlock(Ids.Recipes.MechPartsIronAssembly)
             .SetToResearch(proto);
 
         // Construction II
         proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Cp2Packing);
         proto.UnitsAsEditable()
-            .AddRecipeUnlock(protosDb, ModIDs.Recipes.CpAssemblySteelT2)
-            .RemoveRecipeUnlock(Ids.Recipes.CpAssemblyT2)
-            .AddRecipeUnlock(protosDb, ModIDs.Recipes.MechPartsAssemblyT2Steel)
-            .RemoveRecipeUnlock(Ids.Recipes.MechPartsAssemblyT2)
+            .AddRecipeUnlock(protosDb, Ids.Recipes.CpAssemblySteel, machine: protosDb.GetMachine(Ids.Machines.AssemblyElectrified))
+            .RemoveRecipeUnlock(Ids.Recipes.CpAssembly)
+            .AddRecipeUnlock(protosDb, Ids.Recipes.MechPartsSteelAssembly, machine: protosDb.GetMachine(Ids.Machines.AssemblyElectrified))
+            .RemoveRecipeUnlock(Ids.Recipes.MechPartsIronAssembly)
             .SetToResearch(proto);
 
         // Construction III
         proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Cp3Packing);
         proto.UnitsAsEditable()
-            .RemoveRecipeUnlock(Ids.Recipes.CpAssemblyT3)
-            .RemoveRecipeUnlock(Ids.Recipes.MechPartsAssemblyT3Iron)
+            .RemoveRecipeUnlock(Ids.Recipes.CpAssembly)
+            .RemoveRecipeUnlock(Ids.Recipes.MechPartsIronAssembly)
             .SetToResearch(proto);
 
         // Robotic assembly
         proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.RoboticAssembly);
         proto.UnitsAsEditable()
-            .RemoveRecipeUnlock(Ids.Recipes.CpAssemblyT4)
-            .RemoveRecipeUnlock(Ids.Recipes.MechPartsAssemblyT4Iron)
+            .RemoveRecipeUnlock(Ids.Recipes.CpAssembly)
+            .RemoveRecipeUnlock(Ids.Recipes.MechPartsIronAssembly)
             .SetToResearch(proto);
 
         // Robotic assembly II
         proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.Assembler3);
         proto.UnitsAsEditable()
-            .RemoveRecipeUnlock(Ids.Recipes.CpAssemblyT5)
-            .RemoveRecipeUnlock(Ids.Recipes.MechPartsAssemblyT5Iron)
+            .RemoveRecipeUnlock(Ids.Recipes.CpAssembly)
+            .RemoveRecipeUnlock(Ids.Recipes.MechPartsIronAssembly)
             .SetToResearch(proto);
     }
 
