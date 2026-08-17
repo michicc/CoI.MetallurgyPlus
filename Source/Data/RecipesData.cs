@@ -11,6 +11,8 @@ namespace CoI.MetallurgyPlus.Data;
 
 internal class RecipesData : IModData
 {
+    public bool KeepIronCasting { get; set; }
+
     public void RegisterData(ProtoRegistrator registrator)
     {
         AddCharcoalRecipes(registrator);
@@ -383,7 +385,7 @@ internal class RecipesData : IModData
         protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.SteelSmeltingT2).MarkAsObsolete();
 
         // Remove iron casting recipes.
-        protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.IronCasting).MarkAsObsolete();
+        if (!KeepIronCasting) protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.IronCasting).MarkAsObsolete();
         protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.SteelCastingCooled).MarkAsObsolete();
 
         // Remove iron construction part recipes.

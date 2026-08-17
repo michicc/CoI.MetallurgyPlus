@@ -28,7 +28,10 @@ public sealed class MetallurgyPlusMod : IMod
 
     public void RegisterPrototypes(ProtoRegistrator registrator)
     {
+        bool keepIron = JsonConfig.GetBool("keep_iron_plates");
+
         Log.Info("[Metallurgy+] Registering prototypes");
+        if (keepIron) Log.Info("[Metallurgy+] Compatibility option for keeping iron plates enabled.");
 
         registrator.RegisterAllProducts();
         registrator.RegisterData<ProductData>();
@@ -36,8 +39,8 @@ public sealed class MetallurgyPlusMod : IMod
         registrator.RegisterData<CokingOven>();
         registrator.RegisterData<AirSeparatorData>();
         registrator.RegisterData<MachineData>();
-        registrator.RegisterData<RecipesData>();
-        registrator.RegisterDataWithInterface<IResearchNodesData>();
+        registrator.RegisterData<RecipesData>(x => x.KeepIronCasting = keepIron);
+        registrator.RegisterData<ResearchData>(x => x.KeepIronCasting = keepIron);
         registrator.RegisterData<TradeData>();
         registrator.RegisterData<GoalsData>();
     }

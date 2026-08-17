@@ -30,6 +30,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="install.txt" CopyToOutputDirectory="PreserveNewest" TargetPath="readme.txt" />
+    <Content Include="config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="manifest.json" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="Thumbnail.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -142,6 +145,6 @@
   </Target>
 
   <ProjectExtensions>
-    <VisualStudio><UserProperties manifest_1json__JsonSchema="https://raw.githubusercontent.com/MaFi-Games/Captain-of-industry-modding/refs/heads/main/src/ExampleMod/manifest.schema.json" /></VisualStudio>
+    <VisualStudio><UserProperties config_1json__JsonSchema="https://raw.githubusercontent.com/MaFi-Games/Captain-of-industry-modding/refs/heads/main/src/ExampleMod/config.schema.json" manifest_1json__JsonSchema="https://raw.githubusercontent.com/MaFi-Games/Captain-of-industry-modding/refs/heads/main/src/ExampleMod/manifest.schema.json" /></VisualStudio>
   </ProjectExtensions>
 </Project>

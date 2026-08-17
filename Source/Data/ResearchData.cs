@@ -2,15 +2,19 @@
 using Mafi;
 using Mafi.Base;
 using Mafi.Core.Factory.Machines;
+using Mafi.Core.Factory.Recipes;
 using Mafi.Core.Mods;
 using Mafi.Core.Products;
 using Mafi.Core.Prototypes;
 using Mafi.Core.Research;
+using Mafi.Core.UnlockingTree;
 
 namespace CoI.MetallurgyPlus.Data;
 
 internal class ResearchData : IResearchNodesData
 {
+    public bool KeepIronCasting { get; set; }
+
     public void RegisterData(ProtoRegistrator registrator)
     {
         AddIronSmeltingOre(registrator);
@@ -75,7 +79,7 @@ internal class ResearchData : IResearchNodesData
 
     private void AddIronSmeltingOre(ProtoRegistrator registrator)
     {
-        var proto = registrator.ResearchNodeProtoBuilder
+        var builder = registrator.ResearchNodeProtoBuilder
             .Start("Iron ore smelting", ModIDs.Research.IronSmeltingOre, 2)
             .Description("Production of iron from iron ore.")
             .AddMachineToUnlock(Ids.Machines.SmeltingFurnaceT1)
@@ -83,8 +87,11 @@ internal class ResearchData : IResearchNodesData
             .AddRecipeToUnlock(ModIDs.Recipes.SteelFromIronT1)
             .AddRecipeToUnlock(ModIDs.Recipes.SteelFromIronT1Coal)
             .SetGridPosition(new Vector2i(12, 10))
-            .AddParents(registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.VehicleAndMining))
-            .BuildAndAdd();
+            .AddParents(registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.VehicleAndMining));
+
+        if (KeepIronCasting) builder = builder.AddUnit(new RecipeUnlock(registrator.PrototypesDb.GetOrThrow<RecipeProto>(Ids.Recipes.IronCasting), registrator.PrototypesDb.GetMachine(Ids.Machines.Caster), false, true));
+
+        var proto = builder.BuildAndAdd();
 
         registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.CopperRefinement).AddParent(proto);
 
@@ -217,7 +224,7 @@ internal class ResearchData : IResearchNodesData
             .AddMachineUnlock(protosDb, ModIDs.Machines.OpenHearthFurnace, unlockAllRecipes: false)
             .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelFromScrapT1)
             .RemoveRecipeUnlock(Ids.Recipes.IronCasting)
-            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelCasting)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelCasting, protosDb.GetMachine(Ids.Machines.Caster))
             .SetToResearch(proto);
 
         proto.IconsAsEditable()
@@ -234,7 +241,7 @@ internal class ResearchData : IResearchNodesData
             .RemoveRecipeUnlock(Ids.Recipes.SteelCastingCooled)
             .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelSmelting)
             .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelSmeltingDIR)
-            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelCastingCooled)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelCastingCooled, protosDb.GetMachine(Ids.Machines.CasterCooled))
             .AddMachineUnlock(protosDb, Ids.Machines.Shredder, unlockAllRecipes: false)
             .AddRecipeUnlock(protosDb, ModIDs.Recipes.ShreddingSteel)
             .SetToResearch(proto);
@@ -246,18 +253,18 @@ internal class ResearchData : IResearchNodesData
 
         // Advanced smelting
         proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.AdvancedSmelting);
-        proto.UnitsAsEditable()
+        var units = proto.UnitsAsEditable()
             .RemoveRecipeUnlock(Ids.Recipes.IronSmeltingT2)
             .RemoveRecipeUnlock(Ids.Recipes.IronSmeltingT2Scrap)
             .RemoveRecipeUnlock(Ids.Recipes.SteelSmeltingT2)
             .RemoveRecipeUnlock(Ids.Recipes.SteelCastingCooled)
-            .RemoveRecipeUnlock(Ids.Recipes.IronCasting)
             .AddRecipeUnlock(protosDb, ModIDs.Recipes.IronSmeltingT2, position: 0)
             .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelSmeltingT2, position: 5)
             .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelSmeltingT2DRI, position: 6)
-            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelCastingCooled, position: 7)
-            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelCasting, position: 8)
-            .SetToResearch(proto);
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelCastingCooled, protosDb.GetMachine(Ids.Machines.CasterCooledT2), position: 7)
+            .AddRecipeUnlock(protosDb, ModIDs.Recipes.SteelCasting, protosDb.GetMachine(Ids.Machines.CasterT2), position: 8);
+        if (!KeepIronCasting) units = units.RemoveRecipeUnlock(Ids.Recipes.IronCasting);
+        units.SetToResearch(proto);
 
         // Arc furnace I
         proto = protosDb.GetOrThrow<ResearchNodeProto>(Ids.Research.ArcFurnaceT1);
