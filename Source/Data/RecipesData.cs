@@ -20,6 +20,7 @@ internal class RecipesData : IModData
 
         // Apply overrides for existing recipes.
         ApplyOverrides(registrator.PrototypesDb);
+        RegisterRecipeMigrations(registrator);
     }
 
     private void RegisterRecipeMigrations(ProtoRegistrator registrator)
