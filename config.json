@@ -2,5 +2,9 @@
 	"keep_iron_plates": {
 		"default": false,
 		"description": "If enabled, a production recipe for iron plates is kept.<br>This is meant to improve compatibility with other mods that might still require iron plates. Iron plates will still be removed from all normal (vanilla) game recipes."
+	},
+	"replace_iron_in_recipes": {
+		"default": false,
+		"description": "<b>Experimental:</b> Try to replace all uses of iron plates in other mods with steel plates.<br>This will work for all mods that use the regular prototypes database, but not catch any instances where iron plates are used through other means like e.g. code injection."
 	}
 }

@@ -22,8 +22,6 @@ internal class ProductData : IModData
     {
         RegisterProducts(registrator);
 
-        SwitchIronToSteel(registrator.PrototypesDb);
-
         // Tile surfaces.
         var surfaceProto = registrator.PrototypesDb.GetOrThrow<TerrainTileSurfaceProto>(Ids.TerrainTileSurfaces.Metal2);
         surfaceProto.SetField(nameof(TerrainTileSurfaceProto.CostPerTile), new ProductQuantity(registrator.PrototypesDb.GetOrThrow<ProductProto>(Ids.Products.Steel), new Quantity(1)));
@@ -41,7 +39,7 @@ internal class ProductData : IModData
         ProductBuilder.AddFluidProduct(registrator, ModIDs.Products.SyngasUsed, "Syngas (used)", 0x96C4CC, "Assets/CoI.Metallurgy+/Icons/SyngasUsed.png", pipeColor: 0x96C4CC, accentColor: 0x197887, canBeDiscarded: true);
     }
 
-    public void SwitchIronToSteel(ProtosDb protosDb)
+    public static void SwitchIronToSteel(ProtosDb protosDb)
     {
         var steelProto = protosDb.GetOrThrow<ProductProto>(Ids.Products.Steel);
         var ironProto = protosDb.GetOrThrow<ProductProto>(Ids.Products.Iron);
@@ -82,7 +80,7 @@ internal class ProductData : IModData
         ProductQuantity MapIronToSteel(ProductQuantity quantity)
         {
             if (quantity.Product == ironProto) {
-                return new ProductQuantity(steelProto, (quantity.Quantity / 2).Max(Quantity.One)); // Half iron amount for steel.
+                return new ProductQuantity(steelProto, quantity.Quantity.CeilDiv(2).Max(Quantity.One)); // Half iron amount for steel.
             } else {
                 return quantity;
             }

@@ -1,6 +1,5 @@
 ﻿using CoI.MetallurgyPlus.Data;
 using Mafi;
-using Mafi.Base;
 using Mafi.Collections;
 using Mafi.Core.Game;
 using Mafi.Core.Mods;
@@ -18,6 +17,9 @@ public sealed class MetallurgyPlusMod : IMod
 
     public ModJsonConfig JsonConfig { get; }
 
+    private bool ConfigKeepIronPlates => JsonConfig.GetBool("keep_iron_plates");
+    private bool ConfigReplaceIronInRecipes => JsonConfig.GetBool("replace_iron_in_recipes");
+
     public MetallurgyPlusMod(ModManifest manifest)
     {
         Manifest = manifest;
@@ -28,10 +30,8 @@ public sealed class MetallurgyPlusMod : IMod
 
     public void RegisterPrototypes(ProtoRegistrator registrator)
     {
-        bool keepIron = JsonConfig.GetBool("keep_iron_plates");
-
         Log.Info("[Metallurgy+] Registering prototypes");
-        if (keepIron) Log.Info("[Metallurgy+] Compatibility option for keeping iron plates enabled.");
+        if (ConfigKeepIronPlates) Log.Info("[Metallurgy+] Compatibility option for keeping iron plates enabled.");
 
         registrator.RegisterAllProducts();
         registrator.RegisterData<ProductData>();
@@ -39,10 +39,12 @@ public sealed class MetallurgyPlusMod : IMod
         registrator.RegisterData<CokingOven>();
         registrator.RegisterData<AirSeparatorData>();
         registrator.RegisterData<MachineData>();
-        registrator.RegisterData<RecipesData>(x => x.KeepIronCasting = keepIron);
-        registrator.RegisterData<ResearchData>(x => x.KeepIronCasting = keepIron);
+        registrator.RegisterData<RecipesData>(x => x.KeepIronCasting = ConfigKeepIronPlates);
+        registrator.RegisterData<ResearchData>(x => x.KeepIronCasting = ConfigKeepIronPlates);
         registrator.RegisterData<TradeData>();
         registrator.RegisterData<GoalsData>();
+
+        registrator.PrototypesDb.AddOnLockCheck(ReplaceIronWithSteel);
     }
 
     public void RegisterDependencies(DependencyResolverBuilder depBuilder, ProtosDb protosDb, bool gameWasLoaded) { }
@@ -59,4 +61,14 @@ public sealed class MetallurgyPlusMod : IMod
     public void MigrateJsonConfig(VersionSlim savedVersion, Dict<string, object> savedValues) { }
 
     public void Dispose() { }
+
+    private void ReplaceIronWithSteel(ProtosDb protosDb)
+    {
+        ProductData.SwitchIronToSteel(protosDb);
+
+        if (ConfigReplaceIronInRecipes) {
+            Log.Info("[Metallurgy+] Trying to replace all uses of iron plates with steel.");
+            RecipesData.SwithIronToSteel(protosDb, ConfigKeepIronPlates);
+        }
+    }
 }

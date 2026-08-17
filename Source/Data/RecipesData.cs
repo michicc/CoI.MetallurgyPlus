@@ -6,6 +6,7 @@ using Mafi.Core.Factory.Recipes;
 using Mafi.Core.Mods;
 using Mafi.Core.Products;
 using Mafi.Core.Prototypes;
+using System.Linq;
 
 namespace CoI.MetallurgyPlus.Data;
 
@@ -393,5 +394,43 @@ internal class RecipesData : IModData
 
         // Remove iron mechanical components recipes.
         protosDb.GetOrThrow<RecipeProto>(Ids.Recipes.MechPartsIronAssembly).MarkAsObsolete();
+    }
+
+    public static void SwithIronToSteel(ProtosDb protosDb, bool keepCastingRecipe)
+    {
+        var steelProto = protosDb.GetOrThrow<ProductProto>(Ids.Products.Steel);
+        var ironProto = protosDb.GetOrThrow<ProductProto>(Ids.Products.Iron);
+
+        // Convert costs of builds and vehicles.
+        foreach (RecipeProto recipe in protosDb.All(typeof(RecipeProto)).Cast<RecipeProto>()) {
+            // If iron casting recipe is enabled by mod config, do not do anything to it.
+            if (keepCastingRecipe && recipe.Id == Ids.Recipes.IronCasting) continue;
+            // Ignore obsolete recipes.
+            if (recipe.IsObsolete) continue;
+
+            // Any iron in the recipe?
+            if (recipe.AllInputs.All(x => x.Product != ironProto) && recipe.AllOutputs.All(x => x.Product != ironProto)) continue;
+            // Do not handle recipes that use both iron *and* steel.
+            if (recipe.AllInputs.Any(x => x.Product == steelProto) || recipe.AllOutputs.Any(x => x.Product == steelProto)) {
+                Log.Warning($"[Metallurgy+] Recipe '{recipe.Id}' uses both iron and steel, not converting.");
+                continue;
+            }
+
+            // Convert inputs.
+            foreach (RecipeProduct product in recipe.AllInputs) {
+                if (product.Product == ironProto) {
+                    product.SetField(nameof(RecipeProduct.Product), steelProto);
+                    product.SetField(nameof(RecipeProduct.Quantity), product.Quantity.CeilDiv(2).Max(Quantity.One));
+                }
+            }
+            // Convert outputs.
+            foreach (RecipeProduct product in recipe.AllOutputs) {
+                if (product.Product == ironProto) {
+                    product.SetField(nameof(RecipeProduct.Product), steelProto);
+                    product.SetField(nameof(RecipeProduct.Quantity), product.Quantity.CeilDiv(2).Max(Quantity.One));
+                }
+            }
+
+        }
     }
 }
