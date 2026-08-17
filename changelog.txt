@@ -1,3 +1,8 @@
+v0.4.0 | 2026-08-17
+* Added a config option to keep the iron plate casting recipe around for compatibility with other mods. Default (vanilla) game recipes will still be changed to use steel only.
+* Added an experimenal config option to try to rewrite all recipes from all loaded mods to only use steel and not any iron plates.
+* Fixed missing recipe migrations for loading saves from before Update 4.2.
+
 v0.3.0 | 2026-07-17
 * Rebuild for Update 4.2 (0.8.6+)
 * Slightly improved wording for the "Iron production" tutorial goal
