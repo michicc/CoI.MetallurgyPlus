@@ -203,6 +203,6 @@ internal class MachineData : IModData
             steam.SetField(nameof(ParticlesParams.SupportedRecipesSelector), Option<Func<RecipeProto, bool>>.Create(r => lambdaSteam.Value(r) && !IsSyngasRecipe(r)));
         }
 
-        static bool IsSyngasRecipe(RecipeProto r) => r.Id == ModIDs.Recipes.SyngasSmokeStack || r.Id == ModIDs.Recipes.SyngasSmokeStackLarge;
+        static bool IsSyngasRecipe(RecipeProto r) => r.Id == ModIDs.Recipes.SyngasSmokeStack;
     }
 }

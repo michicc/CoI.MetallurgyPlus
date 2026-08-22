@@ -95,9 +95,9 @@ public static class ModIDs
         public static readonly RecipeID SyngasProduction = Ids.Recipes.CreateId("MP_SyngasProduction");
         public static readonly RecipeID SyngasProductionInitial = Ids.Recipes.CreateId("MP_SyngasProductionInitial");
         public static readonly RecipeID SyngasSmokeStack = Ids.Recipes.CreateId("MP_SyngasSmokeStack");
-        public static readonly RecipeID SyngasSmokeStackLarge = Ids.Recipes.CreateId("MP_SyngasSmokeStackLarge");
 
         public static readonly RecipeID AirSeparationT2 = Ids.Recipes.CreateId("MP_AirSeparationT2");
+        public static readonly RecipeID ArgonSmokeStack = Ids.Recipes.CreateId("MP_ArgonSmokeStack");
         #endregion
     }
 

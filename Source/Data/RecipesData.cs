@@ -37,6 +37,7 @@ internal class RecipesData : IModData
         registrator.RegisterRecipeMigration("Recipe_MP_MechPartsAssemblyT2Steel", ModIDs.Recipes.MechPartsAssemblySteel, V_U42);
         registrator.RegisterRecipeMigration("Recipe_MP_SteelCastingT2", ModIDs.Recipes.SteelCasting, V_U42);
         registrator.RegisterRecipeMigration("Recipe_MP_SteelCastingCooledT2", ModIDs.Recipes.SteelCastingCooled, V_U42);
+        registrator.RegisterRecipeMigration("Recipe_MP_SyngasSmokeStackLarge", ModIDs.Recipes.SyngasSmokeStack, V_U42);
     }
 
     private void AddCharcoalRecipes(ProtoRegistrator registrator)
@@ -340,18 +341,15 @@ internal class RecipesData : IModData
             .BuildAndAdd().BindTo(registrator.PrototypesDb.GetMachine(Ids.Machines.HydrogenReformer), 30.Seconds());
 
         // Smoke stack for used syngas.
-        registrator.RecipeProtoBuilder
+        var recipe = registrator.RecipeProtoBuilder
             .Start(ModIDs.Recipes.SyngasSmokeStack)
             .SetProductsDestroyReason(DestroyReason.DumpedOnTerrain)
             .AddInput(20, ModIDs.Products.SyngasUsed)
             .AddOutput(10, Ids.Products.PollutedAir)
-            .BuildAndAdd().BindTo(registrator.PrototypesDb.GetMachine(Ids.Machines.SmokeStack), 20.Seconds(),  minPartialUtilization: 25.Percent());
-        registrator.RecipeProtoBuilder
-            .Start(ModIDs.Recipes.SyngasSmokeStackLarge)
-            .SetProductsDestroyReason(DestroyReason.DumpedOnTerrain)
-            .AddInput(20 * 15, ModIDs.Products.SyngasUsed, RecipeProtoBuilder.ANY_COMPATIBLE_PORT)
-            .AddOutput(10 * 15, Ids.Products.PollutedAir, RecipeProtoBuilder.VIRTUAL_PORT)
-            .BuildAndAdd().BindTo(registrator.PrototypesDb.GetMachine(Ids.Machines.SmokeStackLarge), 20.Seconds(), minPartialUtilization: 25.Percent());
+            .BuildAndAdd();
+
+        recipe.BindTo(registrator.PrototypesDb.GetMachine(Ids.Machines.SmokeStack), 20.Seconds(), minPartialUtilization: 25.Percent());
+        recipe.BindTo(registrator.PrototypesDb.GetMachine(Ids.Machines.SmokeStackLarge), 20.Seconds(), multiplier: 15, minPartialUtilization: 25.Percent());
     }
 
     private void AddAssemblyRecipes(ProtoRegistrator registrator)

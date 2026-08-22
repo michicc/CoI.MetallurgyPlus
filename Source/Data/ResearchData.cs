@@ -100,6 +100,7 @@ internal class ResearchData : IResearchNodesData
             .Description("Direct steel production using hydrogen.")
             .AddRecipeToUnlock(ModIDs.Recipes.IronSmeltingArc)
             .AddMachineToUnlock(ModIDs.Machines.AirSeparatorT2, unlockAllRecipes: true)
+            .AddRecipeToUnlock(ModIDs.Recipes.ArgonSmokeStack)
             .SetGridPosition(new Vector2i(124, 11))
             .AddParents(registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.ArcFurnace2))
             .BuildAndAdd();
@@ -127,7 +128,6 @@ internal class ResearchData : IResearchNodesData
             .AddRecipeToUnlock(ModIDs.Recipes.SyngasProduction)
             .AddRecipeToUnlock(ModIDs.Recipes.SyngasProductionInitial)
             .AddRecipeToUnlock(ModIDs.Recipes.SyngasSmokeStack)
-            .AddRecipeToUnlock(ModIDs.Recipes.SyngasSmokeStackLarge)
             .SetGridPosition(new Vector2i(92, 7))
             .AddParents(registrator.PrototypesDb.GetOrThrow<ResearchNodeProto>(Ids.Research.RotaryKilnGas), proto)
             .BuildAndAdd();

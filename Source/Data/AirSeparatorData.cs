@@ -6,6 +6,7 @@ using Mafi.Core.Entities.Animations;
 using Mafi.Core.Entities.Static.Layout;
 using Mafi.Core.Factory.Machines;
 using Mafi.Core.Mods;
+using Mafi.Core.Products;
 using Mafi.Core.Prototypes;
 
 namespace CoI.MetallurgyPlus.Data;
@@ -53,6 +54,16 @@ internal class AirSeparatorData : IModData
             .AddOutput(12, Ids.Products.Nitrogen, "X")
             .AddOutput(2, ModIDs.Products.Argon, "Z")
             .BuildAndAdd().BindTo(proto, 20.Seconds());
+
+        // Recipe: Argon venting.
+        var ventRecipe = registrator.RecipeProtoBuilder
+            .Start(ModIDs.Recipes.ArgonSmokeStack)
+            .SetProductsDestroyReason(DestroyReason.DumpedOnTerrain)
+            .AddInput(20, ModIDs.Products.Argon)
+            .BuildAndAdd();
+
+        ventRecipe.BindTo(registrator.PrototypesDb.GetMachine(Ids.Machines.SmokeStack), 20.Seconds(), minPartialUtilization: 25.Percent());
+        ventRecipe.BindTo(registrator.PrototypesDb.GetMachine(Ids.Machines.SmokeStackLarge), 20.Seconds(), multiplier: 15, minPartialUtilization: 25.Percent());
     }
 
     public static void OnInitialize(DependencyResolver resolver, bool gameWasLoaded)
