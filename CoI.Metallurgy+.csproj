@@ -24,6 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Tables\**\*.tbl" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="AssetBundles\**" Exclude="AssetBundles\**\*.manifest;AssetBundles\AssetBundles;**\.gitignore" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="AssetBundles\mafi_bundles.manifest" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="changelog.txt">

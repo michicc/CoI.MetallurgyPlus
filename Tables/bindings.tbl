@@ -1,0 +1,7 @@
+# Which sound each entity proto plays. The engine resolves a binding once, when the entity is added.
+# Rows are keyed by entity proto id and role; the sound cell is a row id from one of the sound tables.
+# An entity with a single sound has no role and writes the inherit token for it.
+# Maintained by hand. Edit a row to repoint an entity; comments and blank lines may group rows freely.
+
+id                                 role          sound
+Machine_MP_OpenHearthFurnace       -             SmeltingFurnaceT1

@@ -1,9 +1,11 @@
 ﻿using CoI.MetallurgyPlus.Data;
 using Mafi;
 using Mafi.Collections;
+using Mafi.Core.Audio;
 using Mafi.Core.Game;
 using Mafi.Core.Mods;
 using Mafi.Core.Prototypes;
+using System.Reflection;
 
 namespace CoI.MetallurgyPlus;
 
@@ -45,6 +47,8 @@ public sealed class MetallurgyPlusMod : IMod
         registrator.RegisterData<GoalsData>();
 
         registrator.PrototypesDb.AddOnLockCheck(ReplaceIronWithSteel);
+
+        SoundBindingsRegistrator.RegisterFromAssembly(registrator.PrototypesDb, Assembly.GetExecutingAssembly(), "MetallurgyPlus");
     }
 
     public void RegisterDependencies(DependencyResolverBuilder depBuilder, ProtosDb protosDb, bool gameWasLoaded) { }
